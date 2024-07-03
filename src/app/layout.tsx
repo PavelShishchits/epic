@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { HTRakikBold, ReadexProMedium, ReadexProRegular } from "./fonts";
+import classNames from "classnames";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +15,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        {/* <link href="favicon.svg" rel="icon" media="(prefers-color-scheme: light)"/> */}
+      </head>
+      <body
+        className={classNames(
+          ReadexProRegular.variable,
+          ReadexProMedium.variable,
+          HTRakikBold.variable
+        )}
+      >
+        {children}
+      </body>
     </html>
   );
 }
