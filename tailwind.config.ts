@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+// default theme to extend
+import defaultTheme from "tailwindcss/defaultTheme";
 
 const config: Config = {
   content: [
@@ -7,12 +9,10 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      fontFamily: {
-        "family-bold": ["var(--font-bold)"],
-        "family-medium": ["var(--font-medium)"],
-        "family-regular": ["var(--font-regular)"],
-      },
+    fontFamily: {
+      "family-bold": ["var(--font-bold)"],
+      "family-medium": ["var(--font-medium)"],
+      "family-regular": ["var(--font-regular)"],
     },
   },
   plugins: [],

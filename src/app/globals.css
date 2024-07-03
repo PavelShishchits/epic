@@ -16,8 +16,10 @@
   }
 }
 
-body {
- 
+@layer base {
+  html {
+    font-family: var(--font-regular);
+  }
 }
 
 @layer utilities {

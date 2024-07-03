@@ -14,19 +14,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={classNames(
+        ReadexProRegular.variable,
+        ReadexProMedium.variable,
+        HTRakikBold.variable
+      )}
+    >
       <head>
         {/* <link href="favicon.svg" rel="icon" media="(prefers-color-scheme: light)"/> */}
       </head>
-      <body
-        className={classNames(
-          ReadexProRegular.variable,
-          ReadexProMedium.variable,
-          HTRakikBold.variable
-        )}
-      >
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
