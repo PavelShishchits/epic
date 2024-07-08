@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { HTRakikBold, ReadexProMedium, ReadexProRegular } from "./fonts";
-import classNames from "classnames";
+import clx from "clsx";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import "./globals.css";
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={classNames(
+      className={clx(
         ReadexProRegular.variable,
         ReadexProMedium.variable,
         HTRakikBold.variable,

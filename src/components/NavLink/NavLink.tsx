@@ -1,7 +1,7 @@
 "use client";
 import Link, { LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
-import classNames from "classnames";
+import clx from "clsx";
 
 interface NavLinkProps extends LinkProps {
   activeClass?: string;
@@ -21,7 +21,7 @@ const NavLink = (props: NavLinkProps) => {
   return (
     <Link
       {...linkProps}
-      className={classNames(
+      className={clx(
         className,
         pathname === linkProps.href ? activeClass : ""
       )}

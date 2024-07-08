@@ -1,5 +1,6 @@
 import NavLink from "@/components/NavLink/NavLink";
 import { db } from "@/utils/db.server";
+import Typography from "@/components/Typography/Typography";
 
 interface UserDetailsProps {
   userName: string;
@@ -17,7 +18,7 @@ const UserDetails = async ({ userName }: UserDetailsProps) => {
 
   return (
     <div>
-      <h1 className="text-h2">{user?.name}</h1>
+      <Typography variant="h2" tag="h1">{user?.name}</Typography>
       <ul>
         <li>
           <NavLink

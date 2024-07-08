@@ -1,12 +1,11 @@
 import { db } from "@/utils/db.server";
-import { delay } from "@/utils/delay";
+import Typography from "@/components/Typography/Typography";
 
 interface NoteDetailsProps {
   noteId: string;
 }
 
 async function NoteDetails({ noteId }: NoteDetailsProps) {
-
   const note = await db.note.findFirst({
     where: {
       id: {
@@ -19,7 +18,9 @@ async function NoteDetails({ noteId }: NoteDetailsProps) {
 
   return (
     <article>
-      <h1 className="text-h2">{note.title}</h1>
+      <Typography variant="h1" tag="h1">
+        {note.title}
+      </Typography>
       <p>{note.content}</p>
     </article>
   );

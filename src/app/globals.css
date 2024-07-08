@@ -19,6 +19,7 @@
 @layer base {
   html {
     font-family: var(--font-regular);
+    line-height: 1.25;
   }
 }
 
