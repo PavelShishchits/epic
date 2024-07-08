@@ -22,6 +22,12 @@
   }
 }
 
+@layer components {
+  .text-h2 {
+    @apply mb-4 font-family-medium;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
