@@ -27,7 +27,7 @@ export default async function NotesLayout({
   const userName = user?.name ?? user?.username ?? userNameParam;
 
   return (
-    <div className="flex border-2 border-orange-600">
+    <div className="flex border-2 border-orange-600 h-full">
       <div className="p-4 w-1/4 border-2 border-blue-200">
         <div className="mb-4">
           <NavLink href={`/users/${userNameParam}`}>Back to {userName}</NavLink>
@@ -36,7 +36,7 @@ export default async function NotesLayout({
           <NoteSidebarList userName={userNameParam} />
         </Suspense>
       </div>
-      <div className="p-4 w-3/4 border-2 border-violet-600">{children}</div>
+      <div className="p-4 w-3/4 border-2 border-violet-600 h-full">{children}</div>
     </div>
   );
 }
