@@ -20,7 +20,7 @@ async function NoteDetails(props: NoteDetailsProps) {
     },
   });
 
-  if (!note || !userId) { 
+  if (!note || !userId) {     
     return notFound();
   };
 

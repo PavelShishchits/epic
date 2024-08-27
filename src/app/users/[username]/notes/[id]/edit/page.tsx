@@ -1,6 +1,25 @@
-// import NoteDetails from '@/components/NoteDetails/NoteDetails';
-import { Suspense } from 'react';
-import NoteEdit from '@/components/NoteEdit/NoteEdit';
+import { Suspense } from "react";
+import NoteEdit from "@/components/NoteEdit/NoteEdit";
+import { db } from "@/utils/db.server";
+
+export async function generateMetadata({ params }: NotesEditingPageProps) {
+  const noteId = params?.id || "";
+
+  const note = await db.note.findFirst({
+    where: {
+      id: {
+        equals: noteId,
+      },
+    },
+  });
+
+  if (!note) return;
+
+  return {
+    title: note.title,
+    description: note.content.substring(0, 100),
+  };
+}
 
 interface NotesEditingPageProps {
   params?: {

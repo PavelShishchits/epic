@@ -23,6 +23,7 @@ const NavLink = (props: NavLinkProps) => {
       {...linkProps}
       className={clx(
         className,
+        // pathname.includes(linkProps.href.toString()) ? activeClass : ""
         pathname === linkProps.href ? activeClass : ""
       )}
     >

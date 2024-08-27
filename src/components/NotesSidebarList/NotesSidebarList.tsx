@@ -21,7 +21,7 @@ async function NoteSidebarList({ userName }: NotesSidebarListProps) {
     <ul>
       {notes?.map((note) => (
         <li key={note.id} className="mb-2">
-          <NavLink href={`/users/${userName}/notes/${note.id}`}>
+          <NavLink href={`/users/${userName}/notes/${note.id}`} scroll={false}>
             {note.title}
           </NavLink>
         </li>

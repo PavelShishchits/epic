@@ -6,8 +6,8 @@ import { z } from "zod";
 import { delay } from "@/utils/delay";
 
 const noteEditSchema = z.object({
-  title: z.string().trim().min(5, { message: "Must be 5 characters or more" }),
-  content: z.string().trim().min(5, { message: "Content is required" }),
+  title: z.string().trim().min(1, { message: "Title is required" }),
+  content: z.string().trim().min(1, { message: "Content is required" }),
 });
 
 type State = {
@@ -24,7 +24,7 @@ type AdditionalProps = {
 
 export async function editNoteAction(
   { noteId, userId }: AdditionalProps,
-  prevState: any,
+  prevState: State,
   formData: FormData
 ) {
   const validatedFields = noteEditSchema.safeParse({
@@ -39,6 +39,8 @@ export async function editNoteAction(
   }
 
   const { title, content } = validatedFields.data;
+
+  await delay(2000);
 
   await db.note.update({
     where: {

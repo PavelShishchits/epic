@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Typography from "@/components/Typography/Typography";
 
-export default function NotFound() {
+export default async function NotFound() {
   return (
     <div>
       <Typography variant={"h2"} tag="h2">

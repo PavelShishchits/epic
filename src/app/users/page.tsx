@@ -1,4 +1,10 @@
 import NavLink from "@/components/NavLink/NavLink";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Users",
+  description: "A note taking app",
+}
 
 export default function UsersPage() {
   return (
