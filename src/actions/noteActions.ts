@@ -1,21 +1,11 @@
 "use server";
+import "server-only";
 import { db } from "@/utils/db.server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { z } from "zod";
+import { parseWithZod } from "@conform-to/zod";
 import { delay } from "@/utils/delay";
-
-const noteEditSchema = z.object({
-  title: z.string().trim().min(1, { message: "Title is required" }),
-  content: z.string().trim().min(1, { message: "Content is required" }),
-});
-
-type State = {
-  errors?: {
-    title?: string[];
-    content?: string[];
-  };
-};
+import { noteEditSchema } from "@/schema/note";
 
 type AdditionalProps = {
   noteId: string;
@@ -24,21 +14,20 @@ type AdditionalProps = {
 
 export async function editNoteAction(
   { noteId, userId }: AdditionalProps,
-  prevState: State,
+  prevState: any,
   formData: FormData
 ) {
-  const validatedFields = noteEditSchema.safeParse({
-    title: formData.get("title"),
-    content: formData.get("content"),
+  const submission = parseWithZod(formData, {
+    schema: noteEditSchema,
   });
 
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-    };
+  console.log(submission);
+  if (submission.status !== "success") {
+    console.log(submission.reply());
+    return submission.reply();
   }
 
-  const { title, content } = validatedFields.data;
+  const { title, content } = submission.value;
 
   await delay(2000);
 

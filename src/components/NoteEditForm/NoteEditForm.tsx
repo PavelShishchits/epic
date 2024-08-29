@@ -2,22 +2,18 @@
 import { useEffect, useRef, useId } from "react";
 import { editNoteAction } from "@/actions/noteActions";
 import { useFormState } from "react-dom";
+import { useForm, getFormProps, getInputProps, getTextareaProps } from "@conform-to/react";
+import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 import { Note } from "@/domain/note";
 import SubmitBtn from "@/components/SubmitBtn/SubmitBtn";
 import ErrorList from "@/components/ErrorList/ErrorList";
+import { noteEditSchema } from "@/schema/note";
 
 interface NoteEditFormProps {
   note: Note;
   noteId: string;
   userId: string;
 }
-
-const initialState = {
-  errors: {
-    title: [],
-    content: [],
-  },
-};
 
 function NoteEditForm(props: NoteEditFormProps) {
   const { note, noteId, userId } = props;
@@ -27,58 +23,52 @@ function NoteEditForm(props: NoteEditFormProps) {
     userId: userId,
   });
 
-  const formRef = useRef<HTMLFormElement>(null);
-  const [state, formAction] = useFormState(boundEditNoteAction, initialState);
-  
-  const titleHasErrors = Boolean(state.errors.title?.length);
-  const contentHasErrors = Boolean(state.errors.content?.length);
-  const titleErrorId = useId();
-  const contentErrorId = useId();
+  const [state, formAction] = useFormState(boundEditNoteAction, undefined);
 
-  useEffect(() => {
-    if (!formRef.current) return;
-    if (Object.keys(state.errors).length === 0) return;
+  const [form, fields] = useForm({
+    id: "note-edit-form",
+    constraint: getZodConstraint(noteEditSchema),
+    lastResult: state,
+    onValidate(context) {
+      return parseWithZod(context.formData, {
+        schema: noteEditSchema,
+      });
+    },
+    defaultValue: {
+      title: note.title,
+      content: note.content,
+    },
+    shouldValidate: 'onInput',
+    shouldRevalidate: 'onInput',
+  });
 
-    const firstInvalidElement = formRef.current.querySelector('[aria-invalid="true"]');
-    if (firstInvalidElement && firstInvalidElement instanceof HTMLElement) {
-      firstInvalidElement.focus();
-    }
-    
-  }, [state.errors]);
+  const {key: titleKey, ...titleProps} = getInputProps(fields.title, { type: "text"});
+  const {key: contentKey, ...contentProps} = getTextareaProps(fields.content);
 
   return (
-    <form ref={formRef} noValidate action={formAction} className="h-full flex flex-col">
+    <form action={formAction} className="h-full flex flex-col" {...getFormProps(form)}>
       <div>
-        <div className="mb-5">
-          <label className="flex flex-col gap-2 mb-2">
+        <div className="mb-5">          
+          <label htmlFor={fields.title.id} className="flex flex-col gap-2 mb-2">
             <span>Title</span>
             <input
-              className="border-2 border-blue-200 py-3 px-4 rounded"
-              type="text"
-              name="title"
-              defaultValue={note.title}
-              aria-invalid={titleHasErrors || undefined}
-              aria-describedby={titleHasErrors ? titleErrorId : undefined}
-              autoFocus              
-              required
+              className="border-2 border-blue-200 py-3 px-4 rounded"             
+              autoFocus
+              {...titleProps}  
             />
           </label>
-          <ErrorList errors={state.errors.title} id={titleErrorId} />        
+          <ErrorList errors={fields.title.errors} id={fields.title.errorId} />        
         </div>
         <div className="mb-5">
-          <label className="flex flex-col gap-2 mb-2">
+          <label htmlFor={fields.content.id} className="flex flex-col gap-2 mb-2">
             <span>Content</span>
             <textarea
               className="border-2 border-blue-200 py-3 px-4 rounded resize-none"
-              name="content"
-              defaultValue={note.content}
               rows={10}
-              aria-invalid={contentHasErrors || undefined}
-              aria-describedby={contentHasErrors ? contentErrorId : undefined}
-              required
+              {...contentProps}
             ></textarea>
           </label>
-          <ErrorList errors={state.errors.content} id={contentErrorId} />    
+          <ErrorList errors={fields.content.errors} id={fields.content.errorId} />
         </div>
       </div>
       <div className="mt-auto pt-4">
