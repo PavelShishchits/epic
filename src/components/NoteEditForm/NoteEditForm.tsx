@@ -7,6 +7,7 @@ import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 import { Note } from "@/domain/note";
 import SubmitBtn from "@/components/SubmitBtn/SubmitBtn";
 import ErrorList from "@/components/ErrorList/ErrorList";
+import FileUploader from "@/components/FileUploader/FileUploader"
 import { noteEditSchema } from "@/schema/note";
 
 interface NoteEditFormProps {
@@ -44,6 +45,8 @@ function NoteEditForm(props: NoteEditFormProps) {
 
   const {key: titleKey, ...titleProps} = getInputProps(fields.title, { type: "text"});
   const {key: contentKey, ...contentProps} = getTextareaProps(fields.content);
+  const {key: fileKey, ...fileProps} = getInputProps(fields.file, { type: 'file'});
+  const {key: altTextKey, ...altTextProps} = getInputProps(fields.altText, { type: 'text'});
 
   return (
     <form action={formAction} className="h-full flex flex-col" {...getFormProps(form)}>
@@ -69,6 +72,18 @@ function NoteEditForm(props: NoteEditFormProps) {
             ></textarea>
           </label>
           <ErrorList errors={fields.content.errors} id={fields.content.errorId} />
+        </div>
+        <div className="mb-5">
+          <label htmlFor={fields.file.id} className="flex flex-col gap-2 mb-2">
+            <span>Image</span>
+            <input className="border-2 border-blue-200 py-3 px-4 rounded" {...fileProps} />
+          </label>
+        </div>
+        <div className="mb-5">
+          <label htmlFor={fields.altText.id} className="flex flex-col gap-2 mb-2">
+            <span>Alt</span>
+            <input className="border-2 border-blue-200 py-3 px-4 rounded" {...altTextProps} />
+          </label>
         </div>
       </div>
       <div className="mt-auto pt-4">

@@ -21,15 +21,16 @@ export async function editNoteAction(
     schema: noteEditSchema,
   });
 
-  console.log(submission);
+  // console.log(submission);
   if (submission.status !== "success") {
-    console.log(submission.reply());
     return submission.reply();
   }
 
-  const { title, content } = submission.value;
+  const { title, content, file } = submission.value;
 
   await delay(2000);
+
+  console.log("file", file);
 
   await db.note.update({
     where: {
