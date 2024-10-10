@@ -1,7 +1,7 @@
-import { db } from "@/utils/db.server";
+import { db } from "@/infrastructure/db/db.server";
 import { notFound } from "next/navigation";
 import NoteEditForm from "@/components/NoteEditForm/NoteEditForm";
-import { getSerializableProps } from "@/utils/getSerializableProps";
+import { getSerializableProps } from "@/infrastructure/utils/getSerializableProps";
 import { Note } from "@/domain/note";
 
 interface NoteEditProps {

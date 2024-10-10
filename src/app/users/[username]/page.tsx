@@ -1,6 +1,6 @@
 import UserDetails from "@/components/UserDetails/UserDetails";
 import { Suspense } from "react";
-import { db } from "@/utils/db.server";
+import { db } from "@/infrastructure/db/db.server";
 import type { ResolvingMetadata } from "next";
 
 export async function generateMetadata({ params }: UserDetailPageProps, parent: ResolvingMetadata) {

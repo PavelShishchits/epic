@@ -1,5 +1,5 @@
 import NavLink from "@/components/NavLink/NavLink";
-import { db } from "@/utils/db.server";
+import { db } from "@/infrastructure/db/db.server";
 import NoteSidebarList from "@/components/NotesSidebarList/NotesSidebarList";
 import { Suspense } from "react";
 

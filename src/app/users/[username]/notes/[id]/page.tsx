@@ -1,5 +1,5 @@
 import NoteDetails from "@/components/NoteDetails/NoteDetails";
-import { db } from "@/utils/db.server";
+import { db } from "@/infrastructure/db/db.server";
 import { Suspense } from "react";
 
 export async function generateMetadata({ params }: NotesDetilsPageProps) {

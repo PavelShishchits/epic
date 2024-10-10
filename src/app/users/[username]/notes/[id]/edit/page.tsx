@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import NoteEdit from "@/components/NoteEdit/NoteEdit";
-import { db } from "@/utils/db.server";
+import { db } from "@/infrastructure/db/db.server";
 
 export async function generateMetadata({ params }: NotesEditingPageProps) {
   const noteId = params?.id || "";

@@ -1,10 +1,10 @@
 "use server";
 import "server-only";
-import { db } from "@/utils/db.server";
+import { db } from "@/infrastructure/db/db.server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { parseWithZod } from "@conform-to/zod";
-import { delay } from "@/utils/delay";
+import { delay } from "@/infrastructure/utils/delay";
 import { noteEditSchema } from "@/schema/note";
 
 type AdditionalProps = {
@@ -21,7 +21,7 @@ export async function editNoteAction(
     schema: noteEditSchema,
   });
 
-  // console.log(submission);
+  console.log(submission);
   if (submission.status !== "success") {
     return submission.reply();
   }
@@ -32,6 +32,7 @@ export async function editNoteAction(
 
   console.log("file", file);
 
+  // console.log(db);
   await db.note.update({
     where: {
       id: {

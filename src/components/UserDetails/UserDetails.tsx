@@ -1,5 +1,5 @@
 import NavLink from "@/components/NavLink/NavLink";
-import { db } from "@/utils/db.server";
+import { db } from "@/infrastructure/db/db.server";
 import Typography from "@/components/Typography/Typography";
 import { notFound } from "next/navigation";
 

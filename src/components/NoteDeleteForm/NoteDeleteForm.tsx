@@ -1,5 +1,5 @@
 import SubmitBtn from "@/components/SubmitBtn/SubmitBtn";
-import { deleteNoteAction } from '@/actions/noteActions';
+import { deleteNoteAction } from '@/application/useCases/noteUseCase';
 
 type NoteDeleteFormProps = {
   noteId: string;

@@ -1,4 +1,4 @@
-import { db } from "@/utils/db.server";
+import { db } from "@/infrastructure/db/db.server";
 import { notFound } from "next/navigation";
 import Typography from "@/components/Typography/Typography";
 import Link from "next/link";

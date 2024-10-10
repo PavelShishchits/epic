@@ -1,6 +1,5 @@
 "use client";
-import { useEffect, useRef, useId } from "react";
-import { editNoteAction } from "@/actions/noteActions";
+import { editNoteAction } from "@/application/useCases/noteUseCase";
 import { useFormState } from "react-dom";
 import { useForm, getFormProps, getInputProps, getTextareaProps } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
@@ -49,7 +48,7 @@ function NoteEditForm(props: NoteEditFormProps) {
   const {key: altTextKey, ...altTextProps} = getInputProps(fields.altText, { type: 'text'});
 
   return (
-    <form action={formAction} className="h-full flex flex-col" {...getFormProps(form)}>
+    <form action={formAction} className="h-full flex flex-col" encType="multipart/form-data" {...getFormProps(form)}>
       <div>
         <div className="mb-5">          
           <label htmlFor={fields.title.id} className="flex flex-col gap-2 mb-2">
@@ -74,16 +73,7 @@ function NoteEditForm(props: NoteEditFormProps) {
           <ErrorList errors={fields.content.errors} id={fields.content.errorId} />
         </div>
         <div className="mb-5">
-          <label htmlFor={fields.file.id} className="flex flex-col gap-2 mb-2">
-            <span>Image</span>
-            <input className="border-2 border-blue-200 py-3 px-4 rounded" {...fileProps} />
-          </label>
-        </div>
-        <div className="mb-5">
-          <label htmlFor={fields.altText.id} className="flex flex-col gap-2 mb-2">
-            <span>Alt</span>
-            <input className="border-2 border-blue-200 py-3 px-4 rounded" {...altTextProps} />
-          </label>
+          <FileUploader fileProps={fileProps} altTextProps={altTextProps} fileField={fields.file} altTextField={fields.altText} />
         </div>
       </div>
       <div className="mt-auto pt-4">
