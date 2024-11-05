@@ -1,6 +1,6 @@
 "use server";
 import "server-only";
-import { db } from "@/infrastructure/db/db.server";
+import { db, updateNote } from "@/infrastructure/db/db.server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { parseWithZod } from "@conform-to/zod";
@@ -21,28 +21,20 @@ export async function editNoteAction(
     schema: noteEditSchema,
   });
 
-  console.log(submission);
+  console.log("submission", submission);
   if (submission.status !== "success") {
     return submission.reply();
   }
 
-  const { title, content, file } = submission.value;
+  const { title, content, image } = submission.value;
 
   await delay(2000);
 
-  console.log("file", file);
-
-  // console.log(db);
-  await db.note.update({
-    where: {
-      id: {
-        equals: noteId,
-      },
-    },
-    data: {
-      title,
-      content,
-    },
+  await updateNote({
+    id: noteId,
+    title,
+    content,
+    images: [image],
   });
 
   revalidatePath("/users/" + userId + "/notes/" + noteId);

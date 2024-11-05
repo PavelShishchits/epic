@@ -37,18 +37,17 @@ function NoteEditForm(props: NoteEditFormProps) {
     defaultValue: {
       title: note.title,
       content: note.content,
+      image: note.images.length > 0 ? note.images[0] : undefined
     },
     shouldValidate: 'onInput',
     shouldRevalidate: 'onInput',
   });
 
   const {key: titleKey, ...titleProps} = getInputProps(fields.title, { type: "text"});
-  const {key: contentKey, ...contentProps} = getTextareaProps(fields.content);
-  const {key: fileKey, ...fileProps} = getInputProps(fields.file, { type: 'file'});
-  const {key: altTextKey, ...altTextProps} = getInputProps(fields.altText, { type: 'text'});
+  const {key: contentKey, ...contentProps} = getTextareaProps(fields.content);  
 
   return (
-    <form action={formAction} className="h-full flex flex-col" encType="multipart/form-data" {...getFormProps(form)}>
+    <form action={formAction} className="h-full flex flex-col" {...getFormProps(form)}>
       <div>
         <div className="mb-5">          
           <label htmlFor={fields.title.id} className="flex flex-col gap-2 mb-2">
@@ -73,7 +72,7 @@ function NoteEditForm(props: NoteEditFormProps) {
           <ErrorList errors={fields.content.errors} id={fields.content.errorId} />
         </div>
         <div className="mb-5">
-          <FileUploader fileProps={fileProps} altTextProps={altTextProps} fileField={fields.file} altTextField={fields.altText} />
+          <FileUploader config={fields.image} />
         </div>
       </div>
       <div className="mt-auto pt-4">

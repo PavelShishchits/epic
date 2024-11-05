@@ -16,4 +16,11 @@ export type NoteUser = {
   notes: Note[];
 };
 
-export type NoteImages = [];
+export type NoteImages = NoteImage[];
+
+type NoteImage = {
+  altText: string;
+  contentType: string;
+  filepath: string;
+  id: string;
+};

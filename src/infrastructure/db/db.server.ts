@@ -1,6 +1,8 @@
 import crypto from "node:crypto";
+import { mkdir, writeFile } from "node:fs/promises";
 import { factory, manyOf, nullable, oneOf, primaryKey } from "@mswjs/data";
 import { singleton } from "../utils/singleton.server";
+import path from "node:path";
 
 const getId = () => crypto.randomBytes(16).toString("hex").slice(0, 8);
 
@@ -127,73 +129,79 @@ export const db = singleton("db", () => {
   return db;
 });
 
-// export async function updateNote({
-//   id,
-//   title,
-//   content,
-//   images,
-// }: {
-//   id: string;
-//   title: string;
-//   content: string;
-//   images?: Array<{
-//     id?: string;
-//     file?: File;
-//     altText?: string;
-//   } | null>;
-// }) {
-//   const noteImagePromises =
-//     images?.map(async image => {
-//       if (!image) return null;
+export async function updateNote({
+  id,
+  title,
+  content,
+  images,
+}: {
+  id: string;
+  title: string;
+  content: string;
+  images?: Array<{
+    id?: string;
+    file?: File;
+    altText?: string;
+  } | null>;
+}) {
+  const noteImagePromises =
+    images?.map(async (image) => {
+      if (!image) return null;
 
-//       if (image.id) {
-//         const hasReplacement = (image?.file?.size || 0) > 0;
-//         const filepath =
-//           image.file && hasReplacement
-//             ? await writeImage(image.file)
-//             : undefined;
-//         // update the ID so caching is invalidated
-//         const id = image.file && hasReplacement ? getId() : image.id;
+      if (image.id) {
+        const hasReplacement = (image?.file?.size || 0) > 0;
+        const filepath =
+          image.file && hasReplacement
+            ? await writeImage(image.file)
+            : undefined;
+        // update the ID so caching is invalidated
+        const id = image.file && hasReplacement ? getId() : image.id;
 
-//         return db.image.update({
-//           where: { id: { equals: image.id } },
-//           data: {
-//             id,
-//             filepath,
-//             altText: image.altText,
-//           },
-//         });
-//       } else if (image.file) {
-//         if (image.file.size < 1) return null;
-//         const filepath = await writeImage(image.file);
-//         return db.image.create({
-//           altText: image.altText,
-//           filepath,
-//           contentType: image.file.type,
-//         });
-//       } else {
-//         return null;
-//       }
-//     }) ?? [];
+        return db.image.update({
+          where: { id: { equals: image.id } },
+          data: {
+            id,
+            filepath,
+            altText: image.altText,
+          },
+        });
+      } else if (image.file) {
+        if (image.file.size < 1) return null;
+        const filepath = await writeImage(image.file);
+        return db.image.create({
+          altText: image.altText,
+          filepath,
+          contentType: image.file.type,
+        });
+      } else {
+        return null;
+      }
+    }) ?? [];
 
-//   const noteImages = await Promise.all(noteImagePromises);
+  const noteImages = (await Promise.all(noteImagePromises)).filter(
+    (image): image is NonNullable<typeof image> => image !== null
+  );
 
-//   db.note.update({
-//     where: { id: { equals: id } },
-//     data: {
-//       title,
-//       content,
-//       images: noteImages.filter(Boolean),
-//     },
-//   });
-// }
+  db.note.update({
+    where: { id: { equals: id } },
+    data: {
+      title,
+      content,
+      images: noteImages,
+    },
+  });
+}
 
-// async function writeImage(image: File) {
-//   const tmpDir = path.join(os.tmpdir(), 'epic-web', 'images');
-//   await fs.mkdir(tmpDir, { recursive: true });
+async function writeImage(image: File) {
+  const publicDir = path.join(process.cwd(), "public", "images");
+  await mkdir(publicDir, { recursive: true });
 
-//   const timestamp = Date.now();
-//   const filepath = path.join(tmpDir, `${timestamp}.${image.name}`);
-//   await fs.writeFile(filepath, Buffer.from(await image.arrayBuffer()));
-//   return filepath;
-// }
+  const timestamp = Date.now();
+  const filename = `${timestamp}.${image.name}`;
+  const filepath = path.join(publicDir, filename);
+  const publicUrl = `/images/${filename}`;
+
+  await writeFile(filepath, Buffer.from(await image.arrayBuffer()));
+
+  return publicUrl;
+}
