@@ -2,6 +2,7 @@ import { db } from "@/infrastructure/db/db.server";
 import { notFound } from "next/navigation";
 import Typography from "@/components/Typography/Typography";
 import Link from "next/link";
+import Image from "next/image";
 import NoteDeleteForm from "@/components/NoteDeleteForm/NoteDeleteForm";
 
 interface NoteDetailsProps {
@@ -31,6 +32,9 @@ async function NoteDetails(props: NoteDetailsProps) {
           {note.title}
         </Typography>
         <Typography variant="p" tag="p">{note.content}</Typography>
+        {note.images.map((image) => (
+          <Image key={image.id} src={image.filepath} alt={image.altText ?? ''} width={200} height={200} />
+        ))} 
       </div>
       <div className="mt-auto pt-4">
         <div className="flex justify-end gap-4">

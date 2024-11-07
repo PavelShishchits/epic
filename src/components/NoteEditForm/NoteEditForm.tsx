@@ -37,7 +37,7 @@ function NoteEditForm(props: NoteEditFormProps) {
     defaultValue: {
       title: note.title,
       content: note.content,
-      image: note.images.length > 0 ? note.images[0] : undefined
+      images: note.images.length > 0 ? note.images : [{}]
     },
     shouldValidate: 'onInput',
     shouldRevalidate: 'onInput',
@@ -45,6 +45,8 @@ function NoteEditForm(props: NoteEditFormProps) {
 
   const {key: titleKey, ...titleProps} = getInputProps(fields.title, { type: "text"});
   const {key: contentKey, ...contentProps} = getTextareaProps(fields.content);  
+
+  const imagesList = fields.images.getFieldList();
 
   return (
     <form action={formAction} className="h-full flex flex-col" {...getFormProps(form)}>
@@ -71,8 +73,22 @@ function NoteEditForm(props: NoteEditFormProps) {
           </label>
           <ErrorList errors={fields.content.errors} id={fields.content.errorId} />
         </div>
-        <div className="mb-5">
-          <FileUploader config={fields.image} />
+        {imagesList.map((imageField, index) => (
+          <div key={imageField.key} className="mb-5 relative">
+            <button 
+              type="button" 
+              onClick={() => form.remove({ name: fields.images.name, index })}
+              className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600"
+            >
+              <span className="sr-only">Delete Image {index + 1}</span>
+              <span aria-hidden>×</span>
+            </button>
+            <FileUploader config={imageField} />
+            <hr className="border-2 my-4 border-blue-200" />
+          </div>
+        ))}
+        <div className="text-center">
+          <button type="button" onClick={() => form.insert({ name: fields.images.name, defaultValue: {} })}>+ Add image</button>
         </div>
       </div>
       <div className="mt-auto pt-4">

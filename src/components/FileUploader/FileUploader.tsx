@@ -19,7 +19,6 @@ function FileUploader(props: FileUploaderProps) {
   const fieldset = config.getFieldset();
   const imageExists = Boolean(fieldset.id.initialValue);
 
-  console.log(config, fieldset.id.initialValue)
   // toDo get image data from db
   const [previewImage, setPreviewImage] = useState<{src: string; alt: string} | null>(null);
 
@@ -31,7 +30,6 @@ function FileUploader(props: FileUploaderProps) {
     if (imageExists && fieldset.id.initialValue) {
       fetch(`/api/resources/note-images?id=${fieldset.id.initialValue}`)
         .then(response => {
-          console.log(response);
           if (!response.ok) throw new Error('Image not found');
           return response.json();
         })

@@ -26,7 +26,7 @@ export async function editNoteAction(
     return submission.reply();
   }
 
-  const { title, content, image } = submission.value;
+  const { title, content, images } = submission.value;
 
   await delay(2000);
 
@@ -34,7 +34,7 @@ export async function editNoteAction(
     id: noteId,
     title,
     content,
-    images: [image],
+    images,
   });
 
   revalidatePath("/users/" + userId + "/notes/" + noteId);
