@@ -1,12 +1,11 @@
 "use client";
 import { useFormStatus } from "react-dom";
-import { ComponentPropsWithoutRef } from "react";
 import clx from "clsx";
-import { twMerge } from "tailwind-merge";
+import Button, { ButtonProps} from '@/components/ui/Button/Button';
 
 type SubmitBtnStatus = "idle" | "pending" | "success" | "error";
 
-type SubmitBtnProps = ComponentPropsWithoutRef<"button"> & {
+type SubmitBtnProps = ButtonProps & {
   children?: React.ReactNode;
   status?: SubmitBtnStatus;
   className?: string;
@@ -26,14 +25,12 @@ function SubmitBtn(props: SubmitBtnProps) {
   const innerStatus = pending ? "pending" : status;
 
   return (
-    <button
+    <Button 
       type="submit"
       disabled={pending}
-      className={twMerge(className, "flex items-center gap-2")}
+      className={className}
       {...otherProps}
-    >
-      {children}
-      {innerStatus ? (
+      iconAfter={innerStatus ? (
         <span
           className={clx({
             "animate-spin": innerStatus === "pending",
@@ -42,8 +39,10 @@ function SubmitBtn(props: SubmitBtnProps) {
           {statusIcons[innerStatus]}
         </span>
       ) : null}
-    </button>
-  );
+    >
+      {children}
+    </Button>
+  )
 }
 
 export default SubmitBtn;

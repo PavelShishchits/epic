@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/utils"
 
 const typographyVariants = cva("", {
   variants: {
@@ -29,10 +29,11 @@ function Typography(props: TypographyProps) {
   const Tag = tag;
 
   return (
-    <Tag className={twMerge(typographyVariants({ variant, className }))} {...otherProps}>
+    <Tag className={cn(typographyVariants({ variant, className }))} {...otherProps}>
       {children}
     </Tag>
   );
 }
 
+export { typographyVariants };
 export default Typography;

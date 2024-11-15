@@ -1,10 +1,10 @@
 import { db } from "@/infrastructure/db/db.server";
 import { notFound } from "next/navigation";
-import Typography from "@/components/Typography/Typography";
+import Typography from "@/components/ui/Typography/Typography";
 import Link from "next/link";
 import Image from "next/image";
 import NoteDeleteForm from "@/components/NoteDeleteForm/NoteDeleteForm";
-
+import Button from "@/components/ui/Button/Button";
 interface NoteDetailsProps {
   noteId: string;
   userId: string;
@@ -37,9 +37,11 @@ async function NoteDetails(props: NoteDetailsProps) {
         ))} 
       </div>
       <div className="mt-auto pt-4">
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-end gap-3">
           <NoteDeleteForm noteId={noteId} userId={userId} />
-          <Link href={`/users/${userId}/notes/${note.id}/edit`}>Edit</Link>
+          <Button asChild variant="default">
+            <Link href={`/users/${userId}/notes/${note.id}/edit`}>Edit</Link>
+          </Button>
         </div>
       </div>
     </article>

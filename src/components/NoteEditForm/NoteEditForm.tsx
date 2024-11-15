@@ -5,9 +5,11 @@ import { useForm, getFormProps, getInputProps, getTextareaProps } from "@conform
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 import { Note } from "@/domain/note";
 import SubmitBtn from "@/components/SubmitBtn/SubmitBtn";
+import Button from "@/components/ui/Button/Button";
 import ErrorList from "@/components/ErrorList/ErrorList";
 import FileUploader from "@/components/FileUploader/FileUploader"
 import { noteEditSchema } from "@/schema/note";
+import { X, Plus } from "lucide-react";
 
 interface NoteEditFormProps {
   note: Note;
@@ -75,25 +77,33 @@ function NoteEditForm(props: NoteEditFormProps) {
         </div>
         {imagesList.map((imageField, index) => (
           <div key={imageField.key} className="mb-5 relative">
-            <button 
+            <Button 
               type="button" 
               onClick={() => form.remove({ name: fields.images.name, index })}
-              className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600"
+              variant="destructive"
+              size="icon"
+              className="absolute -top-2 -right-2 rounded-full w-7 h-7"
             >
               <span className="sr-only">Delete Image {index + 1}</span>
-              <span aria-hidden>×</span>
-            </button>
+              <span aria-hidden>
+                <X/ >
+              </span>
+            </Button>
             <FileUploader config={imageField} />
             <hr className="border-2 my-4 border-blue-200" />
           </div>
         ))}
         <div className="text-center">
-          <button type="button" onClick={() => form.insert({ name: fields.images.name, defaultValue: {} })}>+ Add image</button>
+          <Button 
+            type="button" 
+            onClick={() => form.insert({ name: fields.images.name, defaultValue: {} })}
+            variant="secondary"
+          ><Plus /> Add image</Button>
         </div>
       </div>
       <div className="mt-auto pt-4">
         <div className="flex justify-end gap-4">
-          <button type="reset">Reset</button>
+          <Button type="reset" variant="destructive">Reset</Button>
           <SubmitBtn>Submit</SubmitBtn>
         </div>
       </div>

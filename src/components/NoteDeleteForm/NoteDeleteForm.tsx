@@ -17,7 +17,7 @@ function NoteDeleteForm(props: NoteDeleteFormProps) {
   return (
     <form action={boundDeleteNoteAction}>
       <input type="hidden" name="noteId" defaultValue={noteId} />
-      <SubmitBtn name="intent" value="delete">Delete</SubmitBtn>
+      <SubmitBtn variant="destructive" name="intent" value="delete">Delete</SubmitBtn>
     </form>
   )
 }

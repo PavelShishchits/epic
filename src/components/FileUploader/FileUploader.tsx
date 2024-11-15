@@ -6,6 +6,7 @@ import ErrorList from "@/components/ErrorList/ErrorList";
 import { getInputProps, type FieldMetadata } from "@conform-to/react";
 import { z } from "zod";
 import { imageFieldSchema } from "@/schema/note";
+import { Plus } from "lucide-react";
 
 type ImageFieldset = z.infer<typeof imageFieldSchema>
 
@@ -74,7 +75,7 @@ function FileUploader(props: FileUploaderProps) {
       <label className="flex flex-col gap-2 mb-2">
         <span>File</span>
         <div className="size-60 border-2 border-blue-200 p-2 rounded flex items-center justify-center">
-          {previewImage ? <img src={previewImage.src} alt={previewImage.alt} /> : <span className="text-blue-200 text-4xl">+</span>}
+          {previewImage ? <img src={previewImage.src} alt={previewImage.alt} /> : <span className="text-blue-200 text-4xl"><Plus /></span>}
         </div>
         <input className="hidden" {...fileProps} onChange={handleFileChange} />
       </label>
