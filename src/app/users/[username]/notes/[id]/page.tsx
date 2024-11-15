@@ -1,9 +1,9 @@
-import NoteDetails from "@/components/NoteDetails/NoteDetails";
-import { db } from "@/infrastructure/db/db.server";
-import { Suspense } from "react";
+import NoteDetails from '@/components/NoteDetails/NoteDetails';
+import { db } from '@/infrastructure/db/db.server';
+import { Suspense } from 'react';
 
 export async function generateMetadata({ params }: NotesDetilsPageProps) {
-  const noteId = params?.id || "";
+  const noteId = params?.id || '';
 
   const note = await db.note.findFirst({
     where: {
@@ -31,8 +31,8 @@ interface NotesDetilsPageProps {
 export default async function NotesDetilsPage({
   params,
 }: NotesDetilsPageProps) {
-  const noteId = params?.id || "";
-  const userId = params?.username || "";
+  const noteId = params?.id || '';
+  const userId = params?.username || '';
 
   return (
     <div className="p-6 border-2 border-blue-200 h-full">

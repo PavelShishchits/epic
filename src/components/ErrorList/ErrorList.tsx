@@ -1,7 +1,7 @@
 type ErrorListProps = {
   errors: string[] | null | undefined;
   id?: string;
-}
+};
 
 function ErrorList({ errors, id }: ErrorListProps) {
   return errors?.length ? (

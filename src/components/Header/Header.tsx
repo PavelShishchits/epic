@@ -1,5 +1,5 @@
-import Link from "next/link";
-import Button from "@/components/ui/Button/Button";
+import Link from 'next/link';
+import Button from '@/components/ui/Button/Button';
 
 const Header = () => {
   return (

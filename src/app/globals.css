@@ -7,7 +7,7 @@
     font-family: var(--font-regular);
     line-height: 1.25;
   }
-  
+
   body {
     @apply bg-background text-foreground;
   }
@@ -69,7 +69,6 @@
 }
 
 @layer components {
-  
 }
 
 @layer utilities {

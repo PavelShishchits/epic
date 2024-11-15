@@ -1,7 +1,7 @@
-"use client";
-import Link, { LinkProps } from "next/link";
-import { usePathname } from "next/navigation";
-import clx from "clsx";
+'use client';
+import Link, { LinkProps } from 'next/link';
+import { usePathname } from 'next/navigation';
+import clx from 'clsx';
 
 interface NavLinkProps extends LinkProps {
   activeClass?: string;
@@ -12,7 +12,7 @@ interface NavLinkProps extends LinkProps {
 const NavLink = (props: NavLinkProps) => {
   const {
     className,
-    activeClass = "text-blue-600",
+    activeClass = 'text-blue-600',
     children,
     ...linkProps
   } = props;
@@ -24,7 +24,7 @@ const NavLink = (props: NavLinkProps) => {
       className={clx(
         className,
         // pathname.includes(linkProps.href.toString()) ? activeClass : ""
-        pathname === linkProps.href ? activeClass : ""
+        pathname === linkProps.href ? activeClass : ''
       )}
     >
       {children}

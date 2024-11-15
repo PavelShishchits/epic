@@ -1,10 +1,10 @@
-import Link from "next/link";
-import Typography from "@/components/ui/Typography/Typography";
+import Link from 'next/link';
+import Typography from '@/components/ui/Typography/Typography';
 
 export default function NotFound() {
   return (
     <div>
-      <Typography variant={"h2"} tag="h2">
+      <Typography variant={'h2'} tag="h2">
         Not Found
       </Typography>
       <Typography variant="p" tag="p">

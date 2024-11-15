@@ -1,9 +1,9 @@
 import { db } from '@/infrastructure/db/db.server';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
-  const url = new URL(request.url)
+  const url = new URL(request.url);
   const id = url.searchParams.get('id');
 
   if (!id) {
@@ -13,9 +13,9 @@ export async function GET(request: Request) {
   const image = await db.image.findFirst({
     where: {
       id: {
-        equals: id
-      }
-    }
+        equals: id,
+      },
+    },
   });
 
   if (!image) {

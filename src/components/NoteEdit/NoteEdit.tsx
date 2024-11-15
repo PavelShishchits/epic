@@ -1,8 +1,8 @@
-import { db } from "@/infrastructure/db/db.server";
-import { notFound } from "next/navigation";
-import NoteEditForm from "@/components/NoteEditForm/NoteEditForm";
-import { getSerializableProps } from "@/infrastructure/utils/getSerializableProps";
-import { Note } from "@/domain/note";
+import { db } from '@/infrastructure/db/db.server';
+import { notFound } from 'next/navigation';
+import NoteEditForm from '@/components/NoteEditForm/NoteEditForm';
+import { getSerializableProps } from '@/infrastructure/utils/getSerializableProps';
+import { Note } from '@/domain/note';
 
 interface NoteEditProps {
   noteId: string;
@@ -23,12 +23,10 @@ async function NoteEdit(props: NoteEditProps) {
   if (!note || !userId) {
     return notFound();
   }
-  
+
   const serializedNote = getSerializableProps<Note>(note);
 
-  return (
-    <NoteEditForm noteId={noteId} userId={userId} note={serializedNote} />
-  )
+  return <NoteEditForm noteId={noteId} userId={userId} note={serializedNote} />;
 }
 
 export default NoteEdit;

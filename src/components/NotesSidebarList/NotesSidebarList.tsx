@@ -1,12 +1,11 @@
-import { db } from "@/infrastructure/db/db.server";
-import NavLink from "@/components/NavLink/NavLink";
+import { db } from '@/infrastructure/db/db.server';
+import NavLink from '@/components/NavLink/NavLink';
 
 interface NotesSidebarListProps {
   userName: string;
 }
 
 async function NoteSidebarList({ userName }: NotesSidebarListProps) {
-
   const notes = db.note.findMany({
     where: {
       owner: {

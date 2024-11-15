@@ -1,11 +1,11 @@
-"use server";
-import "server-only";
-import { db, updateNote } from "@/infrastructure/db/db.server";
-import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
-import { parseWithZod } from "@conform-to/zod";
-import { delay } from "@/infrastructure/utils/delay";
-import { noteEditSchema } from "@/schema/note";
+'use server';
+import 'server-only';
+import { db, updateNote } from '@/infrastructure/db/db.server';
+import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
+import { parseWithZod } from '@conform-to/zod';
+import { delay } from '@/infrastructure/utils/delay';
+import { noteEditSchema } from '@/schema/note';
 
 type AdditionalProps = {
   noteId: string;
@@ -21,8 +21,8 @@ export async function editNoteAction(
     schema: noteEditSchema,
   });
 
-  console.log("submission", submission);
-  if (submission.status !== "success") {
+  console.log('submission', submission);
+  if (submission.status !== 'success') {
     return submission.reply();
   }
 
@@ -37,18 +37,18 @@ export async function editNoteAction(
     images,
   });
 
-  revalidatePath("/users/" + userId + "/notes/" + noteId);
-  redirect("/users/" + userId + "/notes/" + noteId);
+  revalidatePath('/users/' + userId + '/notes/' + noteId);
+  redirect('/users/' + userId + '/notes/' + noteId);
 }
 
 export async function deleteNoteAction(
   { noteId, userId }: AdditionalProps,
   formData: FormData
 ) {
-  const intent = formData.get("intent")!;
+  const intent = formData.get('intent')!;
 
   switch (intent) {
-    case "delete":
+    case 'delete':
       await db.note.delete({
         where: {
           id: {
@@ -57,10 +57,10 @@ export async function deleteNoteAction(
         },
       });
 
-      revalidatePath("/users/" + userId + "/notes");
-      redirect("/users/" + userId + "/notes");
+      revalidatePath('/users/' + userId + '/notes');
+      redirect('/users/' + userId + '/notes');
     default:
-      console.error("Invalid intent");
+      console.error('Invalid intent');
       break;
   }
 }
