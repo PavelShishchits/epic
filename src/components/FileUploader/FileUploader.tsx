@@ -1,11 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import ErrorList from '@/components/ErrorList/ErrorList';
 import { getInputProps, type FieldMetadata } from '@conform-to/react';
 import { z } from 'zod';
 import { imageFieldSchema } from '@/schema/note';
 import { Plus } from 'lucide-react';
+import {
+  FormField,
+  FormLabel,
+  FormMessages,
+  Input,
+} from '@/components/ui/Form/index';
+import { cn } from '@/lib/utils';
 
 type ImageFieldset = z.infer<typeof imageFieldSchema>;
 
@@ -80,45 +86,40 @@ function FileUploader(props: FileUploaderProps) {
 
   return (
     <fieldset className="flex gap-7 items-center">
-      <div>
-        <label className="flex flex-col gap-2 mb-2">
+      <FormField>
+        <FormLabel className={'space-y-2'} htmlFor={fieldset.file.id}>
           <span>File</span>
-          <div className="size-60 border-2 border-blue-200 p-2 rounded flex items-center justify-center">
+          <div
+            tabIndex={0}
+            className={cn(
+              'size-60 rounded-md border border-input bg-background ring-offset-background flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
+            )}
+            aria-label="choose image"
+          >
             {previewImage ? (
               <img src={previewImage.src} alt={previewImage.alt} />
             ) : (
-              <span className="text-blue-200 text-4xl">
+              <span className="text-foreground text-4xl">
                 <Plus />
               </span>
             )}
           </div>
-          <input
-            className="hidden"
-            {...fileProps}
-            onChange={handleFileChange}
-          />
-        </label>
-        <ErrorList errors={fieldset.file.errors} id={fieldset.file.errorId} />
-      </div>
-      {imageExists ? (
-        <div>
-          <input {...idProps} />
-        </div>
-      ) : null}
-      <div>
-        <label className="flex flex-col gap-2 mb-2">
-          <span>Alt text</span>
-          <input
-            {...altTextProps}
-            onChange={handleAltChange}
-            className="border-2 border-blue-200 py-3 px-4 rounded"
-          />
-        </label>
-        <ErrorList
+        </FormLabel>
+        <Input className="hidden" {...fileProps} onChange={handleFileChange} />
+        <FormMessages
+          errors={fieldset.file.errors}
+          id={fieldset.file.errorId}
+        />
+      </FormField>
+      {imageExists ? <Input {...idProps} /> : null}
+      <FormField>
+        <FormLabel htmlFor={fieldset.altText.id}>Alt text</FormLabel>
+        <Input {...altTextProps} onChange={handleAltChange} />
+        <FormMessages
           errors={fieldset.altText.errors}
           id={fieldset.altText.errorId}
         />
-      </div>
+      </FormField>
     </fieldset>
   );
 }

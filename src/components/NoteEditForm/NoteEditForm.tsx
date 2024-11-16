@@ -11,10 +11,16 @@ import { getZodConstraint, parseWithZod } from '@conform-to/zod';
 import { Note } from '@/domain/note';
 import SubmitBtn from '@/components/SubmitBtn/SubmitBtn';
 import Button from '@/components/ui/Button/Button';
-import ErrorList from '@/components/ErrorList/ErrorList';
 import FileUploader from '@/components/FileUploader/FileUploader';
 import { noteEditSchema } from '@/schema/note';
 import { X, Plus } from 'lucide-react';
+import {
+  FormField,
+  FormLabel,
+  FormMessages,
+  Input,
+  Textarea,
+} from '@/components/ui/Form/index';
 
 interface NoteEditFormProps {
   note: Note;
@@ -64,36 +70,25 @@ function NoteEditForm(props: NoteEditFormProps) {
       {...getFormProps(form)}
     >
       <div>
-        <div className="mb-5">
-          <label htmlFor={fields.title.id} className="flex flex-col gap-2 mb-2">
-            <span>Title</span>
-            <input
-              className="border-2 border-blue-200 py-3 px-4 rounded"
-              autoFocus
-              {...titleProps}
-            />
-          </label>
-          <ErrorList errors={fields.title.errors} id={fields.title.errorId} />
-        </div>
-        <div className="mb-5">
-          <label
-            htmlFor={fields.content.id}
-            className="flex flex-col gap-2 mb-2"
-          >
-            <span>Content</span>
-            <textarea
-              className="border-2 border-blue-200 py-3 px-4 rounded resize-none"
-              rows={10}
-              {...contentProps}
-            ></textarea>
-          </label>
-          <ErrorList
+        <FormField>
+          <FormLabel htmlFor={fields.title.id}>Title</FormLabel>
+          <Input autoFocus {...titleProps} />
+          <FormMessages
+            errors={fields.title.errors}
+            id={fields.title.errorId}
+          />
+        </FormField>
+        <FormField>
+          <FormLabel htmlFor={fields.content.id}>Content</FormLabel>
+          <Textarea rows={10} {...contentProps} />
+          <FormMessages
             errors={fields.content.errors}
             id={fields.content.errorId}
           />
-        </div>
+        </FormField>
         {imagesList.map((imageField, index) => (
           <div key={imageField.key} className="mb-5 relative">
+            <FileUploader config={imageField} />
             <Button
               type="button"
               onClick={() => form.remove({ name: fields.images.name, index })}
@@ -106,8 +101,7 @@ function NoteEditForm(props: NoteEditFormProps) {
                 <X />
               </span>
             </Button>
-            <FileUploader config={imageField} />
-            <hr className="border-2 my-4 border-blue-200" />
+            <hr className="my-4 border border-input" />
           </div>
         ))}
         <div className="text-center">
