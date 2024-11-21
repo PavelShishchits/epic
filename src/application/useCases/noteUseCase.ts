@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { parseWithZod } from '@conform-to/zod';
 import { delay } from '@/infrastructure/utils/delay';
 import { noteEditSchema } from '@/schema/note';
+import { HoneyPot } from '@/lib/honeypot.server';
 
 type AdditionalProps = {
   noteId: string;
@@ -17,6 +18,8 @@ export async function editNoteAction(
   prevState: any,
   formData: FormData
 ) {
+  new HoneyPot().check(formData);
+
   const submission = parseWithZod(formData, {
     schema: noteEditSchema,
   });

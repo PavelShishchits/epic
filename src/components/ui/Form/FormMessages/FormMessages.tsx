@@ -1,25 +1,26 @@
 import { cn } from '@/lib/utils';
 import React from 'react';
 
-interface FormMessagesProps extends React.HTMLAttributes<HTMLParagraphElement> {
+interface FormMessagesProps extends React.HTMLAttributes<HTMLUListElement> {
   errors?: string[] | null;
 }
 
-const FormMessages = React.forwardRef<HTMLParagraphElement, FormMessagesProps>(
+const FormMessages = React.forwardRef<HTMLUListElement, FormMessagesProps>(
   ({ className, id, errors, ...props }, ref) => {
     return errors?.length ? (
-      <p
+      <ul
         ref={ref}
+        className={cn(
+          'flex flex-col gap-2 text-sm font-medium text-destructive',
+          className
+        )}
         id={id}
-        className={cn('text-sm font-medium text-destructive', className)}
         {...props}
       >
-        <ul className="flex flex-col gap-2" id={id}>
-          {errors.map((error: string) => (
-            <li key={error}>{error}</li>
-          ))}
-        </ul>
-      </p>
+        {errors.map((error: string) => (
+          <li key={error}>{error}</li>
+        ))}
+      </ul>
     ) : null;
   }
 );

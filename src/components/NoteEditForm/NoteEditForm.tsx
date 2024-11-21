@@ -18,6 +18,7 @@ import {
   FormField,
   FormLabel,
   FormMessages,
+  HoneypotField,
   Input,
   Textarea,
 } from '@/components/ui/Form/index';
@@ -116,6 +117,7 @@ function NoteEditForm(props: NoteEditFormProps) {
           </Button>
         </div>
       </div>
+      <HoneypotField />
       <div className="mt-auto pt-4">
         <div className="flex justify-end gap-4">
           <Button type="reset" variant="destructive">
