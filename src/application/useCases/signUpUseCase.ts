@@ -3,6 +3,8 @@ import 'server-only';
 import { parseWithZod } from '@conform-to/zod';
 import { userRegisterSchema } from '@/schema/user';
 import { HoneyPot } from '@/lib/honeypot.server';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 export async function signUp(prevState: any, formData: FormData) {
   new HoneyPot().check(formData);
@@ -19,4 +21,7 @@ export async function signUp(prevState: any, formData: FormData) {
 
   const { email } = submission.value;
   console.log('register user', submission.value);
+
+  revalidatePath('/');
+  redirect('/');
 }

@@ -21,6 +21,7 @@ import {
   HoneypotField,
   Input,
   Textarea,
+  CsrfTokenField,
 } from '@/components/ui/Form/index';
 
 interface NoteEditFormProps {
@@ -71,6 +72,8 @@ function NoteEditForm(props: NoteEditFormProps) {
       {...getFormProps(form)}
     >
       <div>
+        <CsrfTokenField />
+        <HoneypotField />
         <FormField>
           <FormLabel htmlFor={fields.title.id}>Title</FormLabel>
           <Input autoFocus {...titleProps} />
@@ -117,7 +120,6 @@ function NoteEditForm(props: NoteEditFormProps) {
           </Button>
         </div>
       </div>
-      <HoneypotField />
       <div className="mt-auto pt-4">
         <div className="flex justify-end gap-4">
           <Button type="reset" variant="destructive">

@@ -11,6 +11,7 @@ import {
   FormLabel,
   Input,
   HoneypotField,
+  CsrfTokenField,
 } from '@/components/ui/Form/index';
 
 import SubmitBtn from '@/components/SubmitBtn/SubmitBtn';
@@ -41,6 +42,7 @@ function SignUpForm() {
   return (
     <form action={formAction} {...getFormProps(form)}>
       <FormField>
+        <CsrfTokenField />
         <FormLabel htmlFor={fields.email.id}>Email</FormLabel>
         <Input {...emailProps} />
         <FormMessages
