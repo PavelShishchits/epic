@@ -3,7 +3,7 @@ import NoteEdit from '@/components/NoteEdit/NoteEdit';
 import { db } from '@/infrastructure/db/db.server';
 
 export async function generateMetadata({ params }: NotesEditingPageProps) {
-  const noteId = params?.id || '';
+  const { id: noteId } = await params;
 
   const note = await db.note.findFirst({
     where: {
@@ -22,17 +22,16 @@ export async function generateMetadata({ params }: NotesEditingPageProps) {
 }
 
 interface NotesEditingPageProps {
-  params?: {
-    id?: string;
-    username?: string;
+  params: {
+    id: string;
+    username: string;
   };
 }
 
 export default async function NotesEditingPage({
   params,
 }: NotesEditingPageProps) {
-  const noteId = params?.id || '';
-  const userId = params?.username || '';
+  const { id: noteId, username: userId } = await params;
 
   return (
     <div className="p-6 border-2 border-blue-200 h-full">

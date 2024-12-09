@@ -7,12 +7,12 @@ export async function generateMetadata(
   { params }: UserDetailPageProps,
   parent: ResolvingMetadata
 ) {
-  const userName = params?.username || '';
+  const { username } = await params;
 
   const user = await db.user.findFirst({
     where: {
       username: {
-        equals: userName,
+        equals: username,
       },
     },
   });
@@ -26,18 +26,18 @@ export async function generateMetadata(
 }
 
 interface UserDetailPageProps {
-  params?: {
-    username?: string;
+  params: {
+    username: string;
   };
 }
 
 export default async function UserDetailPage({ params }: UserDetailPageProps) {
-  const userName = params?.username || '';
+  const { username } = await params;
 
   return (
     <div className="py-6 border-2 border-orange-400">
       <Suspense fallback={<div>Loading...</div>}>
-        <UserDetails userName={userName} />
+        <UserDetails userName={username} />
       </Suspense>
     </div>
   );

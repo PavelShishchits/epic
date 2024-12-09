@@ -1,6 +1,6 @@
 'use client';
 import { editNoteAction } from '@/application/useCases/noteUseCase';
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import {
   useForm,
   getFormProps,
@@ -38,7 +38,7 @@ function NoteEditForm(props: NoteEditFormProps) {
     userId: userId,
   });
 
-  const [state, formAction] = useFormState(boundEditNoteAction, undefined);
+  const [state, formAction] = useActionState(boundEditNoteAction, undefined);
 
   const [form, fields] = useForm({
     id: 'note-edit-form',

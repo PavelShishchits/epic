@@ -1,5 +1,5 @@
 'use client';
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { signUp } from '@/application/useCases/signUpUseCase';
 import { userRegisterSchema } from '@/schema/user';
 import { useForm, getFormProps, getInputProps } from '@conform-to/react';
@@ -17,7 +17,7 @@ import {
 import SubmitBtn from '@/components/SubmitBtn/SubmitBtn';
 
 function SignUpForm() {
-  const [state, formAction] = useFormState(signUp, undefined);
+  const [state, formAction] = useActionState(signUp, undefined);
 
   const [form, fields] = useForm({
     id: 'sign-up-form',

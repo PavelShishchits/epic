@@ -1,11 +1,11 @@
 import NavLink from '@/components/NavLink/NavLink';
 import { db } from '@/infrastructure/db/db.server';
-import NoteSidebarList from '@/components/NotesSidebarList/NotesSidebarList';
 import { Suspense } from 'react';
+import NoteSidebarList from '@/components/NotesSidebarList/NotesSidebarList';
 
 type NotesLayoutProps = Readonly<{
-  params?: {
-    username?: string;
+  params: {
+    username: string;
   };
   children: React.ReactNode;
 }>;
@@ -14,7 +14,7 @@ export default async function NotesLayout({
   children,
   params,
 }: NotesLayoutProps) {
-  const userNameParam = params?.username || '';
+  const { username: userNameParam } = await params;
 
   const user = await db.user.findFirst({
     where: {
