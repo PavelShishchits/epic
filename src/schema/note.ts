@@ -35,6 +35,8 @@ export const imageFieldSchema = z.object({
   altText: z.string().optional(),
 });
 
+export type ImageConfig = z.infer<typeof imageFieldSchema>;
+
 export const noteEditSchema = z.object({
   title: z.string().min(1, { message: 'Title is required' }),
   content: z.string().min(1, { message: 'Content is required' }),

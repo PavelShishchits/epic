@@ -1,6 +1,6 @@
 import UserDetails from '@/components/UserDetails/UserDetails';
 import { Suspense } from 'react';
-import { db } from '@/infrastructure/db/db.server';
+import { prisma } from '@/infrastructure/db/db.server';
 import type { ResolvingMetadata } from 'next';
 
 export async function generateMetadata(
@@ -9,11 +9,13 @@ export async function generateMetadata(
 ) {
   const { username } = await params;
 
-  const user = await db.user.findFirst({
+  const user = await prisma.user.findUnique({
     where: {
-      username: {
-        equals: username,
-      },
+      username: username,
+    },
+    select: {
+      name: true,
+      email: true,
     },
   });
 
@@ -35,10 +37,8 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
   const { username } = await params;
 
   return (
-    <div className="py-6 border-2 border-orange-400">
-      <Suspense fallback={<div>Loading...</div>}>
-        <UserDetails userName={username} />
-      </Suspense>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <UserDetails userName={username} />
+    </Suspense>
   );
 }

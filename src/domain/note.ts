@@ -1,26 +1,12 @@
-export type Note = {
-  id: string;
-  title: string;
-  content: string;
-  createdAt: string;
-  owner: NoteUser;
-  images: NoteImages;
+import type {
+  Note as PrismaNote,
+  NoteImage as PrismaNoteImage,
+} from '@prisma/client';
+import type { User } from './user';
+
+export type Note = PrismaNote & {
+  images?: NoteImage[];
+  owner?: User;
 };
 
-export type NoteUser = {
-  id: string;
-  name: string;
-  username: string;
-  email: string;
-  createdAt: string;
-  notes: Note[];
-};
-
-export type NoteImages = NoteImage[];
-
-type NoteImage = {
-  altText: string;
-  contentType: string;
-  filepath: string;
-  id: string;
-};
+export type NoteImage = PrismaNoteImage;

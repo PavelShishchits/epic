@@ -40,6 +40,8 @@ function NoteEditForm(props: NoteEditFormProps) {
 
   const [state, formAction] = useActionState(boundEditNoteAction, undefined);
 
+  const noteImages = note.images || [];
+
   const [form, fields] = useForm({
     id: 'note-edit-form',
     constraint: getZodConstraint(noteEditSchema),
@@ -52,7 +54,13 @@ function NoteEditForm(props: NoteEditFormProps) {
     defaultValue: {
       title: note.title,
       content: note.content,
-      images: note.images.length > 0 ? note.images : [{}],
+      images:
+        noteImages.length > 0
+          ? noteImages.map((image) => ({
+              id: image.id,
+              altText: image.altText,
+            }))
+          : [{}],
     },
     shouldValidate: 'onInput',
     shouldRevalidate: 'onInput',

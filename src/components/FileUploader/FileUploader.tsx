@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getInputProps, type FieldMetadata } from '@conform-to/react';
 import { z } from 'zod';
 import { imageFieldSchema } from '@/schema/note';
@@ -11,7 +11,9 @@ import {
   FormMessages,
   Input,
 } from '@/components/ui/Form/index';
+import NextImage from 'next/image';
 import { cn } from '@/lib/utils';
+import { getNoteImageSrc } from '@/utils/misc';
 
 type ImageFieldset = z.infer<typeof imageFieldSchema>;
 
@@ -25,11 +27,17 @@ function FileUploader(props: FileUploaderProps) {
   const fieldset = config.getFieldset();
   const imageExists = Boolean(fieldset.id.initialValue);
 
-  // toDo get image data from db
   const [previewImage, setPreviewImage] = useState<{
     src: string;
     alt: string;
-  } | null>(null);
+  } | null>(
+    imageExists
+      ? {
+          src: getNoteImageSrc(fieldset.id.value || ''),
+          alt: fieldset.altText.value || '',
+        }
+      : null
+  );
 
   const { key: idKey, ...idProps } = getInputProps(fieldset.id, {
     type: 'hidden',
@@ -40,25 +48,6 @@ function FileUploader(props: FileUploaderProps) {
   const { key: altTextKey, ...altTextProps } = getInputProps(fieldset.altText, {
     type: 'text',
   });
-
-  useEffect(() => {
-    if (imageExists && fieldset.id.initialValue) {
-      fetch(`/api/resources/note-images?id=${fieldset.id.initialValue}`)
-        .then((response) => {
-          if (!response.ok) throw new Error('Image not found');
-          return response.json();
-        })
-        .then((image) => {
-          setPreviewImage({
-            src: image.filepath,
-            alt: image.altText,
-          });
-        })
-        .catch((error) => {
-          console.error('Error loading image:', error);
-        });
-    }
-  }, [imageExists, fieldset.id.initialValue]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
@@ -97,7 +86,12 @@ function FileUploader(props: FileUploaderProps) {
             aria-label="choose image"
           >
             {previewImage ? (
-              <img src={previewImage.src} alt={previewImage.alt} />
+              <NextImage
+                src={previewImage.src}
+                alt={previewImage.alt}
+                width={200}
+                height={200}
+              />
             ) : (
               <span className="text-foreground text-4xl">
                 <Plus />

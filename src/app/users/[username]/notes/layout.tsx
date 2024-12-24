@@ -1,6 +1,8 @@
 import NavLink from '@/components/NavLink/NavLink';
-import { db } from '@/infrastructure/db/db.server';
-import { Suspense } from 'react';
+import { prisma } from '@/infrastructure/db/db.server';
+import { getUserImageSrc } from '@/utils/misc';
+import NextImage from 'next/image';
+import Typography from '@/components/ui/Typography/Typography';
 import NoteSidebarList from '@/components/NotesSidebarList/NotesSidebarList';
 
 type NotesLayoutProps = Readonly<{
@@ -16,10 +18,18 @@ export default async function NotesLayout({
 }: NotesLayoutProps) {
   const { username: userNameParam } = await params;
 
-  const user = await db.user.findFirst({
+  const user = await prisma.user.findUnique({
     where: {
-      username: {
-        equals: userNameParam,
+      username: userNameParam,
+    },
+    select: {
+      name: true,
+      username: true,
+      image: {
+        select: { id: true },
+      },
+      notes: {
+        select: { id: true, title: true },
       },
     },
   });
@@ -27,18 +37,28 @@ export default async function NotesLayout({
   const userName = user?.name ?? user?.username ?? userNameParam;
 
   return (
-    <div className="flex border-2 border-orange-600 h-full">
-      <div className="p-4 w-1/4 border-2 border-blue-200">
-        <div className="mb-4">
-          <NavLink href={`/users/${userNameParam}`}>Back to {userName}</NavLink>
+    <div className="container ml-auto mr-auto flex h-full">
+      <div className="p-4 w-1/4 bg-muted rounded-3xl">
+        <div className="mb-4 pt-4">
+          <NavLink
+            href={`/users/${userNameParam}`}
+            className="flex flex-col items-center justify-center gap-2 lg:flex-row lg:justify-start lg:gap-4"
+          >
+            <NextImage
+              src={getUserImageSrc(user?.image?.id)}
+              alt={userName}
+              className="h-16 w-16 rounded-full object-cover lg:h-24 lg:w-24"
+              width={96}
+              height={96}
+            />
+            <Typography variant={'h5'} tag="h1">
+              {userName}&apos;s Notes
+            </Typography>
+          </NavLink>
         </div>
-        <Suspense fallback={<div>Loading...</div>}>
-          <NoteSidebarList userName={userNameParam} />
-        </Suspense>
+        <NoteSidebarList userName={userNameParam} notes={user?.notes} />
       </div>
-      <div className="p-4 w-3/4 border-2 border-violet-600 h-full">
-        {children}
-      </div>
+      <div className="p-4 w-3/4 h-full">{children}</div>
     </div>
   );
 }

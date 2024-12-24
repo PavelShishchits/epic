@@ -1,31 +1,39 @@
-import { db } from '@/infrastructure/db/db.server';
 import NavLink from '@/components/NavLink/NavLink';
+
+type SidebarNote = {
+  id: string;
+  title: string;
+};
 
 interface NotesSidebarListProps {
   userName: string;
+  notes?: SidebarNote[];
 }
 
-async function NoteSidebarList({ userName }: NotesSidebarListProps) {
-  const notes = db.note.findMany({
-    where: {
-      owner: {
-        username: {
-          equals: userName,
-        },
-      },
-    },
-  });
+async function NoteSidebarList({
+  userName,
+  notes = [],
+}: NotesSidebarListProps) {
+  const hasNotes = notes?.length > 0;
 
   return (
-    <ul>
-      {notes?.map((note) => (
-        <li key={note.id} className="mb-2">
-          <NavLink href={`/users/${userName}/notes/${note.id}`} scroll={false}>
-            {note.title}
-          </NavLink>
-        </li>
-      ))}
-    </ul>
+    <div>
+      {!hasNotes && <p>This user has no notes yet.</p>}
+      {hasNotes && (
+        <ul className="overflow-y-auto overflow-x-hidden pb-12">
+          {notes.map((note) => (
+            <li key={note.id} className="p-1 pr-0">
+              <NavLink
+                href={`/users/${userName}/notes/${note.id}`}
+                scroll={false}
+              >
+                {note.title}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
 

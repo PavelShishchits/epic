@@ -41,9 +41,7 @@ export default async function RootLayout({
         <CsrfTokenProvider csrfToken={csrfToken}>
           <div className="h-full flex flex-col">
             <Header />
-            <main className="p-6 flex-1 border-2 border-blue-200">
-              {children}
-            </main>
+            <main className="p-6 flex-1">{children}</main>
             <Footer />
           </div>
         </CsrfTokenProvider>

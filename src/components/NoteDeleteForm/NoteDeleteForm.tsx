@@ -1,5 +1,6 @@
 import SubmitBtn from '@/components/SubmitBtn/SubmitBtn';
 import { deleteNoteAction } from '@/application/useCases/noteUseCase';
+import { CsrfTokenField } from '@/components/ui/Form/';
 
 type NoteDeleteFormProps = {
   noteId: string;
@@ -16,6 +17,7 @@ function NoteDeleteForm(props: NoteDeleteFormProps) {
 
   return (
     <form action={boundDeleteNoteAction}>
+      <CsrfTokenField />
       <input type="hidden" name="noteId" defaultValue={noteId} />
       <SubmitBtn variant="destructive" name="intent" value="delete">
         Delete

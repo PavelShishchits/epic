@@ -1,23 +1,22 @@
 import NoteDetails from '@/components/NoteDetails/NoteDetails';
-import { db } from '@/infrastructure/db/db.server';
+import { prisma } from '@/infrastructure/db/db.server';
 import { Suspense } from 'react';
 
 export async function generateMetadata({ params }: NotesDetilsPageProps) {
   const { id: noteId } = await params;
 
-  const note = await db.note.findFirst({
+  const note = await prisma.note.findUnique({
     where: {
-      id: {
-        equals: noteId,
-      },
+      id: noteId,
     },
+    select: { title: true, content: true },
   });
 
   if (!note) return;
 
   return {
     title: note.title,
-    description: note.content.substring(0, 100),
+    description: note.content.substring(0, 100) + '...',
   };
 }
 
@@ -34,7 +33,7 @@ export default async function NotesDetilsPage({
   const { id: noteId, username: userId } = await params;
 
   return (
-    <div className="p-6 border-2 border-blue-200 h-full">
+    <div className="p-6 h-full">
       <Suspense fallback={<div>Loading...</div>}>
         <NoteDetails noteId={noteId} userId={userId} />
       </Suspense>

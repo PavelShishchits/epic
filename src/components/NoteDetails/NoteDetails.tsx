@@ -1,10 +1,12 @@
-import { db } from '@/infrastructure/db/db.server';
+import { prisma } from '@/infrastructure/db/db.server';
 import { notFound } from 'next/navigation';
 import Typography from '@/components/ui/Typography/Typography';
 import Link from 'next/link';
-import Image from 'next/image';
+import NextImage from 'next/image';
 import NoteDeleteForm from '@/components/NoteDeleteForm/NoteDeleteForm';
 import Button from '@/components/ui/Button/Button';
+import { getNoteImageSrc } from '@/utils/misc';
+
 interface NoteDetailsProps {
   noteId: string;
   userId: string;
@@ -13,10 +15,19 @@ interface NoteDetailsProps {
 async function NoteDetails(props: NoteDetailsProps) {
   const { noteId, userId } = props;
 
-  const note = await db.note.findFirst({
+  const note = await prisma.note.findUnique({
     where: {
-      id: {
-        equals: noteId,
+      id: noteId,
+    },
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      images: {
+        select: {
+          id: true,
+          altText: true,
+        },
       },
     },
   });
@@ -34,15 +45,19 @@ async function NoteDetails(props: NoteDetailsProps) {
         <Typography variant="p" tag="p">
           {note.content}
         </Typography>
-        {note.images.map((image) => (
-          <Image
-            key={image.id}
-            src={image.filepath}
-            alt={image.altText ?? ''}
-            width={200}
-            height={200}
-          />
-        ))}
+        {note.images?.length > 0 ? (
+          <div className="flex items-center gap-3 mt-6">
+            {note.images.map((image) => (
+              <NextImage
+                key={image.id}
+                src={getNoteImageSrc(image.id)}
+                alt={image.altText}
+                width={150}
+                height={150}
+              />
+            ))}
+          </div>
+        ) : null}
       </div>
       <div className="mt-auto pt-4">
         <div className="flex justify-end gap-3">
