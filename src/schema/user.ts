@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const userRegisterSchema = z.object({
+const userRegisterSchema = z.object({
   email: z
     .string()
     .min(1, {
@@ -8,3 +8,9 @@ export const userRegisterSchema = z.object({
     })
     .email('Invalid email address'),
 });
+
+const searchUsersSchema = z.object({
+  username: z.string().optional(),
+});
+
+export { userRegisterSchema, searchUsersSchema };

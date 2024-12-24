@@ -12,9 +12,8 @@ import {
   Input,
   HoneypotField,
   CsrfTokenField,
+  SubmitBtn,
 } from '@/components/ui/Form/index';
-
-import SubmitBtn from '@/components/SubmitBtn/SubmitBtn';
 
 function SignUpForm() {
   const [state, formAction] = useActionState(signUp, undefined);
@@ -41,8 +40,8 @@ function SignUpForm() {
 
   return (
     <form action={formAction} {...getFormProps(form)}>
+      <CsrfTokenField />
       <FormField>
-        <CsrfTokenField />
         <FormLabel htmlFor={fields.email.id}>Email</FormLabel>
         <Input {...emailProps} />
         <FormMessages

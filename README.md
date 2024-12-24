@@ -7,5 +7,6 @@
 
 [x] Use actual prisma db to retrieve users
 [x] Use actual prisma db to retrieve user's data
-[X] Delete note
-[] Update note
+[x] Delete note
+[x] Update note
+[] Investigate why user's sorting doesn't work

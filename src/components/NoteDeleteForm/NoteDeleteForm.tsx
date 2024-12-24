@@ -1,6 +1,5 @@
-import SubmitBtn from '@/components/SubmitBtn/SubmitBtn';
 import { deleteNoteAction } from '@/application/useCases/noteUseCase';
-import { CsrfTokenField } from '@/components/ui/Form/';
+import { CsrfTokenField, SubmitBtn } from '@/components/ui/Form/';
 
 type NoteDeleteFormProps = {
   noteId: string;

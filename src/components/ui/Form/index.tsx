@@ -7,3 +7,4 @@ export * from './Select/Select';
 export * from './Checkbox/Checkbox';
 export * from './HoneyPotField/HoneyPotField';
 export * from './CsrfTokenField/CsrfTokenField';
+export * from './SubmitBtn/SubmitBtn';

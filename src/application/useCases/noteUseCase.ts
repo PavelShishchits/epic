@@ -63,7 +63,6 @@ export async function editNoteAction(
     async: true,
   });
 
-  console.log('submission', submission);
   if (submission.status !== 'success') {
     return submission.reply();
   }

@@ -9,7 +9,6 @@ import {
 } from '@conform-to/react';
 import { getZodConstraint, parseWithZod } from '@conform-to/zod';
 import { Note } from '@/domain/note';
-import SubmitBtn from '@/components/SubmitBtn/SubmitBtn';
 import Button from '@/components/ui/Button/Button';
 import FileUploader from '@/components/FileUploader/FileUploader';
 import { noteEditSchema } from '@/schema/note';
@@ -22,6 +21,7 @@ import {
   Input,
   Textarea,
   CsrfTokenField,
+  SubmitBtn,
 } from '@/components/ui/Form/index';
 
 interface NoteEditFormProps {
