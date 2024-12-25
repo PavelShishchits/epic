@@ -11,7 +11,6 @@ interface UserListProps {
 
 const UserList = async ({ usernameQuery }: UserListProps) => {
   const like = `%${usernameQuery ?? ''}%`;
-  console.log('UserList:render');
 
   const users = await prisma.$queryRaw<UserSearchResults>(
     Prisma.sql`
@@ -27,7 +26,8 @@ const UserList = async ({ usernameQuery }: UserListProps) => {
         ORDER BY Note.updatedAt DESC
         LIMIT 1
       ) DESC
-      LIMIT 50`
+      LIMIT 50
+    `
   );
 
   if (!users.length) {
