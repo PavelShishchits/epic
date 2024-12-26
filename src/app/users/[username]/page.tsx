@@ -28,9 +28,9 @@ export async function generateMetadata(
 }
 
 interface UserDetailPageProps {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
 export default async function UserDetailPage({ params }: UserDetailPageProps) {

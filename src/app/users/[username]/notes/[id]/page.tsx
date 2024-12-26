@@ -21,10 +21,10 @@ export async function generateMetadata({ params }: NotesDetilsPageProps) {
 }
 
 interface NotesDetilsPageProps {
-  params: {
+  params: Promise<{
     id: string;
     username: string;
-  };
+  }>;
 }
 
 export default async function NotesDetilsPage({

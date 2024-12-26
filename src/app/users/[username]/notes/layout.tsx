@@ -6,9 +6,9 @@ import Typography from '@/components/ui/Typography/Typography';
 import NoteSidebarList from '@/components/NotesSidebarList/NotesSidebarList';
 
 type NotesLayoutProps = Readonly<{
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
   children: React.ReactNode;
 }>;
 

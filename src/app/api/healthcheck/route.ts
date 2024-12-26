@@ -3,8 +3,8 @@ import { cookies, headers } from 'next/headers';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const cookiesStore = cookies();
-  const headersStore = headers();
+  const cookiesStore = await cookies();
+  const headersStore = await headers();
   console.log(cookiesStore.getAll());
   console.log(headersStore.get('Connection'));
 
