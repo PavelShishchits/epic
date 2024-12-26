@@ -10,3 +10,4 @@
 [x] Delete note
 [x] Update note
 [x] Investigate why user's sorting doesn't work
+[] deploy app to vercel
