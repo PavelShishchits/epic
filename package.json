@@ -12,7 +12,8 @@
     "db:studio": "npx prisma studio",
     "db:migrate": "npx prisma migrate dev",
     "db:generate": "npx prisma generate --sql",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "preinstall": "pnpm run db:generate"
   },
   "dependencies": {
     "@conform-to/react": "^1.1.5",
