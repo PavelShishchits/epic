@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 4200",
-    "build": "prisma generate && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
     "db:seed": "npx tsx ./prisma/seed.ts",
     "db:studio": "npx prisma studio",
-    "db:migrate": "npx prisma migrate dev"
+    "db:migrate": "npx prisma migrate dev",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@conform-to/react": "^1.1.5",
