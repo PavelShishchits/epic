@@ -2,8 +2,7 @@ import NavLink from '@/components/NavLink/NavLink';
 import { prisma } from '@/infrastructure/db/db.server';
 import { getUserImageSrc } from '@/utils/misc';
 import Image from 'next/image';
-import { type UserSearchResults } from '@/schema/userSearchResult';
-import { Prisma } from '@prisma/client';
+import { getUsers } from '@prisma/client/sql';
 
 interface UserListProps {
   usernameQuery?: string;
@@ -12,22 +11,7 @@ interface UserListProps {
 const UserList = async ({ usernameQuery }: UserListProps) => {
   const like = `%${usernameQuery ?? ''}%`;
 
-  const users = await prisma.$queryRaw<UserSearchResults>(
-    Prisma.sql`
-      SELECT "User"."id", "User"."name", "User"."username", "UserImage"."id" AS "imageId"
-      FROM "User"
-      LEFT JOIN "UserImage" ON "UserImage"."userId" = "User"."id"
-      WHERE "User"."username" ILIKE ${like} OR "User"."name" ILIKE ${like}
-      ORDER BY (
-        SELECT "Note"."updatedAt"
-        FROM "Note"
-        WHERE "Note"."ownerId" = "User"."id"
-        ORDER BY "Note"."updatedAt" DESC
-        LIMIT 1
-      ) DESC
-      LIMIT 50
-    `
-  );
+  const users = await prisma.$queryRawTyped(getUsers(like));
 
   if (!users.length) {
     return <p>No users found</p>;
