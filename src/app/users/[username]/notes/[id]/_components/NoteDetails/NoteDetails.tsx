@@ -1,4 +1,3 @@
-import { prisma } from '@/infrastructure/db/db.server';
 import { notFound } from 'next/navigation';
 import Typography from '@/components/ui/Typography/Typography';
 import Link from 'next/link';
@@ -6,6 +5,8 @@ import NextImage from 'next/image';
 import NoteDeleteForm from '@/components/NoteDeleteForm/NoteDeleteForm';
 import Button from '@/components/ui/Button/Button';
 import { getNoteImageSrc } from '@/utils/misc';
+
+import { getNote } from '../../page';
 
 interface NoteDetailsProps {
   noteId: string;
@@ -15,22 +16,7 @@ interface NoteDetailsProps {
 async function NoteDetails(props: NoteDetailsProps) {
   const { noteId, userId } = props;
 
-  const note = await prisma.note.findUnique({
-    where: {
-      id: noteId,
-    },
-    select: {
-      id: true,
-      title: true,
-      content: true,
-      images: {
-        select: {
-          id: true,
-          altText: true,
-        },
-      },
-    },
-  });
+  const note = await getNote({ noteId });
 
   if (!note || !userId) {
     return notFound();

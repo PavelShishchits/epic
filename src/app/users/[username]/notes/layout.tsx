@@ -4,6 +4,32 @@ import { getUserImageSrc } from '@/utils/misc';
 import NextImage from 'next/image';
 import Typography from '@/components/ui/Typography/Typography';
 import NoteSidebarList from '@/components/NotesSidebarList/NotesSidebarList';
+import { notFound } from 'next/navigation';
+import { cache } from 'react';
+
+const getUserByUsername = cache(async (username: string) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      username: username,
+    },
+    select: {
+      name: true,
+      username: true,
+      image: {
+        select: { id: true },
+      },
+      notes: {
+        select: { id: true, title: true },
+      },
+    },
+  });
+
+  if (!user) {
+    notFound();
+  }
+
+  return user;
+});
 
 type NotesLayoutProps = Readonly<{
   params: Promise<{
@@ -18,22 +44,7 @@ export default async function NotesLayout({
 }: NotesLayoutProps) {
   const { username: userNameParam } = await params;
 
-  const user = await prisma.user.findUnique({
-    where: {
-      username: userNameParam,
-    },
-    select: {
-      name: true,
-      username: true,
-      image: {
-        select: { id: true },
-      },
-      notes: {
-        select: { id: true, title: true },
-      },
-    },
-  });
-
+  const user = await getUserByUsername(userNameParam);
   const userName = user?.name ?? user?.username ?? userNameParam;
 
   return (

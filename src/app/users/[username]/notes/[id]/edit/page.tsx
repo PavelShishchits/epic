@@ -1,18 +1,12 @@
 import { Suspense } from 'react';
-import NoteEdit from '@/components/NoteEdit/NoteEdit';
+import NoteEdit from './_components/NoteEdit/NoteEdit';
 import { prisma } from '@/infrastructure/db/db.server';
+import { getNote } from '../page';
 
 export async function generateMetadata({ params }: NotesEditingPageProps) {
   const { id: noteId } = await params;
 
-  const note = await prisma.note.findUnique({
-    where: {
-      id: noteId,
-    },
-    select: { title: true, content: true },
-  });
-
-  if (!note) return;
+  const note = await getNote({ noteId });
 
   return {
     title: note.title,
