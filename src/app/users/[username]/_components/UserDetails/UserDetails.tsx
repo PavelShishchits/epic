@@ -1,30 +1,17 @@
 import NavLink from '@/components/NavLink/NavLink';
-import { prisma } from '@/infrastructure/db/db.server';
 import Typography from '@/components/ui/Typography/Typography';
 import NextImage from 'next/image';
 import Button from '@/components/ui/Button/Button';
-import { notFound } from 'next/navigation';
 import { getUserImageSrc } from '@/utils/misc';
+import { getUserCached } from '@/services/userService/userService';
+import { notFound } from 'next/navigation';
 
 interface UserDetailsProps {
   userName: string;
 }
 
 const UserDetails = async ({ userName }: UserDetailsProps) => {
-  const user = await prisma.user.findUnique({
-    where: {
-      username: userName,
-    },
-    select: {
-      name: true,
-      createdAt: true,
-      image: {
-        select: {
-          id: true,
-        },
-      },
-    },
-  });
+  const user = await getUserCached(userName);
 
   if (!user) {
     return notFound();

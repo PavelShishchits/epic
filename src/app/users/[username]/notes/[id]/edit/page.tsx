@@ -1,12 +1,32 @@
 import { Suspense } from 'react';
 import NoteEdit from './_components/NoteEdit/NoteEdit';
+import { getNoteCached } from '@/services/noteService/noteService';
 import { prisma } from '@/infrastructure/db/db.server';
-import { getNote } from '../page';
+
+export const generateStaticParams = async () => {
+  const notes = await prisma.note.findMany({
+    select: {
+      id: true,
+      owner: {
+        select: {
+          username: true,
+        },
+      },
+    },
+  });
+
+  return notes.map((note) => ({
+    id: note.id,
+    username: note.owner.username,
+  }));
+};
 
 export async function generateMetadata({ params }: NotesEditingPageProps) {
   const { id: noteId } = await params;
 
-  const note = await getNote({ noteId });
+  const note = await getNoteCached({ noteId });
+
+  if (!note) return;
 
   return {
     title: note.title,

@@ -5,8 +5,7 @@ import NextImage from 'next/image';
 import NoteDeleteForm from '@/components/NoteDeleteForm/NoteDeleteForm';
 import Button from '@/components/ui/Button/Button';
 import { getNoteImageSrc } from '@/utils/misc';
-
-import { getNote } from '../../page';
+import { getNoteCached } from '@/services/noteService/noteService';
 
 interface NoteDetailsProps {
   noteId: string;
@@ -16,7 +15,7 @@ interface NoteDetailsProps {
 async function NoteDetails(props: NoteDetailsProps) {
   const { noteId, userId } = props;
 
-  const note = await getNote({ noteId });
+  const note = await getNoteCached({ noteId });
 
   if (!note || !userId) {
     return notFound();

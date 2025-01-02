@@ -1,37 +1,32 @@
 import NoteDetails from './_components/NoteDetails/NoteDetails';
 import { prisma } from '@/infrastructure/db/db.server';
-import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { cache } from 'react';
+import { getNoteCached } from '@/services/noteService/noteService';
 
-// toDo move to note service
-export const getNote = cache(async ({ noteId }: { noteId: string }) => {
-  const note = await prisma.note.findUnique({
-    where: {
-      id: noteId,
-    },
+export const generateStaticParams = async () => {
+  const notes = await prisma.note.findMany({
     select: {
       id: true,
-      title: true,
-      content: true,
-      images: {
+      owner: {
         select: {
-          id: true,
-          altText: true,
+          username: true,
         },
       },
     },
   });
 
-  if (!note) return notFound();
-
-  return note;
-});
+  return notes.map((note) => ({
+    id: note.id,
+    username: note.owner.username,
+  }));
+};
 
 export async function generateMetadata({ params }: NotesDetilsPageProps) {
   const { id: noteId } = await params;
 
-  const note = await getNote({ noteId });
+  const note = await getNoteCached({ noteId });
+
+  if (!note) return;
 
   return {
     title: note.title,

@@ -11,10 +11,11 @@
 [x] Update note
 [x] Investigate why user's sorting doesn't work
 [x] deploy app to vercel
-[] Read csrfToken without making all page dynamic
-[] How to build static pages? Next.js will choose rendering strategy based on apis (https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-rendering such as header, cookies, searchParams) that were used to build page. It's recomended to control what resources to cache instead of static/dynamic rendering
-[] Cache data from db https://nextjs.org/docs/app/building-your-application/data-fetching/fetching#caching-data-with-an-orm-or-database
+[x] Read csrfToken without making all page dynamic. (Didn't make it, possible solution to fetch token on client, and write it to store)
+[x] How to build static pages? Next.js will choose rendering strategy based on apis (https://nextjs.org/docs/app/building-your-application/rendering/server-components#dynamic-rendering such as header, cookies, searchParams) that were used to build page. It's recomended to control what resources to cache instead of static/dynamic rendering. To prerender pages based on dynamic routes generateStaticParams should be used https://nextjs.org/docs/app/api-reference/functions/generate-static-params
+[x] Cache data from db https://nextjs.org/docs/app/building-your-application/data-fetching/fetching#caching-data-with-an-orm-or-database
 [] Learn about revalidation cached data https://nextjs.org/docs/app/building-your-application/data-fetching/incremental-static-regeneration
-[] Generate static pages in build time with generateStaticParams https://nextjs.org/docs/app/api-reference/functions/generate-static-params
-[] add not service
+[x] Generate static pages in build time with generateStaticParams https://nextjs.org/docs/app/api-reference/functions/generate-static-params
+[] add note service
+[] add user service
 [] try https://rombo.co/tailwind/ for animations
