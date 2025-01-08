@@ -1,5 +1,5 @@
 'use client';
-import { editNoteAction } from '@/application/useCases/noteUseCase';
+import { editNoteAction } from '@/app/_actions/notes.action';
 import { useActionState } from 'react';
 import {
   useForm,
@@ -8,7 +8,7 @@ import {
   getTextareaProps,
 } from '@conform-to/react';
 import { getZodConstraint, parseWithZod } from '@conform-to/zod';
-import { Note } from '@/domain/note';
+import { Note } from '@/entities/models/note';
 import Button from '@/components/ui/Button/Button';
 import FileUploader from '@/components/FileUploader/FileUploader';
 import { noteEditSchema } from '@/schema/note';
@@ -45,7 +45,7 @@ function NoteEditForm(props: NoteEditFormProps) {
   const [form, fields] = useForm({
     id: 'note-edit-form',
     constraint: getZodConstraint(noteEditSchema),
-    lastResult: state,
+    // lastResult: state,
     onValidate(context) {
       return parseWithZod(context.formData, {
         schema: noteEditSchema,

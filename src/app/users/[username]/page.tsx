@@ -3,13 +3,11 @@ import { Suspense } from 'react';
 import { prisma } from '@/infrastructure/db/db.server';
 import type { ResolvingMetadata } from 'next';
 import { getUserCached } from '@/services/userService/userService';
+import { UserRepository } from '@/infrastructure/repositories/users.repository';
 
 export async function generateStaticParams() {
-  const users = await prisma.user.findMany({
-    select: {
-      username: true,
-    },
-  });
+  const userRepository = new UserRepository(prisma);
+  const users = await userRepository.getUsers({ username: true });
 
   return users.map((user) => ({ username: user.username }));
 }

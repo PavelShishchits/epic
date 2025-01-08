@@ -42,3 +42,34 @@ export const noteEditSchema = z.object({
   content: z.string().min(1, { message: 'Content is required' }),
   images: z.array(imageFieldSchema),
 });
+
+export const convertedImageSchema = z.object({
+  id: z.string().optional(),
+  altText: z.string().optional(),
+  contentType: z.string().optional(),
+  blob: z.instanceof(Buffer).optional(),
+});
+
+const updateImageSchema = z.object({
+  id: z.string(),
+  altText: z.string(),
+  contentType: z.string().optional(),
+  blob: z.instanceof(Buffer).optional(),
+});
+
+const newImageSchema = z.object({
+  altText: z.string(),
+  contentType: z.string(),
+  blob: z.instanceof(Buffer),
+});
+
+export const noteUpdateSchema = z.object({
+  title: z.string().min(1, { message: 'Title is required' }),
+  content: z.string().min(1, { message: 'Content is required' }),
+  updatedImages: z.array(updateImageSchema),
+  newImages: z.array(newImageSchema),
+});
+
+export type NoteEditSchema = z.infer<typeof noteEditSchema>;
+
+export type NoteUpdateSchema = z.infer<typeof noteUpdateSchema>;

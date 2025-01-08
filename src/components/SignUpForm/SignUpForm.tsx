@@ -1,6 +1,6 @@
 'use client';
 import { useActionState } from 'react';
-import { signUp } from '@/application/useCases/signUpUseCase';
+import { signUp } from '@/app/_actions/sign-up.action';
 import { userRegisterSchema } from '@/schema/user';
 import { useForm, getFormProps, getInputProps } from '@conform-to/react';
 import { getZodConstraint, parseWithZod } from '@conform-to/zod';

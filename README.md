@@ -19,3 +19,8 @@
 [] add note service
 [] add user service
 [] try https://rombo.co/tailwind/ for animations
+
+### clean arch
+
+- Controllers are responsible for input validation, auhentication and other actions, also inside controller we perform all use cases.
+- Use cases recieve already validated data and perform only one their individual operation

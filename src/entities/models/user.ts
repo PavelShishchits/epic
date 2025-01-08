@@ -5,8 +5,12 @@ import {
 import { Note } from './note';
 
 export type User = PrismaUser & {
+  notes?: Note[];
+  image?: UserImage;
+};
+
+export type UserWithNotes = PrismaUser & {
   notes: Note[];
-  image: UserImage;
 };
 
 export type UserImage = PrismaUserImage;

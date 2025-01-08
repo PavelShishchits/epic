@@ -1,6 +1,6 @@
 import NoteEditForm from '@/components/NoteEditForm/NoteEditForm';
 import { getSerializableProps } from '@/infrastructure/utils/getSerializableProps';
-import { Note } from '@/domain/note';
+import { Note } from '@/entities/models/note';
 import { getNoteCached } from '@/services/noteService/noteService';
 import { notFound } from 'next/navigation';
 
