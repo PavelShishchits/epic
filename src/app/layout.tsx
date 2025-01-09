@@ -5,6 +5,7 @@ import Header from '@/app/_components/Header/Header';
 import Footer from '@/app/_components/Footer/Footer';
 import { CsrfTokenProvider } from '@/providers/CsrfTokenProvider';
 import { headers } from 'next/headers';
+import { Toaster } from '@/app/_components/ui/Sonner/Sonner';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -45,6 +46,7 @@ export default async function RootLayout({
             <Footer />
           </div>
         </CsrfTokenProvider>
+        <Toaster position="bottom-right" />
       </body>
     </html>
   );

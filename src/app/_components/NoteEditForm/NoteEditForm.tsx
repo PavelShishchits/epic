@@ -1,6 +1,5 @@
 'use client';
 import { editNoteAction } from '@/app/_actions/notes.action';
-import { useActionState } from 'react';
 import {
   useForm,
   getFormProps,
@@ -23,6 +22,7 @@ import {
   CsrfTokenField,
   SubmitBtn,
 } from '@/app/_components/ui/Form/index';
+import { toast } from 'sonner';
 
 interface NoteEditFormProps {
   note: Note;
@@ -38,14 +38,11 @@ function NoteEditForm(props: NoteEditFormProps) {
     userId: userId,
   });
 
-  const [state, formAction] = useActionState(boundEditNoteAction, undefined);
-
   const noteImages = note.images || [];
 
   const [form, fields] = useForm({
     id: 'note-edit-form',
     constraint: getZodConstraint(noteEditSchema),
-    // lastResult: state,
     onValidate(context) {
       return parseWithZod(context.formData, {
         schema: noteEditSchema,
@@ -73,9 +70,16 @@ function NoteEditForm(props: NoteEditFormProps) {
 
   const imagesList = fields.images.getFieldList();
 
+  const handleFormSubmitAction = async (formData: FormData) => {
+    const response = await boundEditNoteAction(undefined, formData);
+    if (response.error) {
+      toast.error(response.error);
+    }
+  };
+
   return (
     <form
-      action={formAction}
+      action={handleFormSubmitAction}
       className="h-full flex flex-col"
       {...getFormProps(form)}
     >
