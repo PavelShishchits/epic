@@ -13,7 +13,7 @@ import {
   HoneypotField,
   CsrfTokenField,
   SubmitBtn,
-} from '@/components/ui/Form/index';
+} from '@/app/_components/ui/Form/index';
 
 function SignUpForm() {
   const [state, formAction] = useActionState(signUp, undefined);

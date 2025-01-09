@@ -1,9 +1,9 @@
-import NavLink from '@/components/NavLink/NavLink';
+import NavLink from '@/app/_components/NavLink/NavLink';
 import { prisma } from '@/infrastructure/db/db.server';
 import { getUserImageSrc } from '@/utils/misc';
 import NextImage from 'next/image';
-import Typography from '@/components/ui/Typography/Typography';
-import NoteSidebarList from '@/components/NotesSidebarList/NotesSidebarList';
+import Typography from '@/app/_components/ui/Typography/Typography';
+import NoteSidebarList from '@/app/_components/NotesSidebarList/NotesSidebarList';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 import { UserRepository } from '@/infrastructure/repositories/users.repository';

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { HTRakikBold, ReadexProMedium, ReadexProRegular } from './fonts';
 import clx from 'clsx';
-import Header from '@/components/Header/Header';
-import Footer from '@/components/Footer/Footer';
+import Header from '@/app/_components/Header/Header';
+import Footer from '@/app/_components/Footer/Footer';
 import { CsrfTokenProvider } from '@/providers/CsrfTokenProvider';
 import { headers } from 'next/headers';
 import './globals.css';

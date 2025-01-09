@@ -1,7 +1,7 @@
 'use client';
 import { useFormStatus } from 'react-dom';
 import clx from 'clsx';
-import Button, { ButtonProps } from '@/components/ui/Button/Button';
+import Button, { ButtonProps } from '@/app/_components/ui/Button/Button';
 
 type SubmitBtnStatus = 'idle' | 'pending' | 'success' | 'error';
 

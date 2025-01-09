@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import Typography from '@/components/ui/Typography/Typography';
-import UserList from '@/components/UserList/UserList';
-import UsersSearchForm from '@/components/UsersSearchForm/UsersSearchForm';
+import Typography from '@/app/_components/ui/Typography/Typography';
+import UserList from '@/app/_components/UserList/UserList';
+import UsersSearchForm from '@/app/_components/UsersSearchForm/UsersSearchForm';
 import { SEARCH_USERS_QUERY_PARAM } from '@/utils/constants';
 
 export const metadata: Metadata = {

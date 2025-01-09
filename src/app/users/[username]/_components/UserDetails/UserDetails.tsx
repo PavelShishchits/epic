@@ -1,7 +1,7 @@
-import NavLink from '@/components/NavLink/NavLink';
-import Typography from '@/components/ui/Typography/Typography';
+import NavLink from '@/app/_components/NavLink/NavLink';
+import Typography from '@/app/_components/ui/Typography/Typography';
 import NextImage from 'next/image';
-import Button from '@/components/ui/Button/Button';
+import Button from '@/app/_components/ui/Button/Button';
 import { getUserImageSrc } from '@/utils/misc';
 import { getUserCached } from '@/services/userService/userService';
 import { notFound } from 'next/navigation';

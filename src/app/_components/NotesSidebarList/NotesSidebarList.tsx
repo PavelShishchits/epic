@@ -1,4 +1,4 @@
-import NavLink from '@/components/NavLink/NavLink';
+import NavLink from '@/app/_components/NavLink/NavLink';
 
 type SidebarNote = {
   id: string;

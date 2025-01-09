@@ -9,8 +9,8 @@ import {
 } from '@conform-to/react';
 import { getZodConstraint, parseWithZod } from '@conform-to/zod';
 import { Note } from '@/entities/models/note';
-import Button from '@/components/ui/Button/Button';
-import FileUploader from '@/components/FileUploader/FileUploader';
+import Button from '@/app/_components/ui/Button/Button';
+import FileUploader from '@/app/_components/FileUploader/FileUploader';
 import { noteEditSchema } from '@/schema/note';
 import { X, Plus } from 'lucide-react';
 import {
@@ -22,7 +22,7 @@ import {
   Textarea,
   CsrfTokenField,
   SubmitBtn,
-} from '@/components/ui/Form/index';
+} from '@/app/_components/ui/Form/index';
 
 interface NoteEditFormProps {
   note: Note;

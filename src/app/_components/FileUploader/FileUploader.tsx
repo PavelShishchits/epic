@@ -10,7 +10,7 @@ import {
   FormLabel,
   FormMessages,
   Input,
-} from '@/components/ui/Form/index';
+} from '@/app/_components/ui/Form/index';
 import NextImage from 'next/image';
 import { cn } from '@/lib/utils';
 import { getNoteImageSrc } from '@/utils/misc';

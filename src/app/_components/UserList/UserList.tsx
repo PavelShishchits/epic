@@ -1,4 +1,4 @@
-import NavLink from '@/components/NavLink/NavLink';
+import NavLink from '@/app/_components/NavLink/NavLink';
 import { prisma } from '@/infrastructure/db/db.server';
 import { getUserImageSrc } from '@/utils/misc';
 import Image from 'next/image';

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import SignUpForm from '@/components/SignUpForm/SignUpForm';
-import Typography from '@/components/ui/Typography/Typography';
+import SignUpForm from '@/app/_components/SignUpForm/SignUpForm';
+import Typography from '@/app/_components/ui/Typography/Typography';
 
 export const metadata: Metadata = {
   title: 'Sign up',

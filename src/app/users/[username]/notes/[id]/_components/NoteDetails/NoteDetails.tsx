@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation';
-import Typography from '@/components/ui/Typography/Typography';
+import Typography from '@/app/_components/ui/Typography/Typography';
 import Link from 'next/link';
 import NextImage from 'next/image';
-import NoteDeleteForm from '@/components/NoteDeleteForm/NoteDeleteForm';
-import Button from '@/components/ui/Button/Button';
+import NoteDeleteForm from '@/app/_components/NoteDeleteForm/NoteDeleteForm';
+import Button from '@/app/_components/ui/Button/Button';
 import { getNoteImageSrc } from '@/utils/misc';
 import { getNoteCached } from '@/services/noteService/noteService';
 
