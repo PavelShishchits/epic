@@ -1,7 +1,7 @@
 import NoteEditForm from '@/app/_components/NoteEditForm/NoteEditForm';
 import { getSerializableProps } from '@/infrastructure/utils/getSerializableProps';
 import { Note } from '@/entities/models/note';
-import { getNoteCached } from '@/services/noteService/noteService';
+import { getNoteCached } from '@/app/_cached/get-note.cached';
 import { notFound } from 'next/navigation';
 
 interface NoteEditProps {
@@ -12,7 +12,7 @@ interface NoteEditProps {
 async function NoteEdit(props: NoteEditProps) {
   const { noteId, userId } = props;
 
-  const note = await getNoteCached({ noteId });
+  const note = await getNoteCached(noteId);
 
   if (!note) return notFound();
 

@@ -1,7 +1,7 @@
 import NoteDetails from './_components/NoteDetails/NoteDetails';
 import { prisma } from '@/infrastructure/db/db.server';
 import { Suspense } from 'react';
-import { getNoteCached } from '@/services/noteService/noteService';
+import { getNoteCached } from '@/app/_cached/get-note.cached';
 
 export const generateStaticParams = async () => {
   const notes = await prisma.note.findMany({
@@ -24,7 +24,7 @@ export const generateStaticParams = async () => {
 export async function generateMetadata({ params }: NotesDetilsPageProps) {
   const { id: noteId } = await params;
 
-  const note = await getNoteCached({ noteId });
+  const note = await getNoteCached(noteId);
 
   if (!note) return;
 

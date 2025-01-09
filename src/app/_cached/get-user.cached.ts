@@ -23,4 +23,4 @@ const getUser = async (username: string) => {
 
 const getUserCached = cache(getUser);
 
-export { getUser, getUserCached };
+export { getUserCached };

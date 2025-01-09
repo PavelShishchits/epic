@@ -5,6 +5,23 @@ import { prisma } from '@/infrastructure/db/db.server';
 import { DatabaseOperationError } from '@/entities/errors';
 
 export class NotesRepository implements NoteRepositoryInterface {
+  async getNote(id: Note['id']): Promise<Note> {
+    const note = await prisma.note.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        images: true,
+      },
+    });
+
+    if (!note) {
+      throw new DatabaseOperationError('Note not found');
+    }
+
+    return note;
+  }
+
   async updateNote(
     id: Note['id'],
     noteData: Partial<NoteUpdateSchema>

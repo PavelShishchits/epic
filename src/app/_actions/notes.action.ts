@@ -18,11 +18,9 @@ async function editNoteAction(
   prevState: any,
   formData: FormData
 ) {
-  const inputData = Object.fromEntries(formData.entries());
-
   try {
     new HoneyPot().check(formData);
-    const editedNote = await editNoteController(noteId, inputData);
+    const editedNote = await editNoteController(noteId, formData);
 
     console.log('editedNote', editedNote);
   } catch (e) {
@@ -31,6 +29,9 @@ async function editNoteAction(
         error: e.message,
       };
     }
+
+    console.log('error', e);
+    // toDo show error message to user
 
     return {
       error: 'Something went wrong',

@@ -5,7 +5,7 @@ import NextImage from 'next/image';
 import NoteDeleteForm from '@/app/_components/NoteDeleteForm/NoteDeleteForm';
 import Button from '@/app/_components/ui/Button/Button';
 import { getNoteImageSrc } from '@/utils/misc';
-import { getNoteCached } from '@/services/noteService/noteService';
+import { getNoteCached } from '@/app/_cached/get-note.cached';
 
 interface NoteDetailsProps {
   noteId: string;
@@ -15,7 +15,7 @@ interface NoteDetailsProps {
 async function NoteDetails(props: NoteDetailsProps) {
   const { noteId, userId } = props;
 
-  const note = await getNoteCached({ noteId });
+  const note = await getNoteCached(noteId);
 
   if (!note || !userId) {
     return notFound();
@@ -30,7 +30,7 @@ async function NoteDetails(props: NoteDetailsProps) {
         <Typography variant="p" tag="p">
           {note.content}
         </Typography>
-        {note.images?.length > 0 ? (
+        {note.images && note.images.length > 0 ? (
           <div className="flex items-center gap-3 mt-6">
             {note.images.map((image) => (
               <NextImage

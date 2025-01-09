@@ -2,7 +2,7 @@ import UserDetails from './_components/UserDetails/UserDetails';
 import { Suspense } from 'react';
 import { prisma } from '@/infrastructure/db/db.server';
 import type { ResolvingMetadata } from 'next';
-import { getUserCached } from '@/services/userService/userService';
+import { getUserCached } from '@/app/_cached/get-user.cached';
 import { UserRepository } from '@/infrastructure/repositories/users.repository';
 
 export async function generateStaticParams() {

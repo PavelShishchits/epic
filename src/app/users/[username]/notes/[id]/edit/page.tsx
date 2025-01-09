@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import NoteEdit from './_components/NoteEdit/NoteEdit';
-import { getNoteCached } from '@/services/noteService/noteService';
+import { getNoteCached } from '@/app/_cached/get-note.cached';
 import { prisma } from '@/infrastructure/db/db.server';
 
 export const generateStaticParams = async () => {
@@ -24,7 +24,7 @@ export const generateStaticParams = async () => {
 export async function generateMetadata({ params }: NotesEditingPageProps) {
   const { id: noteId } = await params;
 
-  const note = await getNoteCached({ noteId });
+  const note = await getNoteCached(noteId);
 
   if (!note) return;
 
