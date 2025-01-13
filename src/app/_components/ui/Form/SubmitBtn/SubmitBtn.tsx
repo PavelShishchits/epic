@@ -1,6 +1,6 @@
 'use client';
 import { useFormStatus } from 'react-dom';
-import clx from 'clsx';
+import { cn } from '@/app/_utils/cn';
 import Button, { ButtonProps } from '@/app/_components/ui/Button/Button';
 
 type SubmitBtnStatus = 'idle' | 'pending' | 'success' | 'error';
@@ -33,7 +33,7 @@ function SubmitBtn(props: SubmitBtnProps) {
       iconAfter={
         innerStatus ? (
           <span
-            className={clx({
+            className={cn({
               'animate-spin': innerStatus === 'pending',
             })}
           >

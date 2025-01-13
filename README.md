@@ -19,6 +19,7 @@
 [] add note service
 [] add user service
 [] try https://rombo.co/tailwind/ for animations
+[] find a way how to pass selectedFields from client code to repository
 
 ### clean arch
 

@@ -1,17 +1,14 @@
 import NavLink from '@/app/_components/NavLink/NavLink';
-import { prisma } from '@/infrastructure/db/db.server';
 import { getUserImageSrc } from '@/app/_utils/misc';
 import Image from 'next/image';
-import { getUsers } from '@prisma/client/sql';
+import { getUsersOrderedByLatestChangesController } from '@/interface-adapters/controllers/get-users-ordered-by-latest-changes.controller';
 
 interface UserListProps {
   usernameQuery?: string;
 }
 
 const UserList = async ({ usernameQuery }: UserListProps) => {
-  const like = `%${usernameQuery ?? ''}%`;
-
-  const users = await prisma.$queryRawTyped(getUsers(like));
+  const users = await getUsersOrderedByLatestChangesController(usernameQuery);
 
   if (!users.length) {
     return <p>No users found</p>;

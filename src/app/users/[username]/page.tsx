@@ -1,12 +1,11 @@
 import UserDetails from './_components/UserDetails/UserDetails';
 import { Suspense } from 'react';
-import { prisma } from '@/infrastructure/db/db.server';
 import type { ResolvingMetadata } from 'next';
 import { getUserCached } from '@/app/_cached/get-user.cached';
 import { UserRepository } from '@/infrastructure/repositories/users.repository';
 
 export async function generateStaticParams() {
-  const userRepository = new UserRepository(prisma);
+  const userRepository = new UserRepository();
   const users = await userRepository.getUsers({ username: true });
 
   return users.map((user) => ({ username: user.username }));
@@ -20,7 +19,12 @@ export async function generateMetadata(
 
   const user = await getUserCached(username);
 
-  if (!user) return;
+  if (!user) {
+    return {
+      title: 'User Not Found',
+      description: 'The requested user does not exist.',
+    };
+  }
 
   return {
     title: user.name + ' Notes',

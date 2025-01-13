@@ -6,7 +6,7 @@ import { Note } from './note';
 
 export type User = PrismaUser & {
   notes?: Note[];
-  image?: UserImage;
+  image?: UserImage | null;
 };
 
 export type UserWithNotes = PrismaUser & {

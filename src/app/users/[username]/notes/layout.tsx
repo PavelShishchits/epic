@@ -1,12 +1,11 @@
 import NavLink from '@/app/_components/NavLink/NavLink';
-import { prisma } from '@/infrastructure/db/db.server';
 import { getUserImageSrc } from '@/app/_utils/misc';
 import NextImage from 'next/image';
 import Typography from '@/app/_components/ui/Typography/Typography';
 import NoteSidebarList from '@/app/_components/NotesSidebarList/NotesSidebarList';
 import { notFound } from 'next/navigation';
-import { cache } from 'react';
-import { UserRepository } from '@/infrastructure/repositories/users.repository';
+import { getUserController } from '@/interface-adapters/controllers/get-user.controller';
+// import { UserRepository } from '@/infrastructure/repositories/users.repository';
 
 type NotesLayoutProps = Readonly<{
   params: Promise<{
@@ -21,18 +20,9 @@ export default async function NotesLayout({
 }: NotesLayoutProps) {
   const { username: userNameParam } = await params;
 
-  const userRepository = new UserRepository(prisma);
+  const user = await getUserController(userNameParam);
 
-  const user = await userRepository.getUserByName(userNameParam, {
-    name: true,
-    username: true,
-    image: {
-      select: { id: true },
-    },
-    notes: {
-      select: { id: true, title: true },
-    },
-  });
+  console.log('user', user);
 
   if (!user) {
     notFound();
