@@ -12,8 +12,8 @@ import {
   Input,
 } from '@/app/_components/ui/Form/index';
 import NextImage from 'next/image';
-import { cn } from '@/lib/utils';
-import { getNoteImageSrc } from '@/utils/misc';
+import { cn } from '@/app/_utils/cn';
+import { getNoteImageSrc } from '@/app/_utils/misc';
 
 type ImageFieldset = z.infer<typeof imageFieldSchema>;
 

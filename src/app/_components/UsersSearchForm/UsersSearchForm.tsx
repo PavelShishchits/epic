@@ -13,8 +13,8 @@ import { getZodConstraint, parseWithZod } from '@conform-to/zod';
 import { searchUsersSchema } from '@/schema/user';
 import { getFormProps, useForm, getInputProps } from '@conform-to/react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { debounce } from '@/utils/debounce';
-import { SEARCH_USERS_QUERY_PARAM } from '@/utils/constants';
+import { debounce } from '@/app/_utils/debounce';
+import { SEARCH_USERS_QUERY_PARAM } from '@/app/_utils/constants';
 
 export default function UsersSearchForm() {
   const searchParams = useSearchParams();

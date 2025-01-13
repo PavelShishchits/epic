@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/_utils/cn';
 import React from 'react';
 
 interface FormMessagesProps extends React.HTMLAttributes<HTMLUListElement> {

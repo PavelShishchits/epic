@@ -3,7 +3,7 @@ import { HTRakikBold, ReadexProMedium, ReadexProRegular } from './fonts';
 import clx from 'clsx';
 import Header from '@/app/_components/Header/Header';
 import Footer from '@/app/_components/Footer/Footer';
-import { CsrfTokenProvider } from '@/providers/CsrfTokenProvider';
+import { CsrfTokenProvider } from '@/app/_providers/CsrfTokenProvider';
 import { headers } from 'next/headers';
 import { Toaster } from '@/app/_components/ui/Sonner/Sonner';
 import './globals.css';
@@ -34,6 +34,7 @@ export default async function RootLayout({
         HTRakikBold.variable,
         'h-full'
       )}
+      suppressHydrationWarning
     >
       <head>
         {/* <link href="favicon.svg" rel="icon" media="(prefers-color-scheme: light)"/> */}

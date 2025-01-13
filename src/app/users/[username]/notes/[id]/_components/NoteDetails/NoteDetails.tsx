@@ -4,7 +4,7 @@ import Link from 'next/link';
 import NextImage from 'next/image';
 import NoteDeleteForm from '@/app/_components/NoteDeleteForm/NoteDeleteForm';
 import Button from '@/app/_components/ui/Button/Button';
-import { getNoteImageSrc } from '@/utils/misc';
+import { getNoteImageSrc } from '@/app/_utils/misc';
 import { getNoteCached } from '@/app/_cached/get-note.cached';
 
 interface NoteDetailsProps {
