@@ -1,11 +1,14 @@
 import type { Metadata } from 'next';
-import { HTRakikBold, ReadexProMedium, ReadexProRegular } from './fonts';
-import clx from 'clsx';
-import Header from '@/app/_components/Header/Header';
-import Footer from '@/app/_components/Footer/Footer';
-import { CsrfTokenProvider } from '@/app/_providers/CsrfTokenProvider';
 import { headers } from 'next/headers';
+
+import clx from 'clsx';
+
+import Footer from '@/app/_components/Footer/Footer';
+import Header from '@/app/_components/Header/Header';
 import { Toaster } from '@/app/_components/ui/Sonner/Sonner';
+import { Providers } from '@/app/_providers/providers';
+
+import { HTRakikBold, ReadexProMedium, ReadexProRegular } from './fonts';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -21,10 +24,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const h = await headers();
-
-  const csrfToken = h.get('x-csrf-token') || 'missing';
-
   return (
     <html
       lang="en"
@@ -40,14 +39,14 @@ export default async function RootLayout({
         {/* <link href="favicon.svg" rel="icon" media="(prefers-color-scheme: light)"/> */}
       </head>
       <body className="h-full">
-        <CsrfTokenProvider csrfToken={csrfToken}>
+        <Providers>
           <div className="h-full flex flex-col">
             <Header />
             <main className="p-6 flex-1">{children}</main>
             <Footer />
           </div>
-        </CsrfTokenProvider>
-        <Toaster position="bottom-right" />
+          <Toaster position="bottom-right" />
+        </Providers>
       </body>
     </html>
   );

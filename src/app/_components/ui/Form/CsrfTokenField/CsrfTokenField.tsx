@@ -1,6 +1,6 @@
 'use client';
 
-import { useCsrfToken } from '@/app/_providers/CsrfTokenProvider';
+import { useCsrfToken } from '@/app/_providers/csrf-token-provider';
 
 const CSRF_FIELD_NAME = 'csrf_token';
 
