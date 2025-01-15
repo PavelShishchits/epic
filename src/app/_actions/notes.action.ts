@@ -1,12 +1,14 @@
 'use server';
+
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+
 import 'server-only';
 
 import { InputParseError } from '@/entities/errors';
-import { editNoteController } from '@/interface-adapters/controllers/edit-note.controller';
 import { deleteNoteController } from '@/interface-adapters/controllers/delete-note.controller';
+import { editNoteController } from '@/interface-adapters/controllers/edit-note.controller';
 import { HoneyPot } from '@/lib/honeypot.server';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 type AdditionalProps = {
   noteId: string;

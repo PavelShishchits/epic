@@ -1,5 +1,6 @@
-import { prisma } from '@/infrastructure/db/db.server';
 import { cache } from 'react';
+
+import { prisma } from '@/infrastructure/db/db.server';
 
 const getUser = async (username: string) => {
   const user = await prisma.user.findUnique({

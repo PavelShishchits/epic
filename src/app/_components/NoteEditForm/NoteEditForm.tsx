@@ -1,28 +1,30 @@
 'use client';
-import { editNoteAction } from '@/app/_actions/notes.action';
+
 import {
-  useForm,
   getFormProps,
   getInputProps,
   getTextareaProps,
+  useForm,
 } from '@conform-to/react';
 import { getZodConstraint, parseWithZod } from '@conform-to/zod';
-import { Note } from '@/entities/models/note';
-import Button from '@/app/_components/ui/Button/Button';
+import { Plus, X } from 'lucide-react';
+import { toast } from 'sonner';
+
+import { editNoteAction } from '@/app/_actions/notes.action';
 import FileUploader from '@/app/_components/FileUploader/FileUploader';
-import { noteEditSchema } from '@/schema/note';
-import { X, Plus } from 'lucide-react';
+import Button from '@/app/_components/ui/Button/Button';
 import {
+  CsrfTokenField,
   FormField,
   FormLabel,
   FormMessages,
   HoneypotField,
   Input,
-  Textarea,
-  CsrfTokenField,
   SubmitBtn,
+  Textarea,
 } from '@/app/_components/ui/Form/index';
-import { toast } from 'sonner';
+import { Note } from '@/entities/models/note';
+import { noteEditSchema } from '@/schema/note';
 
 interface NoteEditFormProps {
   note: Note;

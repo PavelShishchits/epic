@@ -1,8 +1,9 @@
 import type { Prisma } from '@prisma/client';
-import type { IUserRepository } from '@/application/repositories/user.repository.interface';
-import { prisma } from '@/infrastructure/db/db.server';
-import { DatabaseOperationError } from '@/entities/errors';
 import { getUsers } from '@prisma/client/sql';
+
+import type { IUserRepository } from '@/application/repositories/user.repository.interface';
+import { DatabaseOperationError } from '@/entities/errors';
+import { prisma } from '@/infrastructure/db/db.server';
 
 export class UserRepository implements IUserRepository {
   constructor() {}

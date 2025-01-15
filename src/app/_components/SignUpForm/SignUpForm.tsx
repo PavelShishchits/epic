@@ -1,19 +1,21 @@
 'use client';
+
 import { useActionState } from 'react';
-import { signUp } from '@/app/_actions/sign-up.action';
-import { userRegisterSchema } from '@/schema/user';
-import { useForm, getFormProps, getInputProps } from '@conform-to/react';
+
+import { getFormProps, getInputProps, useForm } from '@conform-to/react';
 import { getZodConstraint, parseWithZod } from '@conform-to/zod';
 
+import { signUp } from '@/app/_actions/sign-up.action';
 import {
-  FormField,
-  FormMessages,
-  FormLabel,
-  Input,
-  HoneypotField,
   CsrfTokenField,
+  FormField,
+  FormLabel,
+  FormMessages,
+  HoneypotField,
+  Input,
   SubmitBtn,
 } from '@/app/_components/ui/Form/index';
+import { userRegisterSchema } from '@/schema/user';
 
 function SignUpForm() {
   const [state, formAction] = useActionState(signUp, undefined);

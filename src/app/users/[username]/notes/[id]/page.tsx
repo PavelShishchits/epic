@@ -1,7 +1,9 @@
-import NoteDetails from './_components/NoteDetails/NoteDetails';
-import { prisma } from '@/infrastructure/db/db.server';
 import { Suspense } from 'react';
+
 import { getNoteCached } from '@/app/_cached/get-note.cached';
+import { prisma } from '@/infrastructure/db/db.server';
+
+import NoteDetails from './_components/NoteDetails/NoteDetails';
 
 export const generateStaticParams = async () => {
   const notes = await prisma.note.findMany({

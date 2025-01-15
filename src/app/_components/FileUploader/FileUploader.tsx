@@ -1,19 +1,21 @@
 'use client';
 
+import NextImage from 'next/image';
 import { useState } from 'react';
-import { getInputProps, type FieldMetadata } from '@conform-to/react';
-import { z } from 'zod';
-import { imageFieldSchema } from '@/schema/note';
+
+import { type FieldMetadata, getInputProps } from '@conform-to/react';
 import { Plus } from 'lucide-react';
+import { z } from 'zod';
+
 import {
   FormField,
   FormLabel,
   FormMessages,
   Input,
 } from '@/app/_components/ui/Form/index';
-import NextImage from 'next/image';
 import { cn } from '@/app/_utils/cn';
 import { getNoteImageSrc } from '@/app/_utils/misc';
+import { imageFieldSchema } from '@/schema/note';
 
 type ImageFieldset = z.infer<typeof imageFieldSchema>;
 

@@ -1,11 +1,13 @@
 'use server';
-import 'server-only';
 
-import { parseWithZod } from '@conform-to/zod';
-import { userRegisterSchema } from '@/schema/user';
-import { HoneyPot } from '@/lib/honeypot.server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+
+import { parseWithZod } from '@conform-to/zod';
+import 'server-only';
+
+import { HoneyPot } from '@/lib/honeypot.server';
+import { userRegisterSchema } from '@/schema/user';
 
 async function signUp(prevState: any, formData: FormData) {
   new HoneyPot().check(formData);

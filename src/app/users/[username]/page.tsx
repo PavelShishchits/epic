@@ -1,8 +1,10 @@
-import UserDetails from './_components/UserDetails/UserDetails';
-import { Suspense } from 'react';
 import type { ResolvingMetadata } from 'next';
+import { Suspense } from 'react';
+
 import { getUserCached } from '@/app/_cached/get-user.cached';
 import { UserRepository } from '@/infrastructure/repositories/users.repository';
+
+import UserDetails from './_components/UserDetails/UserDetails';
 
 export async function generateStaticParams() {
   const userRepository = new UserRepository();

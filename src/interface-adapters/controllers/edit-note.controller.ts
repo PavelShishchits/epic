@@ -1,8 +1,9 @@
-import { noteEditSchema } from '@/schema/note';
-import { InputParseError } from '@/entities/errors';
 import { parseWithZod } from '@conform-to/zod';
+
 import { editNoteUseCase } from '@/application/use-cases/note/edit-note.use-case';
+import { InputParseError } from '@/entities/errors';
 import { Note } from '@/entities/models/note';
+import { noteEditSchema } from '@/schema/note';
 
 function presenter(note: Note) {
   // convert to UI friendly format

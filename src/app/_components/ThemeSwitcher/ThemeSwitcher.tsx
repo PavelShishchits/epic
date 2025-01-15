@@ -31,7 +31,17 @@ const ThemeSwitcher = () => {
   return (
     <div>
       <Button variant={'ghost'} onClick={handleSwitchButtonClick}>
-        {theme === 'light' ? <Sun /> : <Moon />}
+        {theme === 'light' ? (
+          <>
+            <Sun aria-hidden="true" />
+            <span className="sr-only">Toggle dark theme</span>
+          </>
+        ) : (
+          <>
+            <Moon aria-hidden="true" />
+            <span className="sr-only">Toggle light theme</span>
+          </>
+        )}
       </Button>
     </div>
   );

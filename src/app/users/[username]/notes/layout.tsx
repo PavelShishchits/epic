@@ -1,10 +1,12 @@
-import NavLink from '@/app/_components/NavLink/NavLink';
-import { getUserImageSrc } from '@/app/_utils/misc';
 import NextImage from 'next/image';
-import Typography from '@/app/_components/ui/Typography/Typography';
-import NoteSidebarList from '@/app/_components/NotesSidebarList/NotesSidebarList';
 import { notFound } from 'next/navigation';
+
+import NavLink from '@/app/_components/NavLink/NavLink';
+import NoteSidebarList from '@/app/_components/NotesSidebarList/NotesSidebarList';
+import Typography from '@/app/_components/ui/Typography/Typography';
+import { getUserImageSrc } from '@/app/_utils/misc';
 import { getUserController } from '@/interface-adapters/controllers/get-user.controller';
+
 // import { UserRepository } from '@/infrastructure/repositories/users.repository';
 
 type NotesLayoutProps = Readonly<{

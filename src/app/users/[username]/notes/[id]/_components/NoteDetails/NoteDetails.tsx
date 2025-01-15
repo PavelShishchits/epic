@@ -1,11 +1,12 @@
-import { notFound } from 'next/navigation';
-import Typography from '@/app/_components/ui/Typography/Typography';
-import Link from 'next/link';
 import NextImage from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+
+import { getNoteCached } from '@/app/_cached/get-note.cached';
 import NoteDeleteForm from '@/app/_components/NoteDeleteForm/NoteDeleteForm';
 import Button from '@/app/_components/ui/Button/Button';
+import Typography from '@/app/_components/ui/Typography/Typography';
 import { getNoteImageSrc } from '@/app/_utils/misc';
-import { getNoteCached } from '@/app/_cached/get-note.cached';
 
 interface NoteDetailsProps {
   noteId: string;

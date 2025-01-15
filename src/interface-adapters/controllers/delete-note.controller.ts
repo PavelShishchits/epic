@@ -1,5 +1,5 @@
-import { Note } from '@/entities/models/note';
 import { deleteNoteUseCase } from '@/application/use-cases/note/delete-note.use-case';
+import { Note } from '@/entities/models/note';
 
 function presenter(note: Note) {
   return {

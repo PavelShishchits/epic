@@ -1,6 +1,8 @@
 import { Prisma } from '@prisma/client';
-import type { User } from '@/entities/models/user';
 import { getUsers } from '@prisma/client/sql';
+
+import type { User } from '@/entities/models/user';
+
 export interface IUserRepository {
   getUsers: <T extends Prisma.UserSelect>(
     selectFields: T

@@ -1,8 +1,8 @@
 import type { NoteRepositoryInterface } from '@/application/repositories/note.repository.interface';
-import { Note } from '@/entities/models/note';
-import { NoteUpdateSchema } from '@/schema/note';
-import { prisma } from '@/infrastructure/db/db.server';
 import { DatabaseOperationError } from '@/entities/errors';
+import { Note } from '@/entities/models/note';
+import { prisma } from '@/infrastructure/db/db.server';
+import { NoteUpdateSchema } from '@/schema/note';
 
 export class NotesRepository implements NoteRepositoryInterface {
   async getNote(id: Note['id']): Promise<Note> {

@@ -1,10 +1,11 @@
-import NavLink from '@/app/_components/NavLink/NavLink';
-import Typography from '@/app/_components/ui/Typography/Typography';
 import NextImage from 'next/image';
-import Button from '@/app/_components/ui/Button/Button';
-import { getUserImageSrc } from '@/app/_utils/misc';
-import { getUserCached } from '@/app/_cached/get-user.cached';
 import { notFound } from 'next/navigation';
+
+import { getUserCached } from '@/app/_cached/get-user.cached';
+import NavLink from '@/app/_components/NavLink/NavLink';
+import Button from '@/app/_components/ui/Button/Button';
+import Typography from '@/app/_components/ui/Typography/Typography';
+import { getUserImageSrc } from '@/app/_utils/misc';
 
 interface UserDetailsProps {
   userName: string;

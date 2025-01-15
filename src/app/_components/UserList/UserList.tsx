@@ -1,6 +1,7 @@
+import Image from 'next/image';
+
 import NavLink from '@/app/_components/NavLink/NavLink';
 import { getUserImageSrc } from '@/app/_utils/misc';
-import Image from 'next/image';
 import { getUsersOrderedByLatestChangesController } from '@/interface-adapters/controllers/get-users-ordered-by-latest-changes.controller';
 
 interface UserListProps {

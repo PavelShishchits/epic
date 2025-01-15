@@ -1,6 +1,6 @@
 import { Note } from '@/entities/models/note';
-import { ImageConfig, NoteEditSchema } from '@/schema/note';
 import { NotesRepository } from '@/infrastructure/repositories/notes.repository';
+import { ImageConfig, NoteEditSchema } from '@/schema/note';
 
 const imageHasFile = (image: ImageConfig) => {
   return Boolean(image.file && image.file.size > 0);

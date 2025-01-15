@@ -1,5 +1,7 @@
-import { NextResponse, NextRequest } from 'next/server';
-import { createCsrfProtect, CsrfError } from '@edge-csrf/nextjs';
+import { NextRequest, NextResponse } from 'next/server';
+
+import { CsrfError, createCsrfProtect } from '@edge-csrf/nextjs';
+
 import env from '@/lib/env';
 
 const csrfProtect = createCsrfProtect({

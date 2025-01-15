@@ -1,8 +1,9 @@
-import NoteEditForm from '@/app/_components/NoteEditForm/NoteEditForm';
-import { getSerializableProps } from '@/infrastructure/utils/getSerializableProps';
-import { Note } from '@/entities/models/note';
-import { getNoteCached } from '@/app/_cached/get-note.cached';
 import { notFound } from 'next/navigation';
+
+import { getNoteCached } from '@/app/_cached/get-note.cached';
+import NoteEditForm from '@/app/_components/NoteEditForm/NoteEditForm';
+import { Note } from '@/entities/models/note';
+import { getSerializableProps } from '@/infrastructure/utils/getSerializableProps';
 
 interface NoteEditProps {
   noteId: string;

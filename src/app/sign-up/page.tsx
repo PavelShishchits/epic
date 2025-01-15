@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+
 import SignUpForm from '@/app/_components/SignUpForm/SignUpForm';
 import Typography from '@/app/_components/ui/Typography/Typography';
 

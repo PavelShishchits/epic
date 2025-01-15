@@ -1,7 +1,9 @@
 import { Suspense } from 'react';
-import NoteEdit from './_components/NoteEdit/NoteEdit';
+
 import { getNoteCached } from '@/app/_cached/get-note.cached';
 import { prisma } from '@/infrastructure/db/db.server';
+
+import NoteEdit from './_components/NoteEdit/NoteEdit';
 
 export const generateStaticParams = async () => {
   const notes = await prisma.note.findMany({
