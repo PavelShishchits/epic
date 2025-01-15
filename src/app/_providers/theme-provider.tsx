@@ -1,6 +1,6 @@
 'use client';
 
-import { Dispatch, SetStateAction, useMemo } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 
 import {
   ThemeProvider as NextThemeProvider,
@@ -21,6 +21,13 @@ type SetTheme = Dispatch<SetStateAction<Theme>>;
 
 const useSystemTheme = () => {
   const { theme, setTheme, systemTheme } = useNextTheme();
+
+  useEffect(() => {
+    // change theme if systemTheme has changed
+    if (systemTheme !== theme) {
+      setTheme(systemTheme!);
+    }
+  }, [systemTheme]);
 
   return {
     theme: theme === 'system' ? systemTheme : theme,
