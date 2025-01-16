@@ -1,3 +1,7 @@
+'use client';
+
+import { toast } from 'sonner';
+
 import { deleteNoteAction } from '@/app/_actions/notes.action';
 import { CsrfTokenField, SubmitBtn } from '@/app/_components/ui/Form/';
 
@@ -14,8 +18,15 @@ function NoteDeleteForm(props: NoteDeleteFormProps) {
     userId: userId,
   });
 
+  const handeFormSubmit = async (formData: FormData) => {
+    const response = await boundDeleteNoteAction(formData);
+    if (response?.error) {
+      toast.error(response.error);
+    }
+  };
+
   return (
-    <form action={boundDeleteNoteAction}>
+    <form action={handeFormSubmit}>
       <CsrfTokenField />
       <input type="hidden" name="noteId" defaultValue={noteId} />
       <SubmitBtn variant="destructive" name="intent" value="delete">

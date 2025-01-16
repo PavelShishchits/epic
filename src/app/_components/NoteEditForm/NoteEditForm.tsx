@@ -73,7 +73,7 @@ function NoteEditForm(props: NoteEditFormProps) {
   const imagesList = fields.images.getFieldList();
 
   const handleFormSubmitAction = async (formData: FormData) => {
-    const response = await boundEditNoteAction(undefined, formData);
+    const response = await boundEditNoteAction(formData);
     if (response.error) {
       toast.error(response.error);
     }

@@ -7,8 +7,6 @@ import Typography from '@/app/_components/ui/Typography/Typography';
 import { getUserImageSrc } from '@/app/_utils/misc';
 import { getUserController } from '@/interface-adapters/controllers/get-user.controller';
 
-// import { UserRepository } from '@/infrastructure/repositories/users.repository';
-
 type NotesLayoutProps = Readonly<{
   params: Promise<{
     username: string;
@@ -23,8 +21,6 @@ export default async function NotesLayout({
   const { username: userNameParam } = await params;
 
   const user = await getUserController(userNameParam);
-
-  console.log('user', user);
 
   if (!user) {
     notFound();

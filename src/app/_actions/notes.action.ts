@@ -10,6 +10,8 @@ import { deleteNoteController } from '@/interface-adapters/controllers/delete-no
 import { editNoteController } from '@/interface-adapters/controllers/edit-note.controller';
 import { HoneyPot } from '@/lib/honeypot.server';
 
+// import { createToastCookie } from '@/lib/toast.server';
+
 type AdditionalProps = {
   noteId: string;
   userId: string;
@@ -17,7 +19,6 @@ type AdditionalProps = {
 
 async function editNoteAction(
   { noteId, userId }: AdditionalProps,
-  prevState: any,
   formData: FormData
 ) {
   try {
@@ -52,9 +53,15 @@ async function deleteNoteAction(
 
   switch (intent) {
     case 'delete':
-      const deletedNote = await deleteNoteController(noteId);
-
-      console.log('deletedNote', deletedNote);
+      try {
+        const deletedNote = await deleteNoteController(noteId);
+        // createToastCookie('Successfully deleted');
+        console.log('deletedNote', deletedNote);
+      } catch (e) {
+        return {
+          error: 'Something went wrong',
+        };
+      }
 
       revalidatePath('/users/' + userId + '/notes');
       redirect('/users/' + userId + '/notes');

@@ -6,6 +6,7 @@ import { prisma } from '@/infrastructure/db/db.server';
 import NoteDetails from './_components/NoteDetails/NoteDetails';
 
 export const generateStaticParams = async () => {
+  // toDo fetch via repository
   const notes = await prisma.note.findMany({
     select: {
       id: true,
@@ -28,7 +29,12 @@ export async function generateMetadata({ params }: NotesDetilsPageProps) {
 
   const note = await getNoteCached(noteId);
 
-  if (!note) return;
+  if (!note) {
+    return {
+      title: 'Note not found',
+      description: 'Note not found',
+    };
+  }
 
   return {
     title: note.title,
