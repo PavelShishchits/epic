@@ -10,8 +10,6 @@ import { deleteNoteController } from '@/interface-adapters/controllers/delete-no
 import { editNoteController } from '@/interface-adapters/controllers/edit-note.controller';
 import { HoneyPot } from '@/lib/honeypot.server';
 
-// import { createToastCookie } from '@/lib/toast.server';
-
 type AdditionalProps = {
   noteId: string;
   userId: string;

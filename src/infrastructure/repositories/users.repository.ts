@@ -2,7 +2,7 @@ import type { Prisma } from '@prisma/client';
 import { getUsers } from '@prisma/client/sql';
 
 import type { IUserRepository } from '@/application/repositories/user.repository.interface';
-import { DatabaseOperationError } from '@/entities/errors';
+import { User } from '@/entities/models/user';
 import { prisma } from '@/infrastructure/db/db.server';
 
 export class UserRepository implements IUserRepository {
@@ -24,7 +24,7 @@ export class UserRepository implements IUserRepository {
     return users;
   }
 
-  async getUserByName(username: string) {
+  async getUserByName(username: string): Promise<User | null> {
     const user = await prisma.user.findUnique({
       where: { username },
       include: {
@@ -33,9 +33,17 @@ export class UserRepository implements IUserRepository {
       },
     });
 
-    if (!user) {
-      throw new DatabaseOperationError('User not found');
-    }
+    return user;
+  }
+
+  async getUser(id: string): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: { id },
+      include: {
+        notes: true,
+        image: true,
+      },
+    });
 
     return user;
   }

@@ -5,7 +5,7 @@ import { useActionState } from 'react';
 import { getFormProps, getInputProps, useForm } from '@conform-to/react';
 import { getZodConstraint, parseWithZod } from '@conform-to/zod';
 
-import { signUp } from '@/app/_actions/sign-up.action';
+import { signUpAction } from '@/app/_actions/auth.action';
 import {
   CsrfTokenField,
   FormField,
@@ -18,7 +18,7 @@ import {
 import { userRegisterSchema } from '@/schema/user';
 
 function SignUpForm() {
-  const [state, formAction] = useActionState(signUp, undefined);
+  const [state, formAction] = useActionState(signUpAction, undefined);
 
   const [form, fields] = useForm({
     id: 'sign-up-form',

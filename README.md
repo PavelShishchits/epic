@@ -23,6 +23,10 @@
 [] find a way how to pass selectedFields from client code to repository
 [] try https://rombo.co/tailwind/ for animations
 
+## auth
+
+[] implement input password ui component with show/hide password function
+
 ### clean arch
 
 - Controllers are responsible for input validation, auhentication and other actions, also inside controller we perform all use cases.

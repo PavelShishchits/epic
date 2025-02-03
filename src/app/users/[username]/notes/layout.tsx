@@ -1,11 +1,11 @@
 import NextImage from 'next/image';
 import { notFound } from 'next/navigation';
 
+import { getUserCached } from '@/app/_cached/get-user.cached';
 import NavLink from '@/app/_components/NavLink/NavLink';
 import NoteSidebarList from '@/app/_components/NotesSidebarList/NotesSidebarList';
 import Typography from '@/app/_components/ui/Typography/Typography';
 import { getUserImageSrc } from '@/app/_utils/misc';
-import { getUserController } from '@/interface-adapters/controllers/get-user.controller';
 
 type NotesLayoutProps = Readonly<{
   params: Promise<{
@@ -20,7 +20,7 @@ export default async function NotesLayout({
 }: NotesLayoutProps) {
   const { username: userNameParam } = await params;
 
-  const user = await getUserController(userNameParam);
+  const user = await getUserCached(userNameParam);
 
   if (!user) {
     notFound();

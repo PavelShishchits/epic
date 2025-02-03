@@ -5,7 +5,7 @@ import { prisma } from '@/infrastructure/db/db.server';
 import { NoteUpdateSchema } from '@/schema/note';
 
 export class NotesRepository implements NoteRepositoryInterface {
-  async getNote(id: Note['id']): Promise<Note> {
+  async getNote(id: Note['id']): Promise<Note | null> {
     const note = await prisma.note.findUnique({
       where: {
         id: id,
@@ -14,10 +14,6 @@ export class NotesRepository implements NoteRepositoryInterface {
         images: true,
       },
     });
-
-    if (!note) {
-      throw new DatabaseOperationError('Note not found');
-    }
 
     return note;
   }

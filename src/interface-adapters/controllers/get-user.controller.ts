@@ -9,6 +9,7 @@ function presenter(user: User) {
     email: user.email,
     image: user.image,
     notes: user.notes,
+    createdAt: user.createdAt,
   };
 }
 

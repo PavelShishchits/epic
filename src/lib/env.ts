@@ -6,6 +6,7 @@ const envSchema = z.object({
   NODE_ENV: z
     .enum(['development', 'production', 'test'])
     .default('development'),
+  SESSION_SECRET: z.string().min(32),
 });
 
 const env = envSchema.parse(process.env);
