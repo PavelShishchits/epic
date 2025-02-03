@@ -83,7 +83,7 @@ function FileUploader(props: FileUploaderProps) {
           <div
             tabIndex={0}
             className={cn(
-              'size-60 rounded-md border border-input bg-background ring-offset-background flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
+              'size-60 rounded-md border border-input bg-background ring-offset-background flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
             )}
             aria-label="choose image"
           >
