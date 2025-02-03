@@ -8,6 +8,13 @@ import { toast } from 'sonner';
 
 import { signInAction } from '@/app/_actions/auth.action';
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/app/_components/ui/Card/Card';
+import {
   CsrfTokenField,
   FormField,
   FormLabel,
@@ -16,6 +23,7 @@ import {
   Input,
   SubmitBtn,
 } from '@/app/_components/ui/Form';
+import Typography from '@/app/_components/ui/Typography/Typography';
 import { userLoginSchema } from '@/schema/user';
 
 type LoginFormProps = {};
@@ -58,27 +66,43 @@ const LoginForm = (props: LoginFormProps) => {
   };
 
   return (
-    <form action={handleFormSubmitAction} {...getFormProps(form)}>
-      <CsrfTokenField />
-      <HoneypotField />
-      <FormField>
-        <FormLabel htmlFor={fields.username.id}>Username</FormLabel>
-        <Input {...usernameProps} />
-        <FormMessages
-          errors={fields.username.errors}
-          id={fields.username.errorId}
-        />
-      </FormField>
-      <FormField>
-        <FormLabel htmlFor={fields.password.id}>Password</FormLabel>
-        <Input {...passwordProps} />
-        <FormMessages
-          errors={fields.password.errors}
-          id={fields.password.errorId}
-        />
-      </FormField>
-      <SubmitBtn variant={'default'}>Login</SubmitBtn>
-    </form>
+    <Card className="max-w-lg w-full">
+      <CardHeader>
+        <CardTitle>
+          <Typography className="mb-3" variant={'h3'} tag="h1">
+            Login
+          </Typography>
+        </CardTitle>
+        <CardDescription>
+          Enter your username below to login to your account
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form action={handleFormSubmitAction} {...getFormProps(form)}>
+          <CsrfTokenField />
+          <HoneypotField />
+          <FormField>
+            <FormLabel htmlFor={fields.username.id}>Username</FormLabel>
+            <Input {...usernameProps} />
+            <FormMessages
+              errors={fields.username.errors}
+              id={fields.username.errorId}
+            />
+          </FormField>
+          <FormField>
+            <FormLabel htmlFor={fields.password.id}>Password</FormLabel>
+            <Input {...passwordProps} />
+            <FormMessages
+              errors={fields.password.errors}
+              id={fields.password.errorId}
+            />
+          </FormField>
+          <SubmitBtn className="w-full" variant={'default'}>
+            Login
+          </SubmitBtn>
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 
