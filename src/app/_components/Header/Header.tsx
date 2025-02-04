@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { User } from 'lucide-react';
+
 import { getAuthenticatedUserCached } from '@/app/_cached/get-authenticated-user.cached';
 import { ThemeSwitcher } from '@/app/_components/ThemeSwitcher/ThemeSwitcher';
 import Button from '@/app/_components/ui/Button/Button';
@@ -22,8 +24,8 @@ const Header = async () => {
           {user ? (
             <span>{user.username}</span>
           ) : (
-            <Button asChild variant="link">
-              <Link href="/login">Login</Link>
+            <Button asChild variant="link" iconBefore={<User />}>
+              <Link href="/login">Login / Register</Link>
             </Button>
           )}
         </div>

@@ -17,7 +17,7 @@ import {
 } from '@/app/_components/ui/Form/index';
 import { userRegisterSchema } from '@/schema/user';
 
-function SignUpForm() {
+export function SignUpForm() {
   const [state, formAction] = useActionState(signUpAction, undefined);
 
   const [form, fields] = useForm({
@@ -41,7 +41,7 @@ function SignUpForm() {
   });
 
   return (
-    <form action={formAction} {...getFormProps(form)}>
+    <form className="w-full" action={formAction} {...getFormProps(form)}>
       <CsrfTokenField />
       <FormField>
         <FormLabel htmlFor={fields.email.id}>Email</FormLabel>
@@ -52,9 +52,9 @@ function SignUpForm() {
         ></FormMessages>
       </FormField>
       <HoneypotField />
-      <SubmitBtn variant="default">Sign up</SubmitBtn>
+      <SubmitBtn className="w-full" variant="default">
+        Sign up
+      </SubmitBtn>
     </form>
   );
 }
-
-export default SignUpForm;
