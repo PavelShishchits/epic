@@ -14,7 +14,14 @@ export async function loginUseCase(input: {
     throw new AuthenticationError('User not found');
   }
 
-  // toDo check if password is equal
+  const validPassord = await authenticationService.validatePassword(
+    input.password,
+    existingUser.password
+  );
+
+  if (!validPassord) {
+    throw new AuthenticationError('Invalid username or password');
+  }
 
   const userId = existingUser.id;
 

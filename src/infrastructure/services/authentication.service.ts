@@ -1,3 +1,5 @@
+import { compare } from 'bcrypt-ts';
+
 import { IAuthenticationService } from '@/application/services/authentication.service.interface';
 import { UnauthenticatedError } from '@/entities/errors';
 import { Session } from '@/entities/models/session';
@@ -43,6 +45,10 @@ class AuthentificationService implements IAuthenticationService {
 
   async invalidateSession(sessionId: string): Promise<void> {
     console.log(`Session with ID ${sessionId} invalidated.`);
+  }
+
+  async validatePassword(inputPassword: string, userPasswordHash: string) {
+    return compare(inputPassword, userPasswordHash);
   }
 }
 

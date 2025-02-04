@@ -1,9 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { PrismaClient } from '@prisma/client';
+import { hash } from 'bcrypt-ts';
 import { UniqueEnforcer } from 'enforce-unique';
 import fs from 'node:fs';
-
-const bcrypt = require('bcryptjs');
 
 const prisma = new PrismaClient();
 
@@ -14,7 +13,7 @@ const uniqueUsernameEnforcer = new UniqueEnforcer();
 const createPassword = async (
   password: string = faker.internet.password()
 ): Promise<string> => {
-  return await bcrypt.hash(password, 10);
+  return await hash(password, 10);
 };
 
 const createUser = async () => {
