@@ -3,13 +3,21 @@ import { PrismaClient } from '@prisma/client';
 import { UniqueEnforcer } from 'enforce-unique';
 import fs from 'node:fs';
 
+const bcrypt = require('bcryptjs');
+
 const prisma = new PrismaClient();
 
 const USERS_NUMBER = 5;
 
 const uniqueUsernameEnforcer = new UniqueEnforcer();
 
-const createUser = () => {
+const createPassword = async (
+  password: string = faker.internet.password()
+): Promise<string> => {
+  return await bcrypt.hash(password, 10);
+};
+
+const createUser = async () => {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
   const username = uniqueUsernameEnforcer.enforce(() => {
@@ -30,7 +38,8 @@ const createUser = () => {
   return {
     username,
     name: fullname,
-    email: `${username}.example.com`,
+    email: `${username}@example.com`,
+    password: await createPassword(),
   };
 };
 
@@ -84,7 +93,7 @@ const seed = async () => {
       .create({
         select: { id: true },
         data: {
-          ...createUser(),
+          ...(await createUser()),
           image: {
             create: userImages[i % 5],
           },
@@ -122,6 +131,7 @@ const seed = async () => {
       email: 'kody@kcd.dev',
       username: 'kody',
       name: 'Kody',
+      password: await createPassword('Test_12345'),
       image: { create: userImages[0] },
       notes: {
         create: [

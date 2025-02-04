@@ -18,7 +18,11 @@ const Header = async () => {
   const sessionId = await getSessionId();
 
   if (sessionId) {
-    user = await getAuthenticatedUserCached({ sessionId });
+    try {
+      user = await getAuthenticatedUserCached({ sessionId });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   const avatarUserName = user?.username.substring(0, 2).toLocaleUpperCase();

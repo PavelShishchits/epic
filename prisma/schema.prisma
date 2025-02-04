@@ -17,6 +17,7 @@ model User {
   email String @unique
   username String @unique
   name String?
+  password String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -24,8 +25,6 @@ model User {
   notes Note[]
 
   image UserImage?
-
-  password Password?
 }
 
 model Note {
@@ -73,11 +72,4 @@ model NoteImage {
   noteId String
 
   @@index([noteId])
-}
-
-model Password {
-  hash String
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String @unique
 }
