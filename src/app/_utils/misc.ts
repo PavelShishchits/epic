@@ -1,7 +1,5 @@
-import userFallbackImage from '@/assets/images/user.png';
-
 const getUserImageSrc = (id?: string | null) => {
-  return id ? `/api/resources/user-images?id=${id}` : userFallbackImage;
+  return id ? `/api/resources/user-images?id=${id}` : '/images/user.png';
 };
 
 const getNoteImageSrc = (id: string) => {
