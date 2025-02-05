@@ -17,8 +17,6 @@ export async function loginController(input: any) {
 
   const { username, password } = parsedResult.value;
 
-  console.log('loginController', parsedResult.value);
-
   const { cookie } = await loginUseCase({ username, password });
 
   return { cookie };

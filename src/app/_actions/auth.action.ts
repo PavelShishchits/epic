@@ -1,35 +1,42 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { parseWithZod } from '@conform-to/zod';
 import 'server-only';
 
 import { AuthenticationError, InputParseError } from '@/entities/errors';
 import { Cookie } from '@/entities/models/cookie';
 import { loginController } from '@/interface-adapters/controllers/login.controller';
+import { signUpController } from '@/interface-adapters/controllers/sign-up.controller';
 import { HoneyPot } from '@/lib/honeypot.server';
-import { userLoginSchema, userRegisterSchema } from '@/schema/user';
 
-async function signUpAction(prevState: any, formData: FormData) {
+async function signUpAction(prevState: unknown, formData: FormData) {
   new HoneyPot().check(formData);
 
-  const submission = parseWithZod(formData, {
-    schema: userRegisterSchema,
-  });
+  const cookiesStore = await cookies();
+  let sessionCookie: Cookie;
 
-  console.log('submission', submission);
-
-  if (submission.status !== 'success') {
-    return submission.reply();
+  try {
+    const result = await signUpController(formData);
+    sessionCookie = result.cookie;
+  } catch (e) {
+    if (e instanceof AuthenticationError) {
+      return {
+        toastError: e.message,
+      };
+    }
+    return {
+      toastError: 'Something went wrong',
+    };
   }
 
-  const { email } = submission.value;
-  console.log('register user', submission.value);
+  cookiesStore.set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes
+  );
 
-  revalidatePath('/');
   redirect('/');
 }
 

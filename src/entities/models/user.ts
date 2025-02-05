@@ -14,4 +14,6 @@ export type UserWithNotes = PrismaUser & {
   notes: Note[];
 };
 
+export type CreateUser = Pick<User, 'email' | 'username' | 'name' | 'password'>;
+
 export type UserImage = PrismaUserImage;

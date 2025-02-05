@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client';
 import { getUsers } from '@prisma/client/sql';
 
-import type { User } from '@/entities/models/user';
+import type { CreateUser, User } from '@/entities/models/user';
 
 export interface IUserRepository {
   getUsers: <T extends Prisma.UserSelect>(
@@ -11,4 +11,5 @@ export interface IUserRepository {
   getUsersOrderedByLatestChanges(query?: string): Promise<getUsers.Result[]>;
   getUserByName(username: string): Promise<User | null>;
   getUser(id: string): Promise<User | null>;
+  createUser(input: CreateUser): Promise<User>;
 }

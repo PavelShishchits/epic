@@ -1,4 +1,4 @@
-import { AuthenticationError } from '@/entities/errors/index';
+import { AuthenticationError } from '@/entities/errors';
 import { UserRepository } from '@/infrastructure/repositories/users.repository';
 import { AuthentificationService } from '@/infrastructure/services/authentication.service';
 
@@ -14,12 +14,12 @@ export async function loginUseCase(input: {
     throw new AuthenticationError('User not found');
   }
 
-  const validPassord = await authenticationService.validatePassword(
+  const validPassword = await authenticationService.validatePassword(
     input.password,
     existingUser.password
   );
 
-  if (!validPassord) {
+  if (!validPassword) {
     throw new AuthenticationError('Invalid username or password');
   }
 
