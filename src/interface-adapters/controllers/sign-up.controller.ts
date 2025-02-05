@@ -1,6 +1,6 @@
 import { parseWithZod } from '@conform-to/zod';
 
-import { signUpUseCase } from '@/application/use-cases/auth/sign-up.use.case';
+import { signUpUseCase } from '@/application/use-cases/auth/sign-up.use-case';
 import { InputParseError } from '@/entities/errors';
 import { userRegisterSchema } from '@/schema/user';
 

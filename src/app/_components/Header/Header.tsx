@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { User } from 'lucide-react';
 
 import { getAuthenticatedUserCached } from '@/app/_cached/get-authenticated-user.cached';
+import { LogoutForm } from '@/app/_components/LogoutForm/LogoutForm';
 import { ThemeSwitcher } from '@/app/_components/ThemeSwitcher/ThemeSwitcher';
 import {
   Avatar,
@@ -51,7 +52,9 @@ const Header = async () => {
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <LogoutForm />
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
