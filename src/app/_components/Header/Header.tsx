@@ -10,6 +10,12 @@ import {
   AvatarImage,
 } from '@/app/_components/ui/Avatar/Avatar';
 import Button from '@/app/_components/ui/Button/Button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/app/_components/ui/DropdownMenu/DropdownMenu';
 import { getSessionId } from '@/app/_utils/getSessionId';
 import { getUserImageSrc } from '@/app/_utils/misc';
 
@@ -34,10 +40,20 @@ const Header = async () => {
         <div className="flex items-center gap-2">
           <ThemeSwitcher />
           {user ? (
-            <Avatar>
-              <AvatarImage src={getUserImageSrc(user.image?.id)} alt="avatar" />
-              <AvatarFallback>{avatarUserName}</AvatarFallback>
-            </Avatar>
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger>
+                <Avatar>
+                  <AvatarImage
+                    src={getUserImageSrc(user.image?.id)}
+                    alt="avatar"
+                  />
+                  <AvatarFallback>{avatarUserName}</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <Button asChild variant="link" iconBefore={<User />}>
               <Link href="/login">Login / Register</Link>
