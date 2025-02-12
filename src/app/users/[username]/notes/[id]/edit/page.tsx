@@ -28,7 +28,12 @@ export async function generateMetadata({ params }: NotesEditingPageProps) {
 
   const note = await getNoteCached(noteId);
 
-  if (!note) return;
+  if (!note) {
+    return {
+      title: 'Edit note',
+      description: 'Edit note',
+    };
+  }
 
   return {
     title: note.title,
@@ -46,12 +51,12 @@ interface NotesEditingPageProps {
 export default async function NotesEditingPage({
   params,
 }: NotesEditingPageProps) {
-  const { id: noteId, username: userId } = await params;
+  const { id: noteId, username } = await params;
 
   return (
     <div className="p-6 h-full">
       <Suspense fallback={<div>Loading...</div>}>
-        <NoteEdit noteId={noteId} userId={userId} />
+        <NoteEdit noteId={noteId} username={username} />
       </Suspense>
     </div>
   );

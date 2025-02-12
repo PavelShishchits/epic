@@ -1,6 +1,8 @@
+import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 import { getNoteCached } from '@/app/_cached/get-note.cached';
+import { getUserCached } from '@/app/_cached/get-user.cached';
 import { prisma } from '@/infrastructure/db/db.server';
 
 import NoteDetails from './_components/NoteDetails/NoteDetails';
@@ -52,12 +54,18 @@ interface NotesDetilsPageProps {
 export default async function NotesDetilsPage({
   params,
 }: NotesDetilsPageProps) {
-  const { id: noteId, username: userId } = await params;
+  const { id: noteId, username } = await params;
+
+  const user = await getUserCached(username);
+
+  if (!user) {
+    notFound();
+  }
 
   return (
     <div className="p-6 h-full">
       <Suspense fallback={<div>Loading...</div>}>
-        <NoteDetails noteId={noteId} userId={userId} />
+        <NoteDetails noteId={noteId} userName={username} userId={user.id} />
       </Suspense>
     </div>
   );

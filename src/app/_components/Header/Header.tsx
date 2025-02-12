@@ -17,20 +17,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/app/_components/ui/DropdownMenu/DropdownMenu';
-import { getSessionId } from '@/app/_utils/getSessionId';
 import { getUserImageSrc } from '@/app/_utils/misc';
 
 const Header = async () => {
-  let user = null;
-  const sessionId = await getSessionId();
-
-  if (sessionId) {
-    try {
-      user = await getAuthenticatedUserCached({ sessionId });
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  const user = await getAuthenticatedUserCached();
 
   const avatarUserName = user?.username.substring(0, 2).toLocaleUpperCase();
 
@@ -53,7 +43,11 @@ const Header = async () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>
-                  <LogoutForm />
+                  <LogoutForm>
+                    <Button className="p-0 h-auto" variant={'link'}>
+                      Logout
+                    </Button>
+                  </LogoutForm>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

@@ -1,7 +1,11 @@
 import NextImage from 'next/image';
 import { notFound } from 'next/navigation';
 
+import { LogOutIcon } from 'lucide-react';
+
+import { getAuthenticatedUserCached } from '@/app/_cached/get-authenticated-user.cached';
 import { getUserCached } from '@/app/_cached/get-user.cached';
+import { LogoutForm } from '@/app/_components/LogoutForm/LogoutForm';
 import NavLink from '@/app/_components/NavLink/NavLink';
 import Button from '@/app/_components/ui/Button/Button';
 import Typography from '@/app/_components/ui/Typography/Typography';
@@ -17,6 +21,10 @@ const UserDetails = async ({ userName }: UserDetailsProps) => {
   if (!user) {
     return notFound();
   }
+
+  const authenticatedUser = await getAuthenticatedUserCached();
+
+  const isAuthenticatedUser = user.id === authenticatedUser?.id;
 
   const userJoinedDate = new Date(user.createdAt).toLocaleDateString();
   const userDisplayName = user.name ?? userName;
@@ -54,7 +62,18 @@ const UserDetails = async ({ userName }: UserDetailsProps) => {
           >
             Joined {userJoinedDate}
           </Typography>
-          <div className="mt-10 flex gap-4">
+          {isAuthenticatedUser ? (
+            <LogoutForm>
+              <Button
+                className="mt-2"
+                iconBefore={<LogOutIcon />}
+                variant={'link'}
+              >
+                Logout
+              </Button>
+            </LogoutForm>
+          ) : null}
+          <div className="mt-8 flex gap-4">
             <Button asChild>
               <NavLink href={`/users/${userName}/notes`}>
                 {userDisplayName}&apos;s notes

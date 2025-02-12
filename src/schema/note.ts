@@ -70,6 +70,14 @@ export const noteUpdateSchema = z.object({
   newImages: z.array(newImageSchema),
 });
 
+export const noteCreateSchema = z.object({
+  title: z.string().min(1, { message: 'Title is required' }),
+  content: z.string().min(1, { message: 'Content is required' }),
+  images: z.array(newImageSchema),
+});
+
 export type NoteEditSchema = z.infer<typeof noteEditSchema>;
+
+export type NoteCreateSchema = z.infer<typeof noteCreateSchema>;
 
 export type NoteUpdateSchema = z.infer<typeof noteUpdateSchema>;

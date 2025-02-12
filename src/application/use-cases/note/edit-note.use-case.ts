@@ -13,7 +13,6 @@ const imageHasId = (image: ImageConfig) => {
 
 export async function editNoteUseCase(id: Note['id'], data: NoteEditSchema) {
   const { title, content, images } = data;
-  console.log('editNoteUseCase', data);
 
   const updatedImages = await Promise.all(
     images.filter(imageHasId).map(async (image) => {

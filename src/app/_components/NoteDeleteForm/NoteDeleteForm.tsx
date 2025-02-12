@@ -7,15 +7,15 @@ import { CsrfTokenField, SubmitBtn } from '@/app/_components/ui/Form/';
 
 type NoteDeleteFormProps = {
   noteId: string;
-  userId: string;
+  userName: string;
 };
 
 function NoteDeleteForm(props: NoteDeleteFormProps) {
-  const { noteId, userId } = props;
+  const { noteId, userName } = props;
 
   const boundDeleteNoteAction = deleteNoteAction.bind(null, {
     noteId: noteId,
-    userId: userId,
+    username: userName,
   });
 
   const handeFormSubmit = async (formData: FormData) => {

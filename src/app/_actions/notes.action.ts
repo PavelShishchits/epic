@@ -5,25 +5,25 @@ import { redirect } from 'next/navigation';
 
 import 'server-only';
 
+import { getSessionId } from '@/app/_utils/getSessionId';
 import { InputParseError } from '@/entities/errors';
+import { addNoteController } from '@/interface-adapters/controllers/add-note.controller';
 import { deleteNoteController } from '@/interface-adapters/controllers/delete-note.controller';
 import { editNoteController } from '@/interface-adapters/controllers/edit-note.controller';
 import { HoneyPot } from '@/lib/honeypot.server';
 
 type AdditionalProps = {
   noteId: string;
-  userId: string;
+  username: string;
 };
 
 async function editNoteAction(
-  { noteId, userId }: AdditionalProps,
+  { noteId, username }: AdditionalProps,
   formData: FormData
 ) {
   try {
     new HoneyPot().check(formData);
-    const editedNote = await editNoteController(noteId, formData);
-
-    console.log('editedNote', editedNote);
+    await editNoteController(formData, noteId);
   } catch (e) {
     if (e instanceof InputParseError) {
       return {
@@ -31,20 +31,34 @@ async function editNoteAction(
       };
     }
 
-    console.log('error', e);
-    // toDo show error message to user
-
     return {
       error: 'Something went wrong',
     };
   }
 
-  revalidatePath('/users/' + userId + '/notes/' + noteId);
-  redirect('/users/' + userId + '/notes/' + noteId);
+  revalidatePath('/users/' + username + '/notes/' + noteId);
+  redirect('/users/' + username + '/notes/' + noteId);
+}
+
+async function addNoteAction(
+  { username }: Pick<AdditionalProps, 'username'>,
+  formData: FormData
+) {
+  const sessionId = await getSessionId();
+  try {
+    await addNoteController(formData, sessionId, username);
+  } catch (e) {
+    return {
+      error: 'Something went wrong',
+    };
+  }
+
+  revalidatePath('/users/' + username + '/notes');
+  redirect('/users/' + username + '/notes');
 }
 
 async function deleteNoteAction(
-  { noteId, userId }: AdditionalProps,
+  { noteId, username }: AdditionalProps,
   formData: FormData
 ) {
   const intent = formData.get('intent')!;
@@ -61,12 +75,12 @@ async function deleteNoteAction(
         };
       }
 
-      revalidatePath('/users/' + userId + '/notes');
-      redirect('/users/' + userId + '/notes');
+      revalidatePath('/users/' + username + '/notes');
+      redirect('/users/' + username + '/notes');
     default:
       console.error('Invalid intent');
       break;
   }
 }
 
-export { editNoteAction, deleteNoteAction };
+export { editNoteAction, deleteNoteAction, addNoteAction };

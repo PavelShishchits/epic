@@ -2,6 +2,7 @@ import NextImage from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import { getAuthenticatedUserCached } from '@/app/_cached/get-authenticated-user.cached';
 import { getNoteCached } from '@/app/_cached/get-note.cached';
 import NoteDeleteForm from '@/app/_components/NoteDeleteForm/NoteDeleteForm';
 import Button from '@/app/_components/ui/Button/Button';
@@ -11,16 +12,21 @@ import { getNoteImageSrc } from '@/app/_utils/misc';
 interface NoteDetailsProps {
   noteId: string;
   userId: string;
+  userName: string;
 }
 
 async function NoteDetails(props: NoteDetailsProps) {
-  const { noteId, userId } = props;
+  const { noteId, userName, userId } = props;
 
   const note = await getNoteCached(noteId);
 
-  if (!note || !userId) {
+  if (!note || !userName) {
     return notFound();
   }
+
+  const authenticatedUser = await getAuthenticatedUserCached();
+
+  const isAuthenticatedUser = userId === authenticatedUser?.id;
 
   return (
     <article className="h-full flex flex-col">
@@ -45,14 +51,18 @@ async function NoteDetails(props: NoteDetailsProps) {
           </div>
         ) : null}
       </div>
-      <div className="mt-auto pt-4">
-        <div className="flex justify-end gap-3">
-          <NoteDeleteForm noteId={noteId} userId={userId} />
-          <Button asChild variant="default">
-            <Link href={`/users/${userId}/notes/${note.id}/edit`}>Edit</Link>
-          </Button>
+      {isAuthenticatedUser ? (
+        <div className="mt-auto pt-4">
+          <div className="flex justify-end gap-3">
+            <NoteDeleteForm noteId={noteId} userName={userName} />
+            <Button asChild variant="default">
+              <Link href={`/users/${userName}/notes/${note.id}/edit`}>
+                Edit
+              </Link>
+            </Button>
+          </div>
         </div>
-      </div>
+      ) : null}
     </article>
   );
 }

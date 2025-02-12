@@ -16,8 +16,8 @@ function presenter(note: Note) {
 }
 
 export async function editNoteController(
-  id: Note['id'],
-  input: any
+  input: any,
+  id: Note['id']
 ): Promise<ReturnType<typeof presenter>> {
   const parsedResult = parseWithZod(input, {
     schema: noteEditSchema,

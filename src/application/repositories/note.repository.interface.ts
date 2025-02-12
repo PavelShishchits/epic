@@ -1,5 +1,5 @@
 import { Note } from '@/entities/models/note';
-import { NoteUpdateSchema } from '@/schema/note';
+import { NoteCreateSchema, NoteUpdateSchema } from '@/schema/note';
 
 export interface NoteRepositoryInterface {
   getNote(id: Note['id']): Promise<Note | null>;
@@ -8,4 +8,5 @@ export interface NoteRepositoryInterface {
     noteData: Partial<NoteUpdateSchema>
   ): Promise<Note>;
   deleteNote(id: Note['id']): Promise<Note>;
+  addNote(notedData: Partial<NoteCreateSchema>, userId: string): Promise<Note>;
 }

@@ -26,7 +26,7 @@ export default async function NotesLayout({
     notFound();
   }
 
-  const userName = user?.name ?? user?.username ?? userNameParam;
+  const userName = user?.username ?? user?.name ?? userNameParam;
 
   return (
     <div className="container ml-auto mr-auto flex h-full">
@@ -48,7 +48,11 @@ export default async function NotesLayout({
             </Typography>
           </NavLink>
         </div>
-        <NoteSidebarList userName={userNameParam} notes={user?.notes} />
+        <NoteSidebarList
+          userId={user.id}
+          userName={userNameParam}
+          notes={user?.notes}
+        />
       </div>
       <div className="p-4 w-3/4 h-full">{children}</div>
     </div>

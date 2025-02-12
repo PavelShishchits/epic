@@ -10,7 +10,7 @@ import { getZodConstraint, parseWithZod } from '@conform-to/zod';
 import { Plus, X } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { editNoteAction } from '@/app/_actions/notes.action';
+import { addNoteAction, editNoteAction } from '@/app/_actions/notes.action';
 import FileUploader from '@/app/_components/FileUploader/FileUploader';
 import Button from '@/app/_components/ui/Button/Button';
 import {
@@ -27,20 +27,23 @@ import { Note } from '@/entities/models/note';
 import { noteEditSchema } from '@/schema/note';
 
 interface NoteEditFormProps {
-  note: Note;
-  noteId: string;
-  userId: string;
+  note?: Note;
+  username: string;
 }
 
 function NoteEditForm(props: NoteEditFormProps) {
-  const { note, noteId, userId } = props;
+  const { note, username } = props;
 
-  const boundEditNoteAction = editNoteAction.bind(null, {
-    noteId: noteId,
-    userId: userId,
-  });
+  const isEditingMode = !!note;
 
-  const noteImages = note.images || [];
+  const action = isEditingMode
+    ? editNoteAction.bind(null, {
+        noteId: note?.id,
+        username: username,
+      })
+    : addNoteAction.bind(null, { username: username });
+
+  const noteImages = note?.images || [];
 
   const [form, fields] = useForm({
     id: 'note-edit-form',
@@ -51,8 +54,8 @@ function NoteEditForm(props: NoteEditFormProps) {
       });
     },
     defaultValue: {
-      title: note.title,
-      content: note.content,
+      title: note?.title || '',
+      content: note?.content || '',
       images:
         noteImages.length > 0
           ? noteImages.map((image) => ({
@@ -73,8 +76,8 @@ function NoteEditForm(props: NoteEditFormProps) {
   const imagesList = fields.images.getFieldList();
 
   const handleFormSubmitAction = async (formData: FormData) => {
-    const response = await boundEditNoteAction(formData);
-    if (response.error) {
+    const response = await action(formData);
+    if (response?.error) {
       toast.error(response.error);
     }
   };

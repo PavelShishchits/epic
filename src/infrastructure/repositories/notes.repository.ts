@@ -2,7 +2,7 @@ import type { NoteRepositoryInterface } from '@/application/repositories/note.re
 import { DatabaseOperationError } from '@/entities/errors';
 import { Note } from '@/entities/models/note';
 import { prisma } from '@/infrastructure/db/db.server';
-import { NoteUpdateSchema } from '@/schema/note';
+import { NoteCreateSchema, NoteUpdateSchema } from '@/schema/note';
 
 export class NotesRepository implements NoteRepositoryInterface {
   async getNote(id: Note['id']): Promise<Note | null> {
@@ -69,6 +69,28 @@ export class NotesRepository implements NoteRepositoryInterface {
       throw new DatabaseOperationError(
         'Cannot delete note, note does not exist'
       );
+    }
+
+    return note;
+  }
+
+  async addNote(noteData: NoteCreateSchema, userId: string): Promise<Note> {
+    const note = await prisma.note.create({
+      data: {
+        title: noteData.title,
+        content: noteData.content,
+        ownerId: userId,
+        images: {
+          create: noteData.images || [],
+        },
+      },
+      include: {
+        images: true,
+      },
+    });
+
+    if (!note) {
+      throw new DatabaseOperationError('Cannot create note');
     }
 
     return note;

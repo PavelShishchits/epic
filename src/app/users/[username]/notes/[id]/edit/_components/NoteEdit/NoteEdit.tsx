@@ -7,11 +7,11 @@ import { Note } from '@/entities/models/note';
 
 interface NoteEditProps {
   noteId: string;
-  userId: string;
+  username: string;
 }
 
 async function NoteEdit(props: NoteEditProps) {
-  const { noteId, userId } = props;
+  const { noteId, username } = props;
 
   const note = await getNoteCached(noteId);
 
@@ -19,7 +19,7 @@ async function NoteEdit(props: NoteEditProps) {
 
   const serializedNote = getSerializableProps<Note>(note);
 
-  return <NoteEditForm noteId={noteId} userId={userId} note={serializedNote} />;
+  return <NoteEditForm username={username} note={serializedNote} />;
 }
 
 export default NoteEdit;
