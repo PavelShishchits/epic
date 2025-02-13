@@ -3,12 +3,19 @@ import { compare } from 'bcrypt-ts';
 import { IAuthenticationService } from '@/application/services/authentication.service.interface';
 import { UnauthenticatedError } from '@/entities/errors';
 import { Session } from '@/entities/models/session';
+import { SESSION_NAME, getSessionExpiratationDate } from '@/lib/auth.server';
 import env from '@/lib/env';
-import { SESSION_NAME, decrypt, encrypt } from '@/lib/session-management';
+import { decrypt, encrypt } from '@/lib/session-management';
 
 class AuthentificationService implements IAuthenticationService {
-  async createSession(userId: string) {
-    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7d
+  async createSession({
+    userId,
+    rememberMe,
+  }: {
+    userId: string;
+    rememberMe?: boolean;
+  }) {
+    const expiresAt = getSessionExpiratationDate();
     const session = await encrypt({ userId, expiresAt });
 
     const cookie = {
@@ -17,7 +24,7 @@ class AuthentificationService implements IAuthenticationService {
       attributes: {
         httpOnly: true,
         secure: env.NODE_ENV === 'production',
-        expires: expiresAt,
+        expires: rememberMe ? expiresAt : undefined,
         sameSite: 'lax' as 'lax',
         path: '/',
       },

@@ -45,8 +45,9 @@ async function addNoteAction(
   formData: FormData
 ) {
   const sessionId = await getSessionId();
+  let newNote;
   try {
-    await addNoteController(formData, sessionId, username);
+    newNote = await addNoteController(formData, sessionId, username);
   } catch (e) {
     return {
       error: 'Something went wrong',
@@ -54,7 +55,7 @@ async function addNoteAction(
   }
 
   revalidatePath('/users/' + username + '/notes');
-  redirect('/users/' + username + '/notes');
+  redirect('/users/' + username + '/notes/' + newNote.id);
 }
 
 async function deleteNoteAction(

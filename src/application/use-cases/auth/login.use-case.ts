@@ -5,6 +5,7 @@ import { AuthentificationService } from '@/infrastructure/services/authenticatio
 export async function loginUseCase(input: {
   username: string;
   password: string;
+  rememberMe?: boolean;
 }) {
   const userRepository = new UserRepository();
   const authenticationService = new AuthentificationService();
@@ -25,8 +26,10 @@ export async function loginUseCase(input: {
 
   const userId = existingUser.id;
 
-  // create session
-  const { cookie } = await authenticationService.createSession(userId);
+  const { cookie } = await authenticationService.createSession({
+    userId,
+    rememberMe: input.rememberMe,
+  });
 
   return {
     user: existingUser,

@@ -5,7 +5,6 @@ import env from '@/lib/env';
 
 const secret = env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secret);
-const SESSION_NAME = 'session';
 
 async function encrypt(payload: any) {
   return new SignJWT(payload)
@@ -29,4 +28,4 @@ async function decrypt(session: string | undefined = '') {
 // add updateSession
 // add deleteSession
 
-export { encrypt, decrypt, SESSION_NAME };
+export { encrypt, decrypt };

@@ -22,7 +22,7 @@ const userRegisterSchema = z
     name: z.string().optional(),
     password: passwordSchema,
     confirmPassword: z.string(),
-    // terms: z.boolean({ message: 'Terms shoul be accepted' }),
+    terms: z.boolean({ message: 'Terms shoul be accepted' }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -32,6 +32,7 @@ const userRegisterSchema = z
 const userLoginSchema = z.object({
   username: z.string().min(1),
   password: passwordSchema,
+  rememberMe: z.boolean().optional(),
 });
 
 const searchUsersSchema = z.object({

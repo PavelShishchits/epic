@@ -15,9 +15,9 @@ export async function loginController(input: any) {
     });
   }
 
-  const { username, password } = parsedResult.value;
+  const { username, password, rememberMe } = parsedResult.value;
 
-  const { cookie } = await loginUseCase({ username, password });
+  const { cookie } = await loginUseCase({ username, password, rememberMe });
 
   return { cookie };
 }

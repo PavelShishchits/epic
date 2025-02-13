@@ -24,7 +24,10 @@ export async function signUpUseCase(input: {
     password: input.password,
   });
 
-  const { cookie } = await authenticationService.createSession(newUser?.id);
+  const { cookie } = await authenticationService.createSession({
+    userId: newUser.id,
+    rememberMe: true,
+  });
 
   return {
     user: newUser,

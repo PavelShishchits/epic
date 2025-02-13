@@ -68,9 +68,10 @@ export function SignUpForm() {
       type: 'password',
     }
   );
-  // const { key: termsKey, ...termsProps } = getInputProps(fields.terms, {
-  //   type: 'checkbox',
-  // });
+
+  const { key: termsKey, ...termsProps } = getInputProps(fields.terms, {
+    type: 'checkbox',
+  });
 
   return (
     <form className="w-full" action={formAction} {...getFormProps(form)}>
@@ -124,11 +125,9 @@ export function SignUpForm() {
         ></FormMessages>
       </FormField>
 
-      {/* <FormField>
+      <FormField>
         <div className="flex items-center gap-2">
-          <Checkbox
-            {...termsProps}
-          />
+          <Checkbox {...termsProps} />
           <FormLabel htmlFor={fields.terms.id}>
             Accept terms and conditions
           </FormLabel>
@@ -137,7 +136,7 @@ export function SignUpForm() {
           errors={fields.terms.errors}
           id={fields.terms.errorId}
         ></FormMessages>
-      </FormField> */}
+      </FormField>
 
       <SubmitBtn className="w-full" variant="default">
         Create account

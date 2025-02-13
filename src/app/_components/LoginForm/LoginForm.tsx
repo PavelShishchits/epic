@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 
 import { signInAction } from '@/app/_actions/auth.action';
 import {
+  Checkbox,
   CsrfTokenField,
   FormField,
   FormLabel,
@@ -50,6 +51,11 @@ const LoginForm = (props: LoginFormProps) => {
     { type: 'password' }
   );
 
+  const { key: rememberMeKey, ...rememberMeProps } = getInputProps(
+    fields.rememberMe,
+    { type: 'checkbox' }
+  );
+
   const handleFormSubmitAction = async (formData: FormData) => {
     const response = await signInAction(formData);
     if (response?.error) {
@@ -82,6 +88,18 @@ const LoginForm = (props: LoginFormProps) => {
           id={fields.password.errorId}
         />
       </FormField>
+
+      <FormField>
+        <div className="flex items-center gap-2">
+          <Checkbox {...rememberMeProps} />
+          <FormLabel htmlFor={fields.rememberMe.id}>Remember me</FormLabel>
+        </div>
+        <FormMessages
+          errors={fields.rememberMe.errors}
+          id={fields.rememberMe.errorId}
+        />
+      </FormField>
+
       <SubmitBtn className="w-full" variant={'default'}>
         Login
       </SubmitBtn>

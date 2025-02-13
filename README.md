@@ -25,7 +25,8 @@
 
 ## auth
 
-[] implement input password ui component with show/hide password function
+[x] implement input password ui component with show/hide password function
+[] "guard" edit/delete note use cases with authrorization rules
 
 ### clean arch
 
