@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { CsrfError, createCsrfProtect } from '@edge-csrf/nextjs';
 
+import { UnauthenticatedError } from '@/entities/errors';
+import { AuthentificationService } from '@/infrastructure/services/authentication.service';
+import { SESSION_NAME } from '@/lib/auth.server';
 import env from '@/lib/env';
 
 const csrfProtect = createCsrfProtect({
@@ -12,6 +15,29 @@ const csrfProtect = createCsrfProtect({
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
+
+  const AUTH_PATHS = ['/login'];
+
+  const isAuthPath = AUTH_PATHS.includes(request.nextUrl.pathname);
+
+  if (!isAuthPath) {
+    const sessionId = request.cookies.get(SESSION_NAME)?.value;
+    if (!sessionId) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+    const authenticationService = new AuthentificationService();
+
+    try {
+      await authenticationService.validateSession(sessionId);
+      const { cookie } = await authenticationService.updateSession(sessionId);
+      response.cookies.set(cookie.name, cookie.value, cookie.attributes);
+    } catch (e) {
+      if (e instanceof UnauthenticatedError) {
+        return NextResponse.redirect(new URL('/login', request.url));
+      }
+      throw e;
+    }
+  }
 
   try {
     await csrfProtect(request, response);

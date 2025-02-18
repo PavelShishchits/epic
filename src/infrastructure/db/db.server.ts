@@ -13,7 +13,7 @@ export const prisma = singleton('prisma', () => {
   });
 
   client.$on('query', (e) => {
-    console.log('event:query', e.query);
+    // console.log('event:query', e.query);
   });
   client.$connect();
 

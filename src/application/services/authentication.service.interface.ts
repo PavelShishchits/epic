@@ -6,6 +6,7 @@ export interface IAuthenticationService {
     userId: string;
     rememberMe?: boolean;
   }): Promise<{ cookie: Cookie }>;
+  updateSession(session: string): Promise<{ cookie: Cookie }>;
   validateSession(
     sessionId: string
   ): Promise<{ userId: string; session: Session }>;

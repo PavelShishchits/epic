@@ -25,7 +25,4 @@ async function decrypt(session: string | undefined = '') {
   }
 }
 
-// add updateSession
-// add deleteSession
-
 export { encrypt, decrypt };

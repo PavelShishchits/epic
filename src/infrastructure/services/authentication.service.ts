@@ -15,7 +15,7 @@ class AuthentificationService implements IAuthenticationService {
     userId: string;
     rememberMe?: boolean;
   }) {
-    const expiresAt = getSessionExpiratationDate();
+    const expiresAt = rememberMe ? getSessionExpiratationDate() : undefined;
     const session = await encrypt({ userId, expiresAt });
 
     const cookie = {
@@ -24,7 +24,37 @@ class AuthentificationService implements IAuthenticationService {
       attributes: {
         httpOnly: true,
         secure: env.NODE_ENV === 'production',
-        expires: rememberMe ? expiresAt : undefined,
+        expires: expiresAt,
+        sameSite: 'lax' as 'lax',
+        path: '/',
+      },
+    };
+
+    return {
+      cookie,
+    };
+  }
+
+  async updateSession(sessionId: string) {
+    const session = (await decrypt(sessionId)) as Session;
+
+    if (!session?.userId) {
+      throw new UnauthenticatedError('Unauthenticated');
+    }
+
+    const expiresAt = session.expiresAt
+      ? getSessionExpiratationDate()
+      : undefined;
+
+    const newSession = await encrypt({ userId: session.userId, expiresAt });
+
+    const cookie = {
+      name: SESSION_NAME,
+      value: newSession,
+      attributes: {
+        httpOnly: true,
+        secure: env.NODE_ENV === 'production',
+        expires: expiresAt,
         sameSite: 'lax' as 'lax',
         path: '/',
       },
@@ -42,6 +72,10 @@ class AuthentificationService implements IAuthenticationService {
 
     if (!session?.userId) {
       throw new UnauthenticatedError('Unauthenticated');
+    }
+
+    if (session.expiresAt && new Date(session.expiresAt) < new Date()) {
+      throw new UnauthenticatedError('Session expired');
     }
 
     return {

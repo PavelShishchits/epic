@@ -27,6 +27,8 @@
 
 [x] implement input password ui component with show/hide password function
 [] "guard" edit/delete note use cases with authrorization rules
+[x] prolong session if user is "active" (via middleware)
+[] implement invalidate session method
 
 ### clean arch
 

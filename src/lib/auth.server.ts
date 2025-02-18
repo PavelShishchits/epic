@@ -5,4 +5,4 @@ const getSessionExpiratationDate = () => {
   return new Date(Date.now() + SESSION_EXPIRATION_TIME);
 };
 
-export { SESSION_NAME, getSessionExpiratationDate };
+export { SESSION_NAME, SESSION_EXPIRATION_TIME, getSessionExpiratationDate };
