@@ -3,5 +3,5 @@ import { AuthentificationService } from '@/infrastructure/services/authenticatio
 export async function signOutUseCase(sessionId: string) {
   const authenticationService = new AuthentificationService();
 
-  await authenticationService.invalidateSession(sessionId);
+  return await authenticationService.invalidateSession(sessionId);
 }

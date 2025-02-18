@@ -78,14 +78,21 @@ async function logOutAction(formData: FormData) {
 
   const cookiesStore = await cookies();
   const sessionId = await getSessionId();
-
+  let sessionCookie;
   try {
-    await signOutController(sessionId);
+    const result = await signOutController(sessionId);
+    sessionCookie = result.cookie;
   } catch (e) {
-    //
+    return {
+      error: 'Something went wrong',
+    };
   }
 
-  cookiesStore.delete(SESSION_NAME);
+  cookiesStore.set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes
+  );
 
   redirect('/login');
 }

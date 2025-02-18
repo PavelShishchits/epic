@@ -20,8 +20,9 @@ export async function middleware(request: NextRequest) {
 
   const isAuthPath = AUTH_PATHS.includes(request.nextUrl.pathname);
 
+  const sessionId = request.cookies.get(SESSION_NAME)?.value;
+
   if (!isAuthPath) {
-    const sessionId = request.cookies.get(SESSION_NAME)?.value;
     if (!sessionId) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
@@ -36,6 +37,10 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/login', request.url));
       }
       throw e;
+    }
+  } else {
+    if (sessionId) {
+      return NextResponse.redirect(new URL('/', request.url));
     }
   }
 

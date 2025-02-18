@@ -84,8 +84,21 @@ class AuthentificationService implements IAuthenticationService {
     };
   }
 
-  async invalidateSession(sessionId: string): Promise<void> {
-    console.log(`Session with ID ${sessionId} invalidated.`);
+  async invalidateSession(sessionId: string) {
+    const cookie = {
+      name: SESSION_NAME,
+      value: '',
+      attributes: {
+        httpOnly: true,
+        secure: env.NODE_ENV === 'production',
+        expires: new Date(0),
+        maxAge: 0,
+        sameSite: 'lax' as 'lax',
+        path: '/',
+      },
+    };
+
+    return { cookie };
   }
 
   async validatePassword(inputPassword: string, userPasswordHash: string) {
