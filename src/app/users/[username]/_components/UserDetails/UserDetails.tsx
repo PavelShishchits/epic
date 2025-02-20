@@ -76,8 +76,13 @@ const UserDetails = async ({ userName }: UserDetailsProps) => {
           <div className="mt-8 flex gap-4">
             <Button asChild>
               <NavLink href={`/users/${userName}/notes`}>
-                {userDisplayName}&apos;s notes
+                {isAuthenticatedUser
+                  ? 'My notes'
+                  : `${userDisplayName}&apos;s notes`}
               </NavLink>
+            </Button>
+            <Button asChild>
+              <NavLink href="/settings/profile">Edit profile</NavLink>
             </Button>
           </div>
         </div>

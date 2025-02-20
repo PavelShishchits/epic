@@ -43,8 +43,22 @@ const Header = async () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>
-                  <LogoutForm>
-                    <Button className="p-0 h-auto" variant={'link'}>
+                  <Button
+                    className="justify-start p-0 h-auto w-full"
+                    asChild
+                    variant={'link'}
+                  >
+                    <Link href={`/users/${user?.username}`}>
+                      {"User's page"}
+                    </Link>
+                  </Button>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <LogoutForm className="w-full">
+                    <Button
+                      className="justify-start p-0 h-auto w-full"
+                      variant={'link'}
+                    >
                       Logout
                     </Button>
                   </LogoutForm>
