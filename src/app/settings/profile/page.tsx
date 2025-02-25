@@ -8,19 +8,28 @@ export default async function ProfilePage() {
 
   if (!user) return null;
 
+  // console.log('user', user);
+
   return (
-    <div className="container">
+    <div className="container space-y-10">
       <Typography variant={'h2'} tag="h1">
         Profile page
       </Typography>
+      <Typography variant={'h3'} tag="h2">
+        Edit profile
+      </Typography>
       <ChangeProfileForm
         user={{
+          id: user.id,
           username: user.username,
           name: user.name,
           email: user.email,
           imageId: user.image?.id,
         }}
       />
+      <Typography variant={'h3'} tag="h2">
+        Change profile
+      </Typography>
     </div>
   );
 }

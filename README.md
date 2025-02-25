@@ -29,7 +29,10 @@
 [] "guard" edit/delete note use cases with authrorization rules
 [x] prolong session if user is "active" (via middleware)
 [x] implement invalidate session method
-[] Add user profile page
+[x] Add user profile page
+[] edit profile form
+[] change password form
+[] generate pdf function
 [] Optimize queries (exclude not used fields)
 
 ### clean arch

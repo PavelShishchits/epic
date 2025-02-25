@@ -61,14 +61,21 @@ const editUserProfileSchema = z.object({
         if (!value || value?.size === 0 || value?.name === 'undefined')
           return true;
         // Check file type
-        const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        const validTypes = [
+          'image/jpeg',
+          'image/jpg',
+          'image/png',
+          'image/webp',
+        ];
         return validTypes.includes(value.type);
       },
       {
-        message: 'File must be an image (JPEG, PNG)',
+        message: 'File must be an image (JPEG, PNG, WEBP)',
       }
     ),
 });
+
+type EditUserProfileSchema = z.infer<typeof editUserProfileSchema>;
 
 const userLoginSchema = z.object({
   username: z.string().min(1),
@@ -85,4 +92,5 @@ export {
   searchUsersSchema,
   userLoginSchema,
   editUserProfileSchema,
+  type EditUserProfileSchema,
 };

@@ -11,7 +11,6 @@ import { Cookie } from '@/entities/models/cookie';
 import { loginController } from '@/interface-adapters/controllers/login.controller';
 import { signOutController } from '@/interface-adapters/controllers/sign-out.controller';
 import { signUpController } from '@/interface-adapters/controllers/sign-up.controller';
-import { SESSION_NAME } from '@/lib/auth.server';
 import { HoneyPot } from '@/lib/honeypot.server';
 
 async function signUpAction(prevState: unknown, formData: FormData) {

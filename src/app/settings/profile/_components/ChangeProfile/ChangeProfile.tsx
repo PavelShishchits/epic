@@ -1,9 +1,13 @@
 'use client';
 
+import { useActionState, useEffect } from 'react';
+
 import { useForm } from '@conform-to/react';
 import { getFormProps, getInputProps } from '@conform-to/react';
 import { getZodConstraint, parseWithZod } from '@conform-to/zod';
+import { toast } from 'sonner';
 
+import { editProfileAction } from '@/app/_actions/settings.action';
 import {
   CsrfTokenField,
   FormField,
@@ -20,6 +24,7 @@ import { editUserProfileSchema } from '@/schema/user';
 type ChangeProfileFormProps = {
   className?: string;
   user: {
+    id: string;
     username: string;
     name: string | null;
     email: string;
@@ -28,6 +33,11 @@ type ChangeProfileFormProps = {
 };
 
 const ChangeProfileForm = ({ user }: ChangeProfileFormProps) => {
+  const [state, formAction] = useActionState(
+    editProfileAction.bind(null, { userId: user.id }),
+    undefined
+  );
+
   const [form, fields] = useForm({
     id: 'edit-profile',
     constraint: getZodConstraint(editUserProfileSchema),
@@ -45,6 +55,12 @@ const ChangeProfileForm = ({ user }: ChangeProfileFormProps) => {
     shouldValidate: 'onInput',
     shouldRevalidate: 'onInput',
   });
+
+  useEffect(() => {
+    if (state && 'toastError' in state) {
+      toast.error(state.toastError);
+    }
+  }, [state]);
 
   const { key: usernameKey, ...usernameProps } = getInputProps(
     fields.username,
@@ -66,7 +82,7 @@ const ChangeProfileForm = ({ user }: ChangeProfileFormProps) => {
   });
 
   return (
-    <form {...getFormProps(form)}>
+    <form action={formAction} {...getFormProps(form)}>
       <CsrfTokenField />
       <HoneypotField />
 

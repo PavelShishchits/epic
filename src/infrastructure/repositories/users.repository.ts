@@ -4,7 +4,7 @@ import { hash } from 'bcrypt-ts';
 
 import type { IUserRepository } from '@/application/repositories/user.repository.interface';
 import { DatabaseOperationError } from '@/entities/errors';
-import type { CreateUser, User } from '@/entities/models/user';
+import type { CreateUser, UpdateUser, User } from '@/entities/models/user';
 import { prisma } from '@/infrastructure/db/db.server';
 
 export class UserRepository implements IUserRepository {
@@ -67,5 +67,38 @@ export class UserRepository implements IUserRepository {
     }
 
     return newUser;
+  }
+
+  async updateUser(id: string, input: UpdateUser): Promise<User> {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        password: input.password ? await hash(input.password, 10) : undefined,
+        email: input.email ?? undefined,
+        username: input.username ?? undefined,
+        name: input.name ?? undefined,
+        image: input.image
+          ? {
+              delete: {},
+              create: {
+                altText: input.image.altText,
+                contentType: input.image.contentType,
+                blob: input.image.blob,
+              },
+            }
+          : undefined,
+      },
+      include: {
+        image: true,
+      },
+    });
+
+    if (!updatedUser) {
+      throw new DatabaseOperationError('Can not update user');
+    }
+
+    return updatedUser;
   }
 }

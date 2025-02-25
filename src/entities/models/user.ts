@@ -5,15 +5,34 @@ import {
 
 import { Note } from './note';
 
-export type User = PrismaUser & {
+type User = PrismaUser & {
   notes?: Note[];
   image?: UserImage | null;
 };
 
-export type UserWithNotes = PrismaUser & {
+type UserWithNotes = PrismaUser & {
   notes: Note[];
 };
 
-export type CreateUser = Pick<User, 'email' | 'username' | 'name' | 'password'>;
+type CreateUser = {
+  email: string;
+  username: string;
+  name: string;
+  password: string;
+};
 
-export type UserImage = PrismaUserImage;
+type UpdateUser = {
+  email?: string;
+  username?: string;
+  name?: string;
+  password?: string;
+  image?: {
+    altText: string;
+    contentType: string;
+    blob: Buffer;
+  } | null;
+};
+
+type UserImage = PrismaUserImage;
+
+export type { User, UserWithNotes, CreateUser, UpdateUser, UserImage };
