@@ -30,7 +30,8 @@
 [x] prolong session if user is "active" (via middleware)
 [x] implement invalidate session method
 [x] Add user profile page
-[] edit profile form
+[x] edit profile form
+[x] add check for existing username/email in sign up flow
 [] change password form
 [] generate pdf function
 [] Optimize queries (exclude not used fields)

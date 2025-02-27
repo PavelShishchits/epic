@@ -11,16 +11,23 @@ export async function signUpUseCase(input: {
   const userRepository = new UserRepository();
   const authenticationService = new AuthentificationService();
 
-  const existingUser = await userRepository.getUserByName(input.username);
+  const [existingUsername, existingEmail] = await Promise.all([
+    userRepository.getUserByName(input.username),
+    userRepository.getUserByEmail(input.email),
+  ]);
 
-  if (existingUser) {
+  if (existingUsername) {
     throw new AuthenticationError('Username already exists');
+  }
+
+  if (existingEmail) {
+    throw new AuthenticationError('Email already exists');
   }
 
   const newUser = await userRepository.createUser({
     username: input.username,
     email: input.email,
-    name: input.name || null,
+    name: input.name || undefined,
     password: input.password,
   });
 

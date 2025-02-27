@@ -15,30 +15,36 @@ export async function editProfileUseCase(
     throw new AuthenticationError('User not found');
   }
 
-  if (username !== existingUser.username) {
-    const usernameExists = await userRepository.getUserByName(username);
+  const [existingUsername, existingEmail] = await Promise.all([
+    username !== existingUser.username
+      ? userRepository.getUserByName(username)
+      : undefined,
+    email !== existingUser.email
+      ? userRepository.getUserByEmail(email)
+      : undefined,
+  ]);
 
-    if (usernameExists) {
-      throw new AuthenticationError('Username already exists');
-    }
+  if (existingUsername) {
+    throw new AuthenticationError('Username already exists');
   }
 
-  if (email !== existingUser.email) {
-    const emailExists = await userRepository.getUserByEmail(email);
-
-    if (emailExists) {
-      throw new AuthenticationError('Email already exists');
-    }
+  if (existingEmail) {
+    throw new AuthenticationError('Email already exists');
   }
 
-  const newImage =
-    image && image.size > 0
-      ? {
-          altText: image.name,
-          contentType: image.type,
-          blob: Buffer.from(await image.arrayBuffer()),
-        }
-      : null;
+  let newImage = null;
+  try {
+    newImage =
+      image && image.size > 0
+        ? {
+            altText: username,
+            contentType: image.type,
+            blob: Buffer.from(await image.arrayBuffer()),
+          }
+        : null;
+  } catch (e) {
+    //
+  }
 
   return await userRepository.updateUser(userId, {
     username,
