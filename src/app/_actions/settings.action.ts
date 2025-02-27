@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 
 import 'server-only';
 
-import { InputParseError } from '@/entities/errors';
+import { AuthenticationError, InputParseError } from '@/entities/errors';
 import { editProfileController } from '@/interface-adapters/controllers/edit-profile.controller';
 import { HoneyPot } from '@/lib/honeypot.server';
 
@@ -26,6 +26,12 @@ async function editProfileAction(
     if (e instanceof InputParseError) {
       return {
         toastError: 'Incorrect data',
+      };
+    }
+
+    if (e instanceof AuthenticationError) {
+      return {
+        toastError: e.message,
       };
     }
     return {

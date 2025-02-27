@@ -10,6 +10,7 @@ export interface IUserRepository {
 
   getUsersOrderedByLatestChanges(query?: string): Promise<getUsers.Result[]>;
   getUserByName(username: string): Promise<User | null>;
+  getUserByEmail(email: string): Promise<User | null>;
   getUser(id: string): Promise<User | null>;
   createUser(input: CreateUser): Promise<User>;
   updateUser(id: string, input: UpdateUser): Promise<User>;
