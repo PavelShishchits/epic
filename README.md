@@ -34,9 +34,13 @@
 [x] add check for existing username/email in sign up flow
 [] change password form
 [] generate pdf function
-[] Optimize queries (exclude not used fields)
 
 ### clean arch
 
 - Controllers are responsible for input validation, auhentication and other actions, also inside controller we perform all use cases.
 - Use cases recieve already validated data and perform only one their individual operation
+
+## maintanance
+
+[] Check middleware (redirects from home page to logn)
+[] Optimize queries (exclude not used fields)
