@@ -9,7 +9,7 @@ const HoneypotField = ({ name }: HoneypotFieldProps) => {
     <div className="hidden" aria-hidden="true">
       <input
         name={DEFAULT_INPUT_NAME ?? name}
-        autoComplete="nope"
+        autoComplete="off"
         tabIndex={-1}
       />
     </div>

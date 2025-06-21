@@ -12,7 +12,7 @@ export async function signUpUseCase(input: {
   const authenticationService = new AuthentificationService();
 
   const [existingUsername, existingEmail] = await Promise.all([
-    userRepository.getUserByName(input.username),
+    userRepository.getUserByUsername(input.username),
     userRepository.getUserByEmail(input.email),
   ]);
 

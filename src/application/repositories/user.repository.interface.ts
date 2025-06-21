@@ -9,7 +9,7 @@ export interface IUserRepository {
   ) => Promise<Prisma.UserGetPayload<{ select: T }>[]>;
 
   getUsersOrderedByLatestChanges(query?: string): Promise<getUsers.Result[]>;
-  getUserByName(username: string): Promise<User | null>;
+  getUserByUsername(username: string): Promise<User | null>;
   getUserByEmail(email: string): Promise<User | null>;
   getUser(id: string): Promise<User | null>;
   createUser(input: CreateUser): Promise<User>;

@@ -9,7 +9,7 @@ export async function loginUseCase(input: {
 }) {
   const userRepository = new UserRepository();
   const authenticationService = new AuthentificationService();
-  const existingUser = await userRepository.getUserByName(input.username);
+  const existingUser = await userRepository.getUserByUsername(input.username);
 
   if (!existingUser) {
     throw new AuthenticationError('User not found');

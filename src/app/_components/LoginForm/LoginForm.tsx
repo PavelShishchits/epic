@@ -41,20 +41,13 @@ const LoginForm = (props: LoginFormProps) => {
     shouldRevalidate: 'onInput',
   });
 
-  const { key: usernameKey, ...usernameProps } = getInputProps(
-    fields.username,
-    { type: 'text' }
-  );
+  const usernameProps = getInputProps(fields.username, { type: 'text' });
 
-  const { key: passwordKey, ...passwordProps } = getInputProps(
-    fields.password,
-    { type: 'password' }
-  );
+  const passwordProps = getInputProps(fields.password, { type: 'password' });
 
-  const { key: rememberMeKey, ...rememberMeProps } = getInputProps(
-    fields.rememberMe,
-    { type: 'checkbox' }
-  );
+  const rememberMeProps = getInputProps(fields.rememberMe, {
+    type: 'checkbox',
+  });
 
   const handleFormSubmitAction = async (formData: FormData) => {
     const response = await signInAction(formData);

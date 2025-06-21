@@ -14,12 +14,11 @@ import { signUpController } from '@/interface-adapters/controllers/sign-up.contr
 import { HoneyPot } from '@/lib/honeypot.server';
 
 async function signUpAction(prevState: unknown, formData: FormData) {
-  new HoneyPot().check(formData);
-
   const cookiesStore = await cookies();
   let sessionCookie: Cookie;
 
   try {
+    new HoneyPot().check(formData);
     const result = await signUpController(formData);
     sessionCookie = result.cookie;
   } catch (e) {
@@ -43,12 +42,11 @@ async function signUpAction(prevState: unknown, formData: FormData) {
 }
 
 async function signInAction(formData: FormData) {
-  new HoneyPot().check(formData);
-
-  const cookiesStore = await cookies();
   let sessionCookie: Cookie;
+  const cookiesStore = await cookies();
 
   try {
+    new HoneyPot().check(formData);
     const result = await loginController(formData);
     sessionCookie = result.cookie;
   } catch (e) {
@@ -73,12 +71,12 @@ async function signInAction(formData: FormData) {
 }
 
 async function logOutAction(formData: FormData) {
-  new HoneyPot().check(formData);
-
   const cookiesStore = await cookies();
-  const sessionId = await getSessionId();
   let sessionCookie;
+
   try {
+    new HoneyPot().check(formData);
+    const sessionId = await getSessionId();
     const result = await signOutController(sessionId);
     sessionCookie = result.cookie;
   } catch (e) {

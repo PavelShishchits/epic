@@ -17,7 +17,7 @@ export async function editProfileUseCase(
 
   const [existingUsername, existingEmail] = await Promise.all([
     username !== existingUser.username
-      ? userRepository.getUserByName(username)
+      ? userRepository.getUserByUsername(username)
       : undefined,
     email !== existingUser.email
       ? userRepository.getUserByEmail(email)
