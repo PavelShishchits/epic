@@ -16,13 +16,15 @@ const csrfProtect = createCsrfProtect({
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
-  const AUTH_PATHS = ['/login'];
+  const PUBLIC_PATHS = ['/', '/login', '/api/healthcheck'];
 
-  const isAuthPath = AUTH_PATHS.includes(request.nextUrl.pathname);
+  const isPublicPath = PUBLIC_PATHS.some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  );
 
   const sessionId = request.cookies.get(SESSION_NAME)?.value;
 
-  if (!isAuthPath) {
+  if (!isPublicPath) {
     if (!sessionId) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
